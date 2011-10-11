@@ -103,7 +103,28 @@
   		// Event Handling
   		//
   		loginButton.addEventListener('click', function(){
-  			alert('login button clicked!');
+			var client = Titanium.Network.createHTTPClient();
+			client.onerror = function(e)
+			{
+				Ti.API.error(e.error + "\nResponse: " + this.responseText);
+				if (this.status == 401) {
+					alert('Wrong Username or Password!');
+				} else {
+					alert("Server conntection failure!");
+				}
+			};
+			client.onload = function()
+			{
+				result = JSON.parse(this.responseText);
+				Ti.API.info('User ID: '+result.id);
+				alert("User logged in.  User ID = "+result.id);
+			};
+
+			client.open('GET',cm.config.SERVICE_ENDPOINT+'api/auth');
+
+			client.setRequestHeader('Authorization','Basic '+Ti.Utils.base64encode(usernameField.value+':'+pwdField.value));
+	
+			client.send();
   		});
   		
   		newuserLabel.addEventListener('click', function(){

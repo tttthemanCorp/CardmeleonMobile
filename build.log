@@ -7,14 +7,13 @@ Logfile initialized
 [TRACE] adb devices returned 1 devices/emulators
 [TRACE] adb devices returned 1 devices/emulators
 [TRACE] adb devices returned 1 devices/emulators
-[TRACE] adb devices returned 1 devices/emulators
-[DEBUG] Device connected... (waited 15 seconds)
-[DEBUG] waited 15.030990 seconds on emulator to get ready
+[DEBUG] Device connected... (waited 10 seconds)
+[DEBUG] waited 10.023904 seconds on emulator to get ready
 [INFO] Waiting for the Android Emulator to become available
 [DEBUG] com.cardmeleon.mobile installed? True
 [INFO] Fastdev server running, deploying in Fastdev mode
 [INFO] Copying project resources..
-[TRACE] COPYING MODIFIED FILE: /Users/jlu/Projects/mobile/Cardmeleon/Resources/main/ui/ApplicationWindow.js => /Users/jlu/Projects/mobile/Cardmeleon/build/android/bin/assets/Resources/main/ui/ApplicationWindow.js
+[TRACE] COPYING MODIFIED FILE: /Users/jlu/Projects/mobile/Cardmeleon/Resources/main/config/config.js => /Users/jlu/Projects/mobile/Cardmeleon/build/android/bin/assets/Resources/main/config/config.js
 [INFO] Tiapp.xml unchanged, skipping class generation
 [DEBUG] Processing Android resource drawables
 [DEBUG] found drawable-long-land-hdpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-long-land-hdpi/default.png
