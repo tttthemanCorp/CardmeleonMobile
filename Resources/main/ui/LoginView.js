@@ -110,7 +110,7 @@
 				if (this.status == 401) {
 					alert('Wrong Username or Password!');
 				} else {
-					alert("Server conntection failure!");
+					alert("Server connection failure!");
 				}
 			};
 			client.onload = function()
