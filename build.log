@@ -1,59 +1,74 @@
 Logfile initialized
-[INFO] logfile = /Users/jlu/Projects/mobile/Cardmeleon/build.log
-[DEBUG] /Library/Application Support/Titanium/mobilesdk/osx/1.7.2/android/builder.py simulator Cardmeleon /Users/jlu/Softwares/android-sdk-mac_x86 /Users/jlu/Projects/mobile/Cardmeleon com.cardmeleon.mobile 7 HVGA 
-[INFO] Building Cardmeleon for Android ... one moment
+[INFO] logfile = /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build.log
+[DEBUG] /Library/Application Support/Titanium/mobilesdk/osx/1.7.2/android/builder.py simulator CardmeleonMobile /Users/ttttheman/Software/android-sdk-mac_x86 /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile com.cardmeleon.mobile 2 HVGA 
+[INFO] Building CardmeleonMobile for Android ... one moment
 [INFO] Titanium SDK version: 1.7.2 (07/21/11 09:36 97c3689)
 [DEBUG] Waiting for device to be ready ...
-[TRACE] adb devices returned 0 devices/emulators
 [TRACE] adb devices returned 1 devices/emulators
 [TRACE] adb devices returned 1 devices/emulators
 [TRACE] adb devices returned 1 devices/emulators
 [TRACE] adb devices returned 1 devices/emulators
-[TRACE] adb devices returned 1 devices/emulators
-[TRACE] adb devices returned 1 devices/emulators
-[TRACE] adb devices returned 1 devices/emulators
-[DEBUG] Device connected... (waited 35 seconds)
-[DEBUG] waited 35.086732 seconds on emulator to get ready
+[DEBUG] Device connected... (waited 15 seconds)
+[DEBUG] waited 15.071511 seconds on emulator to get ready
 [INFO] Waiting for the Android Emulator to become available
-[DEBUG] com.cardmeleon.mobile installed? True
+[ERROR] Timed out waiting for android.process.acore
+[DEBUG] com.cardmeleon.mobile installed? False
 [WARN] Fastdev enabled, but server isn't running, deploying normally
 [INFO] Copying project resources..
-[TRACE] COPYING MODIFIED FILE: /Users/jlu/Projects/mobile/Cardmeleon/Resources/main/config/config.js => /Users/jlu/Projects/mobile/Cardmeleon/build/android/bin/assets/Resources/main/config/config.js
+[INFO] Detected tiapp.xml change, forcing full re-build...
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/appicon.png => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/appicon.png
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/default.png => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/default.png
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/app.js => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/app.js
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/images/Bgrnd_B-Y.png => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_B-Y.png
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/images/Button_bg.png => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_bg.png
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/images/Button_Login.png => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Login.png
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/images/Frame_top_01.png => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_top_01.png
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/main/cardmeleon.js => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/main/cardmeleon.js
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/main/config/config.js => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/main/config/config.js
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/main/model/model.js => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/main/model/model.js
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/main/ui/ApplicationWindow.js => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/ApplicationWindow.js
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/main/ui/LoginView.js => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/LoginView.js
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/main/ui/styles.js => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/styles.js
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/main/ui/ui.js => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/ui.js
+[TRACE] COPYING CREATED FILE: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/main/utils/serviceutils.js => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/main/utils/serviceutils.js
 [TRACE] Generating Java Classes
 [DEBUG] Processing Android resource drawables
-[DEBUG] copying app icon: /Users/jlu/Projects/mobile/Cardmeleon/build/android/bin/assets/Resources/appicon.png
+[DEBUG] app stylesheet => /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/ApplicationStylesheet.java
+[DEBUG] copying app icon: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/appicon.png
 [DEBUG] generating theme.xml
-[DEBUG] found drawable-long-land-hdpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-long-land-hdpi/default.png
-[DEBUG] copying /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-long-land-hdpi/default.png splash screen to /Users/jlu/Projects/mobile/Cardmeleon/build/android/res/drawable-long-land-hdpi/background.png
-[DEBUG] found drawable-long-land-ldpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-long-land-ldpi/default.png
-[DEBUG] copying /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-long-land-ldpi/default.png splash screen to /Users/jlu/Projects/mobile/Cardmeleon/build/android/res/drawable-long-land-ldpi/background.png
-[DEBUG] found drawable-long-port-hdpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-long-port-hdpi/default.png
-[DEBUG] copying /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-long-port-hdpi/default.png splash screen to /Users/jlu/Projects/mobile/Cardmeleon/build/android/res/drawable-long-port-hdpi/background.png
-[DEBUG] found drawable-long-port-ldpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-long-port-ldpi/default.png
-[DEBUG] copying /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-long-port-ldpi/default.png splash screen to /Users/jlu/Projects/mobile/Cardmeleon/build/android/res/drawable-long-port-ldpi/background.png
-[DEBUG] found drawable-notlong-land-hdpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-land-hdpi/default.png
-[DEBUG] copying /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-land-hdpi/default.png splash screen to /Users/jlu/Projects/mobile/Cardmeleon/build/android/res/drawable-notlong-land-hdpi/background.png
-[DEBUG] found drawable-notlong-land-ldpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-land-ldpi/default.png
-[DEBUG] copying /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-land-ldpi/default.png splash screen to /Users/jlu/Projects/mobile/Cardmeleon/build/android/res/drawable-notlong-land-ldpi/background.png
-[DEBUG] found drawable-notlong-land-mdpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-land-mdpi/default.png
-[DEBUG] copying /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-land-mdpi/default.png splash screen to /Users/jlu/Projects/mobile/Cardmeleon/build/android/res/drawable-notlong-land-mdpi/background.png
-[DEBUG] found drawable-notlong-port-hdpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-port-hdpi/default.png
-[DEBUG] copying /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-port-hdpi/default.png splash screen to /Users/jlu/Projects/mobile/Cardmeleon/build/android/res/drawable-notlong-port-hdpi/background.png
-[DEBUG] found drawable-notlong-port-ldpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-port-ldpi/default.png
-[DEBUG] copying /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-port-ldpi/default.png splash screen to /Users/jlu/Projects/mobile/Cardmeleon/build/android/res/drawable-notlong-port-ldpi/background.png
-[DEBUG] found drawable-notlong-port-mdpi splash screen at /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-port-mdpi/default.png
-[DEBUG] copying /Users/jlu/Projects/mobile/Cardmeleon/Resources/android/images/res-notlong-port-mdpi/default.png splash screen to /Users/jlu/Projects/mobile/Cardmeleon/build/android/res/drawable-notlong-port-mdpi/background.png
-[DEBUG] found splash screen at /Users/jlu/Projects/mobile/Cardmeleon/build/android/bin/assets/Resources/default.png
+[DEBUG] found drawable-long-land-hdpi splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-long-land-hdpi/default.png
+[DEBUG] copying /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-long-land-hdpi/default.png splash screen to /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/res/drawable-long-land-hdpi/background.png
+[DEBUG] found drawable-long-land-ldpi splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-long-land-ldpi/default.png
+[DEBUG] copying /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-long-land-ldpi/default.png splash screen to /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/res/drawable-long-land-ldpi/background.png
+[DEBUG] found drawable-long-port-hdpi splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-long-port-hdpi/default.png
+[DEBUG] copying /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-long-port-hdpi/default.png splash screen to /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/res/drawable-long-port-hdpi/background.png
+[DEBUG] found drawable-long-port-ldpi splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-long-port-ldpi/default.png
+[DEBUG] copying /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-long-port-ldpi/default.png splash screen to /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/res/drawable-long-port-ldpi/background.png
+[DEBUG] found drawable-notlong-land-hdpi splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-land-hdpi/default.png
+[DEBUG] copying /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-land-hdpi/default.png splash screen to /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/res/drawable-notlong-land-hdpi/background.png
+[DEBUG] found drawable-notlong-land-ldpi splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-land-ldpi/default.png
+[DEBUG] copying /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-land-ldpi/default.png splash screen to /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/res/drawable-notlong-land-ldpi/background.png
+[DEBUG] found drawable-notlong-land-mdpi splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-land-mdpi/default.png
+[DEBUG] copying /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-land-mdpi/default.png splash screen to /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/res/drawable-notlong-land-mdpi/background.png
+[DEBUG] found drawable-notlong-port-hdpi splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-port-hdpi/default.png
+[DEBUG] copying /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-port-hdpi/default.png splash screen to /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/res/drawable-notlong-port-hdpi/background.png
+[DEBUG] found drawable-notlong-port-ldpi splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-port-ldpi/default.png
+[DEBUG] copying /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-port-ldpi/default.png splash screen to /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/res/drawable-notlong-port-ldpi/background.png
+[DEBUG] found drawable-notlong-port-mdpi splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-port-mdpi/default.png
+[DEBUG] copying /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/Resources/android/images/res-notlong-port-mdpi/default.png splash screen to /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/res/drawable-notlong-port-mdpi/background.png
+[DEBUG] found splash screen at /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/assets/Resources/default.png
 [TRACE] Writing out AndroidManifest.xml
-[DEBUG] adding /Users/jlu/Projects/mobile/Cardmeleon/build/android/gen/com/cardmeleon/mobile/CardmeleonActivity.java to javac build list
-[DEBUG] adding /Users/jlu/Projects/mobile/Cardmeleon/build/android/gen/com/cardmeleon/mobile/CardmeleonAppInfo.java to javac build list
-[DEBUG] adding /Users/jlu/Projects/mobile/Cardmeleon/build/android/gen/com/cardmeleon/mobile/CardmeleonApplication.java to javac build list
-[DEBUG] adding /Users/jlu/Projects/mobile/Cardmeleon/build/android/gen/com/cardmeleon/mobile/R.java to javac build list
-[DEBUG] Building Java Sources: "/Users/jlu/Projects/mobile/Cardmeleon/build/android/gen/com/cardmeleon/mobile/CardmeleonActivity.java" "/Users/jlu/Projects/mobile/Cardmeleon/build/android/gen/com/cardmeleon/mobile/CardmeleonAppInfo.java" "/Users/jlu/Projects/mobile/Cardmeleon/build/android/gen/com/cardmeleon/mobile/CardmeleonApplication.java" "/Users/jlu/Projects/mobile/Cardmeleon/build/android/gen/com/cardmeleon/mobile/R.java"
+[DEBUG] adding /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/ApplicationStylesheet.java to javac build list
+[DEBUG] adding /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/CardmeleonmobileActivity.java to javac build list
+[DEBUG] adding /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/CardmeleonmobileAppInfo.java to javac build list
+[DEBUG] adding /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/CardmeleonmobileApplication.java to javac build list
+[DEBUG] adding /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/R.java to javac build list
+[DEBUG] Building Java Sources: "/Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/ApplicationStylesheet.java" "/Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/CardmeleonmobileActivity.java" "/Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/CardmeleonmobileAppInfo.java" "/Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/CardmeleonmobileApplication.java" "/Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/R.java"
 [INFO] Waiting for SDCard to become available..
+[ERROR] Timed out waiting for SDCard to become available (60s)
 [INFO] Compiling Android Resources... This could take some time
 [DEBUG] Android classes.dex built
-[DEBUG] creating unsigned apk: /Users/jlu/Projects/mobile/Cardmeleon/build/android/bin/app-unsigned.apk
+[DEBUG] creating unsigned apk: /Users/ttttheman/Documents/CardmeleonMobile/CardmeleonMobile/build/android/bin/app-unsigned.apk
 [DEBUG] from resource zip => assets/Resources/images/Bgrnd_B-Y.png
 [DEBUG] from resource zip => assets/Resources/images/Button_Login.png
 [DEBUG] from resource zip => assets/Resources/images/Button_bg.png
@@ -109,10 +124,10 @@ Logfile initialized
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 1 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.008814 seconds on emulator to get ready
+[DEBUG] waited 0.071294 seconds on emulator to get ready
 [INFO] Installing application on device
-[INFO] Launching application ... Cardmeleon
-[TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cardmeleon.mobile/.CardmeleonActivity }
+[INFO] Launching application ... CardmeleonMobile
+[TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cardmeleon.mobile/.CardmeleonmobileActivity }
 
-[INFO] Deployed Cardmeleon ... Application should be running.
+[INFO] Deployed CardmeleonMobile ... Application should be running.
 [INFO] Android Emulator has exited
