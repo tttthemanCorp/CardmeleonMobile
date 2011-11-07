@@ -77,6 +77,33 @@
 		return Ti.UI.createTableViewRow($$.spacerRow);
 	};
 	
+	// _args example: 
+	// {label: {x_offset: 0, y_offset: -20, texts: ['username', 'password']}, input: {top_start: 30, left: 10, right: 10, spacing: 40}}
+	cm.ui.createLabelInputView = function(_args) {
+		var view = Ti.UI.createView(cm.combine($$.stretch,_args));
+		var curFieldTopPos = _args.input.top_start,
+		curFieldLeftPos = _args.input.left;
+		for (var i = 0, l = _args.label.texts.length; i<l; i++) {
+			var label = Ti.UI.createLabel(cm.combine($$.Label, {
+				text: _args.label.texts[i],
+				top: curFieldTopPos + _args.label.y_offset,
+				left: curFieldLeftPos + _args.label.x_offset
+			}));
+			view.add(label);
+			
+			var field = Titanium.UI.createTextField(cm.combine($$.TextField, {
+				hintText:'enter '+_args.label.texts[i],
+				top: curFieldTopPos,
+				left: curFieldLeftPos,
+				right: _args.input.right
+			}));
+			view.add(field);
+			
+			curFieldTopPos += _args.input.spacing;
+		}
+		return view;
+	};
+	
 	//shorthand for alert dialog
 	cm.ui.alert = function(/*String*/ _title, /*String*/ _message) {
 		Ti.UI.createAlertDialog({
@@ -90,5 +117,9 @@
 Ti.include(
 	'/main/ui/styles.js',
 	'/main/ui/ApplicationWindow.js',
-	'/main/ui/LoginView.js'
+	'/main/ui/LoginView.js',
+	'/main/ui/LoadingView.js',
+	'/main/ui/StoresView.js',
+	'/main/ui/RewardsView.js',
+	'/main/ui/MarketView.js'
 );

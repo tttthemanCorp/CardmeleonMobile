@@ -6,12 +6,18 @@
 	//create the login view
 	cm.ui.createLoginView = function(_args) {
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
+		
+		var labelinputs = cm.ui.createLabelInputView(
+			{label: {x_offset: 0, y_offset: -20, texts: ['username', 'password']}, input: {top_start: 92, left: 20, right: 20, spacing: 80}}
+		);
+		view.add(labelinputs);
 
 		// constants
-		var TOP_MARGIN = 50, LABEL_HEIGHT=14, LABEL_FIELD_MARGIN=7;
-		var FIELD_HEIGHT=33, HORIZON_MARGIN=26, TWO_FIELD_MARGIN=30;
-		var FIELD_BUTTON_MARGIN=60, BUTTON_HEIGHT=33;
+		var TOP_MARGIN = 72, LABEL_HEIGHT=14, LABEL_FIELD_MARGIN=6, FIELD_LABEL_MARGIN=14;
+		var FIELD_HEIGHT=36, HORIZON_MARGIN=20, TWO_FIELD_MARGIN=60;
+		var FIELD_BUTTON_MARGIN=60, BUTTON_HEIGHT=36;
 
+/*
 		//
 		//  CREATE USERNAME
 		//
@@ -39,8 +45,8 @@
 		var newuserLabel = Ti.UI.createLabel(cm.combine($$.Label, {
 			text:'New user?',
 			textAlign:'right',
-			font:cm.combine($$.Label.font, {fontSize:12}),
-			top:currentPosition + FIELD_HEIGHT + LABEL_FIELD_MARGIN - 2,
+			font:cm.combine($$.Label.font, {fontSize:14}),
+			top:currentPosition + FIELD_HEIGHT + FIELD_LABEL_MARGIN,
 			left:HORIZON_MARGIN,
 			right:HORIZON_MARGIN,
 			touchEnabled:true,
@@ -67,6 +73,7 @@
 			right:HORIZON_MARGIN,
 		}));
 		view.add(pwdField);
+
 		
 		//
 		// FORGOT PASSWORD LINK
@@ -74,8 +81,8 @@
 		var forgotpwdLabel = Ti.UI.createLabel(cm.combine($$.Label, {
 			text:'Forgot password?',
 			textAlign:'right',
-			font:cm.combine($$.Label.font, {fontSize:12}),
-			top:currentPosition + FIELD_HEIGHT + LABEL_FIELD_MARGIN - 2,
+			font:cm.combine($$.Label.font, {fontSize:14}),
+			top:currentPosition + FIELD_HEIGHT + FIELD_LABEL_MARGIN,
 			left:HORIZON_MARGIN,
 			right:HORIZON_MARGIN,
 			touchEnabled:true,
@@ -87,17 +94,17 @@
 		//
 		currentPosition += FIELD_HEIGHT + FIELD_BUTTON_MARGIN;
 		var loginButton = Titanium.UI.createButton(cm.combine($$.Button, {
-			image:'images/Button_Login.png',
+			image:'images/Frame_Login_OFF.png',
 			//backgroundImage:'images/Button_bg.png',
 			//title:'Log in!',
 			borderRadius:8,
-			top:currentPosition,
+			bottom:0,
 			left:HORIZON_MARGIN,
 			right:HORIZON_MARGIN,
 			height:BUTTON_HEIGHT,
 			width:'auto'
 		}));
-		view.add(loginButton);
+		view.add(loginButton);	
   		
   		//
   		// Event Handling
@@ -134,7 +141,7 @@
   		forgotpwdLabel.addEventListener('click', function(){
   			alert('Forgot password clicked!');
   		});
-
+*/
 
 		return view;
 	};

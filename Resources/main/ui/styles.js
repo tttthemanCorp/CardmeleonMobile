@@ -39,12 +39,12 @@
 			font: {
 				fontFamily:cm.ui.theme.fontFamily,
 				fontSize:14,
-				fontStyle:'Italic',
+				fontStyle:'Italic'
 			},
 			height:'auto'
 		},
 		Window: {
-			backgroundImage:'images/ruff.png',
+			backgroundImage:'images/Bgrnd_Y-B.png',
 			navBarHidden:true,
 			softInputMode:(Ti.UI.Android) ? Ti.UI.Android.SOFT_INPUT_ADJUST_RESIZE : ''
 		},
@@ -60,7 +60,7 @@
 			className:'tvRow'
 		},
 		TextField: {
-			height:33,
+			height:36,
 			borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
 			color:'#000000'
 		},
@@ -116,8 +116,12 @@
 			}
 		},
 		headerView: {
-			backgroundImage:'images/header_bg.png',
-			height:40
+			backgroundImage:'images/Frame_top_01.png',
+			height:36
+		},
+		subHeaderView: {
+			backgroundImage:'images/Frame_sub_01.png',
+			height:36
 		},
 		boldHeaderText: {
 			height:'auto',
@@ -146,7 +150,7 @@
 		debug: {
 			borderWidth:2,
 			borderColor:'#006cb1',
-			backgroundColor:'#999',
+			//backgroundColor:'#999',
 		},
 		empty: {}
 	};
