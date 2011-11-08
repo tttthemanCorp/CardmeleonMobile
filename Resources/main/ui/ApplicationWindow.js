@@ -6,42 +6,28 @@
 	var platformWidth = Ti.Platform.displayCaps.platformWidth;
 	
 	//create the main application window
-	/*
 	cm.ui.createApplicationWindow = function(_args) {
-		var win = Ti.UI.createWindow({
-			backgroundImage:'images/Bgrnd_Y-B.png',
-			navBarHidden:true,
-		});
+		var win = Ti.UI.createWindow(cm.combine($$.Window,{
+			exitOnClose:true,
+			orientationModes:[Ti.UI.PORTRAIT]
+		}));
 		
-		var titleBar = Ti.UI.createImageView({
-			image:'images/Frame_top_01.png',
-			top:0,
-			left:0,
-			width:320,
-			height:36,
-		});
+		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
 		
-		var subBar = Ti.UI.createImageView({
-			image:'images/Frame_sub_01.png',
-			top:36,
-			left:0,
-			width:320,
-			height:36,
-		});
+		var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
 		
-		var loginView = cm.ui.createLoginView(cm.combine({
-			top:72,
+		var signupView = cm.ui.createSignupView(cm.combine({
+			top: $$.headerView.height + $$.subHeaderView.height,
 		}, $$.empty));
 		
-		win.add(titleBar);
-		win.add(subBar);
-		win.add(loginView);
+		win.add(headerView);
+		win.add(subHeaderView);
+		win.add(signupView);
 		
 		return win;
 	};
-	*/
 	
-	cm.ui.createApplicationWindow = function(_args) {
+	cm.ui.createApplicationWindow2 = function(_args) {
 		var win = Ti.UI.createWindow(cm.combine($$.Window,{
 			exitOnClose:true,
 			orientationModes:[Ti.UI.PORTRAIT]

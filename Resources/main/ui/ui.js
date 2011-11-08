@@ -79,7 +79,7 @@
 	
 	// _args example: 
 	// {label: {x_offset: 0, y_offset: -20, texts: ['username', 'password']}, input: {top_start: 30, left: 10, right: 10, spacing: 40}}
-	cm.ui.createLabelInputView = function(_args) {
+	cm.ui.createLabelInputView = function(_args, fieldvalues) {
 		var view = Ti.UI.createView(cm.combine($$.stretch,_args));
 		var curFieldTopPos = _args.input.top_start,
 		curFieldLeftPos = _args.input.left;
@@ -99,7 +99,15 @@
 			}));
 			view.add(field);
 			
-			curFieldTopPos += _args.input.spacing;
+			field.addEventListener('change', function(idx) { //use closure to retain value of i in idx
+				return function(e) {
+					fieldvalues[idx] = e.value;
+					//Ti.API.info("i="+idx+", value="+e.value);
+				};
+			}(i));
+			
+			//Ti.API.info("i="+i+", current field top position="+curFieldTopPos);
+			curFieldTopPos += $$.TextField.height + _args.input.spacing;
 		}
 		return view;
 	};
@@ -121,5 +129,6 @@ Ti.include(
 	'/main/ui/LoadingView.js',
 	'/main/ui/StoresView.js',
 	'/main/ui/RewardsView.js',
-	'/main/ui/MarketView.js'
+	'/main/ui/MarketView.js',
+	'/main/ui/SignupView.js'
 );

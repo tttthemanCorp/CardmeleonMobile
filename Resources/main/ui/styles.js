@@ -8,6 +8,7 @@
 		textColor:'#000000',
 		grayTextColor:'#888888',
 		labelColor:'#ffffff',
+		linkColor:'#0087A0',
 		headerColor:'#333333',
 		lightBlue:'#006cb1',
 		darkBlue:'#93caed',
@@ -39,8 +40,20 @@
 			font: {
 				fontFamily:cm.ui.theme.fontFamily,
 				fontSize:14,
-				fontStyle:'Italic'
+				fontStyle:'Italic',
+				fontWeight:'bold'
 			},
+			height:18
+		},
+		Link: {
+			color:cm.ui.theme.linkColor,
+			font: {
+				fontFamily:cm.ui.theme.fontFamily,
+				fontSize:14,
+				fontStyle:'Italic',
+				fontWeight:'bold'
+			},
+			touchEnabled:true,
 			height:'auto'
 		},
 		Window: {

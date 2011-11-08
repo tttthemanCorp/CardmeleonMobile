@@ -7,17 +7,97 @@
 	cm.ui.createLoginView = function(_args) {
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
 		
+		var fieldvalues = ['', ''];
 		var labelinputs = cm.ui.createLabelInputView(
-			{label: {x_offset: 0, y_offset: -20, texts: ['username', 'password']}, input: {top_start: 92, left: 20, right: 20, spacing: 80}}
+			{label: {x_offset: 0, y_offset: -24, texts: ['Username or Phone', 'Password']}, 
+			 input: {top_start: 96, left: 20, right: 20, spacing: 84}},
+			fieldvalues
 		);
 		view.add(labelinputs);
 
+		//
+		// NEW USER LINK
+		//
+		var newuserLabel = Ti.UI.createLabel(cm.combine($$.Link, {
+			text:'New user?',
+			textAlign:'right',
+			font:cm.combine($$.Label.font, {fontSize:14}),
+			top:146,
+			right:20
+		}));
+		view.add(newuserLabel);
+		
+		//
+		// FORGOT PASSWORD LINK
+		//
+		var forgotpwdLabel = Ti.UI.createLabel(cm.combine($$.Link, {
+			text:'Forgot password?',
+			textAlign:'right',
+			font:cm.combine($$.Link.font, {fontSize:14}),
+			top:266,
+			right:20
+		}));
+		view.add(forgotpwdLabel);
+		
+		//
+		//  CREATE LOGIN BUTTON
+		//
+		var loginButton = Titanium.UI.createButton(cm.combine($$.Button, {
+			image:'images/Frame_Login_OFF.png',
+			//backgroundImage:'images/Button_bg.png',
+			//title:'Log in!',
+			//borderRadius:8,
+			bottom:0,
+			left:0,
+			right:0,
+			height:36,
+			width:'auto'
+		}));
+		view.add(loginButton);	
+  		
+  		//
+  		// Event Handling
+  		//
+  		loginButton.addEventListener('click', function(){
+			var client = Titanium.Network.createHTTPClient();
+			client.onerror = function(e)
+			{
+				Ti.API.error(e.error + "\nResponse: " + this.responseText);
+				if (this.status == 401) {
+					alert('Wrong Username or Password!');
+				} else {
+					alert("Server connection failure!");
+				}
+			};
+			client.onload = function()
+			{
+				result = JSON.parse(this.responseText);
+				Ti.API.info('User ID: '+result.id);
+				alert("User logged in.  User ID = "+result.id);
+			};
+
+			client.open('GET',cm.config.SERVICE_ENDPOINT+'api/auth');
+
+			//cm.ui.alert(fieldvalues[0]+':'+fieldvalues[1]);
+			client.setRequestHeader('Authorization','Basic '+Ti.Utils.base64encode(fieldvalues[0]+':'+fieldvalues[1]));
+	
+			client.send();
+  		});
+  		
+  		newuserLabel.addEventListener('click', function(){
+  			alert('New user clicked!');
+  		});
+  		
+  		forgotpwdLabel.addEventListener('click', function(){
+  			alert('Forgot password clicked!');
+  		});
+  		
+/*
 		// constants
 		var TOP_MARGIN = 72, LABEL_HEIGHT=14, LABEL_FIELD_MARGIN=6, FIELD_LABEL_MARGIN=14;
 		var FIELD_HEIGHT=36, HORIZON_MARGIN=20, TWO_FIELD_MARGIN=60;
 		var FIELD_BUTTON_MARGIN=60, BUTTON_HEIGHT=36;
 
-/*
 		//
 		//  CREATE USERNAME
 		//
