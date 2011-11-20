@@ -5,29 +5,7 @@
 (function() {
 	var platformWidth = Ti.Platform.displayCaps.platformWidth;
 	
-	//create the main application window
-	cm.ui.createApplicationWindow = function(_args) {
-		var win = Ti.UI.createWindow(cm.combine($$.Window,{
-			exitOnClose:true,
-			orientationModes:[Ti.UI.PORTRAIT]
-		}));
-		
-		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
-		
-		var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
-		
-		var signupView = cm.ui.createSignupView(cm.combine({
-			top: $$.headerView.height + $$.subHeaderView.height,
-		}, $$.empty));
-		
-		win.add(headerView);
-		win.add(subHeaderView);
-		win.add(signupView);
-		
-		return win;
-	};
-	
-	cm.ui.createApplicationWindow2 = function(_args) {
+	function createSingleWindow(_args) {
 		var win = Ti.UI.createWindow(cm.combine($$.Window,{
 			exitOnClose:true,
 			orientationModes:[Ti.UI.PORTRAIT]
@@ -94,12 +72,12 @@
 			var view = Ti.UI.createView({
 				width:tabWidth
 			}),
-			off_path = 'images/'+_icon+'.png',
-			on_path = 'images/'+_icon+'_on.png',
+			off_path = 'images/Frame_Base_'+_icon+'_OFF.png',
+			on_path = 'images/Frame_Base_'+_icon+'_ON.png',
 			dimension = 40,
 			image = Ti.UI.createImageView({
-				height:dimension,
-				width:dimension,
+				//height:dimension,
+				//width:dimension,
 				image:(_on) ? on_path : off_path,
 				bottom:2
 			});
@@ -162,7 +140,6 @@
 			selectIndex(2);
 		}));
 
-		
 		//add tabs to layout
 		for (var i = 0, l = tabs.length; i<l; i++) {
 			tabs[i].left = tabWidth*i;
@@ -182,8 +159,41 @@
 		win.add(tabView);
 		win.add(appFilmStrip);
 		win.add(loader);
+	    
+		return win;
+	}
+	
+	cm.ui.createApplicationWindow = function(_args) {
 		
-		
+	    var navWindow;
+	    var mainWindow = createSingleWindow(_args);
+
+	    // handle cross-platform navigation
+	    if (Ti.Platform.osname == 'android') {
+	        cm.navGroup = {
+	            open: function (win, obj) {
+	                win.open(obj);
+	            },
+	            close: function (win, obj) {
+	                win.close(obj);
+	            }
+	        };
+	        navWindow = mainWindow;
+	    } else {
+	        navWindow = Ti.UI.createWindow();
+	        cm.navGroup = Ti.UI.iPhone.createNavigationGroup({
+	            window: mainWindow
+	        });
+	        navWindow.add(cm.navGroup);
+	    }
+	
+	    // lock orientation to portrait
+	    navWindow.orientationModes = [Ti.UI.PORTRAIT];
+	    if (Ti.Platform.osname != 'android') {
+	        Ti.UI.orientation = Ti.UI.PORTRAIT;
+	    }
+	
+    
 		//initialize Twitter goodness and let folks know most of the awesomeness will not be available offline
 		if (Ti.Network.online == false) {
 			Ti.UI.createAlertDialog({
@@ -191,26 +201,30 @@
 				message:'Sorry, but we couldn\'t detect a connection to the internet - new Twitter data will not be available.'
 			}).show();
 		}
-		
-/*
-		//one-time switch used if no account is present
-		function switchit() {
-			selectIndex(3);
-			Ti.App.removeEventListener('app:drawer.opened', switchit);
-		}
-		
-		//get the current account
-		if (!Ti.App.Properties.hasProperty('currentAccountID')) {
-			//If we don't have an account, that means none has been entered.  Switch tabs and create one
-			Ti.App.fireEvent('app:show.drawer', {showing:'createAccount'});
-			//switch tabs after the drawer opens
-			Ti.App.addEventListener('app:drawer.opened', switchit);
-		} else {
-			cm.app.currentAccount = cm.model.load('Account',Ti.App.Properties.getString('currentAccountID'));
-			Ti.App.fireEvent('app:account.selected');
-		}
-*/
-
-		return win;
+	    
+	    return navWindow;
 	};
+	
+	//create the main application window
+/*	cm.ui.createApplicationWindow1 = function(_args) {
+		var win = Ti.UI.createWindow(cm.combine($$.Window,{
+			exitOnClose:true,
+			orientationModes:[Ti.UI.PORTRAIT]
+		}));
+		
+		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
+		
+		var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
+		
+		var signupView = cm.ui.createSignupView(cm.combine({
+			top: $$.headerView.height + $$.subHeaderView.height,
+		}, $$.empty));
+		
+		win.add(headerView);
+		win.add(subHeaderView);
+		win.add(signupView);
+		
+		return win;
+	}; */
+		
 })();
