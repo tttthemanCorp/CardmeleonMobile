@@ -90,6 +90,10 @@
 				]
 			}
 		},
+		TabGroup: {
+			heightAtTop:36,
+			heightAtBottom:60
+		},
 		
 		//we use these as JS-based 'style classes'
 		animationDuration: 500,
@@ -130,11 +134,18 @@
 		},
 		headerView: {
 			backgroundImage:'images/Frame_top_01.png',
-			height:36
+			height:44,
+			width:Ti.Platform.displayCaps.platformWidth
 		},
 		subHeaderView: {
 			backgroundImage:'images/Frame_sub_01.png',
-			height:36
+			height:36,
+			width:Ti.Platform.displayCaps.platformWidth
+		},
+		dashView: {
+			backgroundImage:'images/Dash_User-bgrnd.png',
+			height:36,
+			width:Ti.Platform.displayCaps.platformWidth
 		},
 		boldHeaderText: {
 			height:'auto',

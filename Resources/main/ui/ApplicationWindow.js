@@ -3,9 +3,140 @@
  */
 
 (function() {
-	var platformWidth = Ti.Platform.displayCaps.platformWidth;
 	
-	function createSingleWindow(_args) {
+	function createMainWindow(_args) {
+	    var navWindow;
+		var win = Ti.UI.createWindow(cm.combine($$.Window,{
+			exitOnClose:true,
+			orientationModes:[Ti.UI.PORTRAIT]
+		}));
+		
+		// common header view
+		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
+		
+		// main application tab group
+		var data = [{
+        	title: 'Stores',
+        	tabbedBarBackgroundImage: 'images/Frame_Base_Stores.png',
+        	view: cm.ui.createStoresView()
+        }, {
+        	title: 'Rewards',
+        	tabbedBarBackgroundImage: 'images/Frame_Base_Rewards.png',
+        	view: cm.ui.createRewardsView()
+        }, {
+        	title: 'Market',
+        	tabbedBarBackgroundImage: 'images/Frame_Base_Market.png',
+        	view: cm.ui.createMarketView()
+        }];
+		var tabGroup = cm.ui.createFilmstripTabGrpView(cm.combine($$.TabGroup,{
+			top:$$.headerView.height,
+			shadow:23,
+			activeIndex: 0,
+			data:data
+		}));
+		
+		//create a loading view which we can show on long data loads
+		var loader = cm.ui.createLoadingView();
+		
+		//assemble main app window
+		win.add(headerView);
+		win.add(tabGroup);
+		win.add(loader);
+
+	    // handle cross-platform navigation
+	    if (Ti.Platform.osname == 'android') {
+	        cm.navGroup = {
+	            open: function (win, obj) {
+	                win.open(obj);
+	            },
+	            close: function (win, obj) {
+	                win.close(obj);
+	            }
+	        };
+	        navWindow = win;
+	    } else {
+	        navWindow = Ti.UI.createWindow();
+	        cm.navGroup = Ti.UI.iPhone.createNavigationGroup({
+	            window: win
+	        });
+	        navWindow.add(cm.navGroup);
+	    }
+	    
+		return navWindow;
+	}
+	
+	// application entry window
+	cm.ui.createApplicationWindow = function(_args) {
+		var win = createMainWindow(_args);
+
+	    // lock orientation to portrait
+	    win.orientationModes = [Ti.UI.PORTRAIT];
+	    if (Ti.Platform.osname != 'android') {
+	        Ti.UI.orientation = Ti.UI.PORTRAIT;
+	    }
+	
+		//initialize Twitter goodness and let folks know most of the awesomeness will not be available offline
+		if (Ti.Network.online == false) {
+			Ti.UI.createAlertDialog({
+				title:'No Network Connection', 
+				message:'Sorry, but we couldn\'t detect a connection to the internet - new Twitter data will not be available.'
+			}).show();
+		}
+	    
+	    return win;
+	};
+	
+
+/*  tabGroup sample
+		var tabGroup = Titanium.UI.createTabGroup({id:'tabGroup1'});
+		var win = Ti.UI.createWindow({title:'New Tab Window',barColor:'#000'});
+		var newtab = Titanium.UI.createTab({  
+			icon:'../images/tabs/KS_nav_mashup.png',
+			title:'New Tab',
+			win:win
+		});
+		tabGroup.addTab(newtab);
+		tabGroup.addEventListener('open', function(e)
+		{
+			messageLabel.text = 'tab group open event';
+			messageWin.open();
+			setTimeout(function()
+			{
+				messageWin.close({opacity:0,duration:500});
+			},1000);
+		
+		});	
+		tabGroup.setActiveTab(1);
+		tabGroup.open({
+			transition:Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
+		});
+ */
+
+/*
+	cm.ui.createApplicationWindow1 = function(_args) {
+		var win = Ti.UI.createWindow(cm.combine($$.Window,{
+			exitOnClose:true,
+			orientationModes:[Ti.UI.PORTRAIT]
+		}));
+		
+		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
+		
+		var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
+		
+		var signupView = cm.ui.createSignupView(cm.combine({
+			top: $$.headerView.height + $$.subHeaderView.height,
+		}, $$.empty));
+		
+		win.add(headerView);
+		win.add(subHeaderView);
+		win.add(signupView);
+		
+		return win;
+	}; 
+*/
+	
+/*
+	function createSingleWindow1(_args) {
 		var win = Ti.UI.createWindow(cm.combine($$.Window,{
 			exitOnClose:true,
 			orientationModes:[Ti.UI.PORTRAIT]
@@ -162,69 +293,6 @@
 	    
 		return win;
 	}
-	
-	cm.ui.createApplicationWindow = function(_args) {
-		
-	    var navWindow;
-	    var mainWindow = createSingleWindow(_args);
-
-	    // handle cross-platform navigation
-	    if (Ti.Platform.osname == 'android') {
-	        cm.navGroup = {
-	            open: function (win, obj) {
-	                win.open(obj);
-	            },
-	            close: function (win, obj) {
-	                win.close(obj);
-	            }
-	        };
-	        navWindow = mainWindow;
-	    } else {
-	        navWindow = Ti.UI.createWindow();
-	        cm.navGroup = Ti.UI.iPhone.createNavigationGroup({
-	            window: mainWindow
-	        });
-	        navWindow.add(cm.navGroup);
-	    }
-	
-	    // lock orientation to portrait
-	    navWindow.orientationModes = [Ti.UI.PORTRAIT];
-	    if (Ti.Platform.osname != 'android') {
-	        Ti.UI.orientation = Ti.UI.PORTRAIT;
-	    }
-	
-    
-		//initialize Twitter goodness and let folks know most of the awesomeness will not be available offline
-		if (Ti.Network.online == false) {
-			Ti.UI.createAlertDialog({
-				title:'No Network Connection', 
-				message:'Sorry, but we couldn\'t detect a connection to the internet - new Twitter data will not be available.'
-			}).show();
-		}
-	    
-	    return navWindow;
-	};
-	
-	//create the main application window
-/*	cm.ui.createApplicationWindow1 = function(_args) {
-		var win = Ti.UI.createWindow(cm.combine($$.Window,{
-			exitOnClose:true,
-			orientationModes:[Ti.UI.PORTRAIT]
-		}));
-		
-		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
-		
-		var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
-		
-		var signupView = cm.ui.createSignupView(cm.combine({
-			top: $$.headerView.height + $$.subHeaderView.height,
-		}, $$.empty));
-		
-		win.add(headerView);
-		win.add(subHeaderView);
-		win.add(signupView);
-		
-		return win;
-	}; */
+*/
 		
 })();

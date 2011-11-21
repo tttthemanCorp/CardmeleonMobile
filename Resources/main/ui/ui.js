@@ -5,92 +5,187 @@
 (function() {
 	cm.ui = {};
 	
+	cm.ui.createDashView = function(params) {
+		var dashView = Ti.UI.createView(cm.combine($$.dashView,{
+			top:0,
+			left:0,
+			zIndex: 0
+		}));
+		
+		var searchIcon = Ti.UI.createImageView({
+			top: 0,
+			right: 0,
+			width: 36,
+			height: 36,
+			zIndex: 1,
+			image: 'images/Dash_Search_OFF.png'
+		});
+		searchIcon.addEventListener('click', function(e) {
+			Ti.API.info('searchIcon clicked!');
+		});
+		dashView.add(searchIcon);
+		
+		var dollarIcon = Ti.UI.createImageView({
+			top: 6,
+			right: 48,
+			width: 73,
+			height: 25,
+			zIndex: 1,
+			image: 'images/Dash_Wallet.png'
+		});
+		dollarIcon.addEventListener('click', function(e) {
+			Ti.API.info('dollarIcon clicked!');
+		});
+		dashView.add(dollarIcon);
+		
+		var userlevelIcon = Ti.UI.createImageView({
+			top: 6,
+			right: 160,
+			width: 30,
+			height: 26,
+			zIndex: 1,
+			image: 'images/Icon_Level_01.png'
+		});
+		userlevelIcon.addEventListener('click', function(e) {
+			Ti.API.info('userlevelIcon clicked!');
+		});
+		dashView.add(userlevelIcon);
+		
+		var userLabel = Ti.UI.createLabel(cm.combine($$.Label, {
+			text: 'user name',  // TODO change
+			top: 9,
+			left: 18
+		}));
+		dashView.add(userLabel);
+		
+		return dashView;
+	};
+
+	cm.ui.createFilmstripTabGrpView = function(params) {
+		var data = params.data || [],
+		platformWidth = $$.platformWidth,
+		tabHeight = params.heightAtBottom || 60,
+		tabWidth = platformWidth / data.length,
+		top = params.top || 0,
+		activeIndex = params.activeIndex || 0,
+		shadow = params.shadow || 0,
+		item, tab;
+		
+		var container = Ti.UI.createView(cm.combine($$.stretch, {top:top}));
+		container.currentActive = activeIndex;
+		var tabbedBar = Ti.UI.createView({
+			left:0,
+			bottom:0,
+			backgroundImage: data[activeIndex].tabbedBarBackgroundImage,
+			height:tabHeight,
+			width:platformWidth,
+			zIndex: 1
+		});
+		
+		var filmStripView = cm.ui.createFilmStripView({
+			bottom:tabHeight - shadow,
+			zIndex: 0,
+			//borderWidth:2,
+			//borderColor:'#006cb1',
+			views: (function() {
+            	var views = [];
+            	for (var j = 0; j < data.length; j++) {
+            		views.push(data[j].view);	
+            	}
+            	return views;
+            })()
+		});
+		
+		//toggle view state of application to the relevant tab
+		function selectIndex(_idx) {
+			Ti.API.info('selecting base tab index: '+_idx);
+			tabbedBar.backgroundImage = data[_idx].tabbedBarBackgroundImage;
+			filmStripView.fireEvent('changeIndex',{idx:_idx});
+			container.currentActive = _idx;
+		}
+		
+		// HACK: need to use annonymous functions to wrap selectIndex as a view event handler
+		for (var i = 0, l = data.length; i<l; i++) {
+			item = data[i];
+			tab = Ti.UI.createView({
+				left: tabWidth*i,
+				top:0,
+				bottom:0,
+				width:tabWidth
+			});
+			tab.addEventListener('click', function(idx) {
+				return function() {
+					selectIndex(idx)
+				};
+			}(i));
+			tabbedBar.add(tab);
+		}
+		
+		//App app-level event listener to change tabs
+		Ti.App.addEventListener('app:change.tab', function(e) {
+			selectIndex(e.tabIndex);
+		});
+		
+		container.add(filmStripView);
+		container.add(tabbedBar);
+		
+		return container;
+	};
+	
 	cm.ui.createTabbedScrollableView = function(params) {
 		// Set configuration variables and defaults is necessary
-		var data = params.data || [];
-		var tabBarHeight = params.tabBarHeight || 36;
-		var top = params.top || 36;
-		var width = params.width || Ti.Platform.displayCaps.platformWidth;
-		var images = {
-			selected: 'images/buttonbar/button2_selected.png',
-			unselected: 'images/buttonbar/button2_unselected_shadow.png',
-			unselectedLS: 'images/buttonbar/button2_unselected_shadowL.png',
-			unselectedRS: 'images/buttonbar/button2_unselected_shadowR.png',
-		};
-		var font = params.font || {fontSize: 14, fontWeight: 'bold'};
-		var item, backgroundImage, tabView, tabLabel, scrollable, i;
+		var data = params.data || [],
+		platformWidth = $$.platformWidth,
+		tabBarHeight = params.heightAtTop || 36,
+		top = params.top || 0,
+		activeIndex = params.activeIndex || 0,
+		tabWidth = platformWidth / data.length,
+		shadow = params.shadow || 0,
+		item, tabView, scrollable, i;
 		
 		// Start creating the TabbedScrollableView
-		var container = Ti.UI.createView();
-		var tabbedBarView = Ti.UI.createView({
-			top: top,
-            backgroundColor: params.backgroundColor || '#555',
-            height: tabBarHeight
-        });
+		var container = Ti.UI.createView(cm.combine($$.stretch, {top:top}));
+		container.currentActive = activeIndex;
         var tabbedBar = Ti.UI.createView({
             top: 0,
-            backgroundColor: '#000',
+            backgroundImage: data[activeIndex].tabbedBarBackgroundImage,
             height: tabBarHeight,
-            width: width
+            width: platformWidth,
+            zIndex: 1
         });
         
         for (i = 0; i < data.length; i++) {
         	item = data[i];
 
-        	// set the default state of the tab bar images
-        	if (i == 0) {
-        		backgroundImage = images.selected;
-        	} else if (i == 1) {
-        		backgroundImage = images.unselectedLS;
-        	} else {
-        		backgroundImage = images.unselected;
-        	}
-        	
         	// create each tab bar button
             tabView = Ti.UI.createView({
-                backgroundImage: backgroundImage,
                 height: tabBarHeight,
-                left: i * (width / data.length),
-                right: width - ((parseInt(i) + 1) * (width / data.length)),
+                left: i * tabWidth,
+                right: platformWidth - ((parseInt(i) + 1) * tabWidth),
                 index: i
-            });
-            tabLabel = Ti.UI.createLabel({
-                text: item.title,
-                textAlign: 'center',
-                color: '#fff',
-                height: 'auto',
-                touchEnabled: false,
-                font: font
             });
 
 			// adjust images and scroll ScrollableView on tab bar clicks
             tabView.addEventListener('click', function (e) {
             	var index = e.source.index;
-            	for (var j = 0; j < data.length; j++) {
-            		if (index == j) {
-            			data[j].tabView.backgroundImage = images.selected;
-            		} else if (index-1 == j && data[index-1]) {
-            			data[j].tabView.backgroundImage = images.unselectedRS;
-            		} else if (index+1 == j && data[index+1]) {
-            			data[j].tabView.backgroundImage = images.unselectedLS;
-            		} else {
-            			data[j].tabView.backgroundImage = images.unselected;
-            		}	
-            	}
-
+            	Ti.API.info('selecting top tab index: '+index);
+            	container.currentActive = index;
+            	tabbedBar.backgroundImage = data[index].tabbedBarBackgroundImage;
 				scrollable.scrollToView(data[index].view);
             });
 
 			// layout the tabbed scrollableview
-            tabView.add(tabLabel);
             tabbedBar.add(tabView);
             item.tabView = tabView;
         }
         
         scrollable = Ti.UI.createScrollableView({
+            backgroundColor:'transparent',
+            top: tabBarHeight - shadow,
+            zIndex: 0,
             showPagingControl: false,
-            backgroundColor: '#000000',
-            top: top + tabBarHeight,
+			//borderWidth:2,
+			//borderColor:'#006cb1',
             views: (function() {
             	var views = [];
             	for (var j = 0; j < data.length; j++) {
@@ -101,13 +196,14 @@
         });
         scrollable.addEventListener('scroll', function (e) {
             if (e.view) {
-                data[e.currentPage].tabView.fireEvent('click');
+            	if (e.currentPage != container.currentActive) {
+                	data[e.currentPage].tabView.fireEvent('click');
+            	}
             }
         });
         
+        container.add(tabbedBar);
         container.add(scrollable);
-        tabbedBarView.add(tabbedBar);
-        container.add(tabbedBarView);
 
         return container;
 	};
@@ -231,12 +327,116 @@
 //Include major UI components and styling properties
 Ti.include(
 	'/main/ui/styles.js',
-	'/main/ui/ApplicationWindow.js',
 	'/main/ui/LoginView.js',
 	'/main/ui/LoadingView.js',
 	'/main/ui/StoresView.js',
 	'/main/ui/RewardsView.js',
 	'/main/ui/MarketView.js',
 	'/main/ui/SignupView.js',
+	'/main/ui/ApplicationWindow.js',
 	'/main/ui/StoreDetailsWindow.js'
 );
+
+/*	
+	cm.ui.createFilmstripTabGrpView = function(params) {
+		var data = params.data || [],
+		platformWidth = Ti.Platform.displayCaps.platformWidth,
+		tabHeight = params.heightAtBottom || 60,
+		tabWidth = platformWidth / data.length,
+		top = params.top || 0,
+		shadow = params.shadow || 10,
+		tabs = [],
+		item, tab;
+		
+		var container = Ti.UI.createView(cm.combine($$.stretch, {top:top}));
+		
+		var tabView = Ti.UI.createView({
+			left:0,
+			bottom:0,
+			height:tabHeight,
+			width:platformWidth
+		});
+		
+		var filmStripView = cm.ui.createFilmStripView({
+			bottom:tabHeight - shadow,
+			views: [
+				cm.ui.createStoresView(),
+				cm.ui.createRewardsView(),
+				cm.ui.createMarketView()
+			]
+		});
+		
+		//create clickable tab images
+		function createTab(_iconOn,_iconOff,_cb,_on) {
+			var view = Ti.UI.createView({
+				top:0,
+				bottom:0,
+				width:tabWidth
+			}),
+			image = Ti.UI.createImageView({
+				image:(_on) ? _iconOn : _iconOff
+			});
+			
+			view.on = _on||false; //instance var for 'on' state
+			
+			//assemble view
+			view.add(image);
+			view.addEventListener('click',_cb);
+			
+			//'instance' method
+			view.toggle = function() {
+				view.on = !view.on;
+				image.image = (view.on) ? _iconOn : _iconOff;
+			};
+			
+			return view;
+		}
+		
+		//toggle view state of application to the relevant tab
+		function selectIndex(_idx) {
+			for (var i = 0, l = tabs.length; i<l; i++) {
+				//select the tab and move the tab 'cursor'
+				if (_idx === i) {
+					//if the tab is already selected, do nothing
+					if (!tabs[i].on) {
+						Ti.API.info('selecting tab index: '+_idx);
+						tabs[i].toggle();
+						//set the current film strip index
+						filmStripView.fireEvent('changeIndex',{idx:i});
+					}
+				}
+				else if (tabs[i].on) {
+					tabs[i].toggle();
+				}
+			}
+		}
+		
+		//assemble main app tabs
+		// HACK: need to use annonymous functions to wrap selectIndex as a view event handler
+		for (var i = 0, l = data.length; i<l; i++) {
+			item = data[i];
+			tabs.push(createTab(item.iconOn, item.iconOff, function(idx) {
+				return function() {
+					selectIndex(idx)
+				};
+			}(item.index), item.active));
+		}
+		
+		//add tabs to layout
+		for (var i = 0, l = tabs.length; i<l; i++) {
+			tabs[i].left = tabWidth*i;
+			tabView.add(tabs[i]);
+		}
+		
+		//App app-level event listener to change tabs
+		Ti.App.addEventListener('app:change.tab', function(e) {
+			selectIndex(e.tabIndex);
+		});
+		
+		container.add(filmStripView);
+		container.add(tabView);
+		
+		return container;
+	};
+*/
+	
