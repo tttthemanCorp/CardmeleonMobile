@@ -5,6 +5,23 @@
 (function() {
 	cm.ui = {};
 	
+	cm.ui.createHeaderView = function(params) {
+		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
+		var settingsIcon = Ti.UI.createImageView({
+			top: 6,
+			left: 6,
+			width: 24,
+			height: 24,
+			zIndex: 1,
+			image: 'images/Icon_Settings.png'
+		});
+		settingsIcon.addEventListener('click', function(e) {
+			Ti.API.info('settingsIcon clicked!');
+		});
+		headerView.add(settingsIcon);
+		return headerView;
+	};
+	
 	cm.ui.createDashView = function(params) {
 		var dashView = Ti.UI.createView(cm.combine($$.dashView,{
 			top:0,

@@ -7,136 +7,15 @@ Logfile initialized
 [TRACE] adb devices returned 1 devices/emulators
 [TRACE] adb devices returned 1 devices/emulators
 [TRACE] adb devices returned 1 devices/emulators
-[TRACE] adb devices returned 1 devices/emulators
-[DEBUG] Device connected... (waited 15 seconds)
-[DEBUG] waited 15.028202 seconds on emulator to get ready
+[DEBUG] Device connected... (waited 10 seconds)
+[DEBUG] waited 10.022042 seconds on emulator to get ready
 [INFO] Waiting for the Android Emulator to become available
+[INFO] Launching application ... Cardmeleon
 [DEBUG] com.cardmeleon.mobile installed? True
 [INFO] Fastdev server running, deploying in Fastdev mode
 [INFO] Copying project resources..
-[INFO] Detected tiapp.xml change (or assets deleted), forcing full re-build...
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/appicon.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/appicon.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/default.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/app.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/app.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_G-B.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_G-B.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_G-Y.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_G-Y.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Market-Card.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Market-Card.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_O-Y.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_O-Y.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_QR-scanner.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_QR-scanner.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Reward-Card.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Reward-Card.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Reward-Redeem.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Reward-Redeem.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Settings-4bbeb4.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Settings-4bbeb4.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Store-Basic.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Store-Basic.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Store-Card.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Store-Card.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Store-Card_Selected.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Store-Card_Selected.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Store-Progress-bar_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Store-Progress-bar_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Store-Progress-bar_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Store-Progress-bar_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Store-Review.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Store-Review.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_User-Card.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_User-Card.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Bgrnd_Y-B.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Bgrnd_Y-B.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Buy_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Buy_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Buy_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Buy_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Cancel_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Cancel_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Cancel_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Cancel_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Down_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Down_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Down_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Down_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Gift_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Gift_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Gift_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Gift_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_logout_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_logout_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_logout_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_logout_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_OK_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_OK_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_OK_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_OK_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Redeem-Lg_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Redeem-Lg_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Redeem-Lg_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Redeem-Lg_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Redeem_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Redeem_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Redeem_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Redeem_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Refer_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Refer_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Refer_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Refer_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Rewards-back_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Rewards-back_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Rewards-back_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Rewards-back_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Sale_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Sale_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Sale_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Sale_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Share_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Share_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Share_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Share_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Stores-back_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Stores-back_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Stores-back_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Stores-back_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Up_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Up_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Button_Up_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Button_Up_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Dash_Search-field.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Dash_Search-field.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Dash_Search_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Dash_Search_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Dash_Search_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Dash_Search_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Dash_User-bgrnd.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Dash_User-bgrnd.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Dash_Wallet.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Dash_Wallet.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Base-Settings_Cancel.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Base-Settings_Cancel.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Base-Settings_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Base-Settings_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Base-Settings_Submit.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Base-Settings_Submit.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Base_Market.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Base_Market.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Base_Rewards.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Base_Rewards.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Base_Stores.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Base_Stores.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Login_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Login_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Login_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Login_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Market-tab_Expire.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Market-tab_Expire.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Market-tab_Nearby.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Market-tab_Nearby.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Market-tab_Watching.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Market-tab_Watching.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Rewards-tab_Expire.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Rewards-tab_Expire.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Rewards-tab_Nearby.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Rewards-tab_Nearby.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Rewards-tab_Sales.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Rewards-tab_Sales.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Shadow_G.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Shadow_G.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Signup_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Signup_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Signup_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Signup_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Stores-tab_Favorites.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Stores-tab_Favorites.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Stores-tab_Nearby.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Stores-tab_Nearby.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Stores_Basic.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Stores_Basic.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Stores_Menu.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Stores_Menu.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Stores_Promo.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Stores_Promo.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Stores_Review.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Stores_Review.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_sub_01.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_sub_01.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_sub_01a.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_sub_01a.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Sub_03.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Sub_03.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_Sub_04.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_Sub_04.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_top_01.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_top_01.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_User-login_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_User-login_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Frame_User-login_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Frame_User-login_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_Camera.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_Camera.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_Congrats.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_Congrats.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_Favorite_OFF.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_Favorite_OFF.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_Favorite_ON.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_Favorite_ON.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_Level_01.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_Level_01.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_New-Item.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_New-Item.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_No-Avatar.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_No-Avatar.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_Points-Symbol_12x17.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_Points-Symbol_12x17.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_Settings.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_Settings.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_Store-Map.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_Store-Map.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/Icon_Stores-More.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/Icon_Stores-More.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/tab_bg.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/tab_bg.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/tab_l.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/tab_l.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/images/tab_r.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/images/tab_r.png
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/cardmeleon.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/cardmeleon.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/config/config.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/config/config.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/model/model.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/model/model.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/ui/ApplicationWindow.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/ApplicationWindow.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/ui/LoadingView.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/LoadingView.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/ui/LoginView.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/LoginView.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/ui/MarketView.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/MarketView.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/ui/RewardsView.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/RewardsView.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/ui/SignupView.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/SignupView.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/ui/StoreDetailsWindow.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/StoreDetailsWindow.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/ui/StoresView.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/StoresView.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/ui/styles.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/styles.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/ui/ui.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/ui/ui.js
-[TRACE] COPYING CREATED FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/main/utils/serviceutils.js => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/main/utils/serviceutils.js
 [TRACE] Generating Java Classes
 [DEBUG] Processing Android resource drawables
-[TRACE] COPYING FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-long-land-hdpi/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/res/drawable-long-land-hdpi/default_d44e27d97b.png
-[TRACE] COPYING FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-long-land-ldpi/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/res/drawable-long-land-ldpi/default_d44e27d97b.png
-[TRACE] COPYING FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-long-port-hdpi/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/res/drawable-long-port-hdpi/default_d44e27d97b.png
-[TRACE] COPYING FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-long-port-ldpi/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/res/drawable-long-port-ldpi/default_d44e27d97b.png
-[TRACE] COPYING FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-notlong-land-hdpi/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/res/drawable-notlong-land-hdpi/default_d44e27d97b.png
-[TRACE] COPYING FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-notlong-land-ldpi/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/res/drawable-notlong-land-ldpi/default_d44e27d97b.png
-[TRACE] COPYING FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-notlong-land-mdpi/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/res/drawable-notlong-land-mdpi/default_d44e27d97b.png
-[TRACE] COPYING FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-notlong-port-hdpi/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/res/drawable-notlong-port-hdpi/default_d44e27d97b.png
-[TRACE] COPYING FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-notlong-port-ldpi/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/res/drawable-notlong-port-ldpi/default_d44e27d97b.png
-[TRACE] COPYING FILE: /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-notlong-port-mdpi/default.png => /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/res/drawable-notlong-port-mdpi/default_d44e27d97b.png
 [DEBUG] copying app icon: /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/assets/Resources/appicon.png
 [DEBUG] generating theme.xml
 [DEBUG] found drawable-long-land-hdpi splash screen at /Users/jlu/Documents/Projects/CardmeleonMobile/Resources/android/images/res-long-land-hdpi/default.png
@@ -167,6 +46,9 @@ Logfile initialized
 [DEBUG] adding /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/R.java to javac build list
 [DEBUG] Building Java Sources: "/Users/jlu/Documents/Projects/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/CardmeleonActivity.java" "/Users/jlu/Documents/Projects/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/CardmeleonAppInfo.java" "/Users/jlu/Documents/Projects/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/CardmeleonApplication.java" "/Users/jlu/Documents/Projects/CardmeleonMobile/build/android/gen/com/cardmeleon/mobile/R.java"
 [INFO] Waiting for SDCard to become available..
+[TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cardmeleon.mobile/.CardmeleonActivity }
+
+[INFO] Deployed Cardmeleon ... Application should be running.
 [INFO] Compiling Android Resources... This could take some time
 [DEBUG] Android classes.dex built
 [DEBUG] creating unsigned apk: /Users/jlu/Documents/Projects/CardmeleonMobile/build/android/bin/app-unsigned.apk
@@ -296,25 +178,15 @@ Logfile initialized
 [DEBUG] from resource zip => res/drawable-hdpi/facebook_icon.png
 [DEBUG] from resource zip => res/drawable-ldpi/facebook_icon.png
 [DEBUG] from resource zip => res/drawable-long-land-hdpi/background.png
-[DEBUG] from resource zip => res/drawable-long-land-hdpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-long-land-ldpi/background.png
-[DEBUG] from resource zip => res/drawable-long-land-ldpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-long-port-hdpi/background.png
-[DEBUG] from resource zip => res/drawable-long-port-hdpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-long-port-ldpi/background.png
-[DEBUG] from resource zip => res/drawable-long-port-ldpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-land-hdpi/background.png
-[DEBUG] from resource zip => res/drawable-notlong-land-hdpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-land-ldpi/background.png
-[DEBUG] from resource zip => res/drawable-notlong-land-ldpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-land-mdpi/background.png
-[DEBUG] from resource zip => res/drawable-notlong-land-mdpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-port-hdpi/background.png
-[DEBUG] from resource zip => res/drawable-notlong-port-hdpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-port-ldpi/background.png
-[DEBUG] from resource zip => res/drawable-notlong-port-ldpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-port-mdpi/background.png
-[DEBUG] from resource zip => res/drawable-notlong-port-mdpi/default_d44e27d97b.png
 [DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.5/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/binding.js
 [DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.5/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/binding.min.js
 [DEBUG] from JAR /Library/Application Support/Titanium/mobilesdk/osx/1.7.5/android/modules/titanium-ui.jar => ti/modules/titanium/ui/widget/webview/json2.js
@@ -341,7 +213,7 @@ Logfile initialized
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 1 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.007194 seconds on emulator to get ready
+[DEBUG] waited 0.006720 seconds on emulator to get ready
 [INFO] Installing application on device
 [INFO] Launching application ... Cardmeleon
 [TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cardmeleon.mobile/.CardmeleonActivity }

@@ -134,7 +134,7 @@
 		},
 		headerView: {
 			backgroundImage:'images/Frame_top_01.png',
-			height:44,
+			height:36,
 			width:Ti.Platform.displayCaps.platformWidth
 		},
 		subHeaderView: {

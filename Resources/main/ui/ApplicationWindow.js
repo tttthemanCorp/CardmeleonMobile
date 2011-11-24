@@ -12,7 +12,7 @@
 		}));
 		
 		// common header view
-		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
+		var headerView = cm.ui.createHeaderView();
 		
 		// main application tab group
 		var data = [{
@@ -44,7 +44,7 @@
 		win.add(loader);
 
 	    // handle cross-platform navigation
-	    if (Ti.Platform.osname == 'android') {
+	    //if (Ti.Platform.osname == 'android') {
 	        cm.navGroup = {
 	            open: function (win, obj) {
 	                win.open(obj);
@@ -54,13 +54,13 @@
 	            }
 	        };
 	        navWindow = win;
-	    } else {
-	        navWindow = Ti.UI.createWindow();
-	        cm.navGroup = Ti.UI.iPhone.createNavigationGroup({
-	            window: win
-	        });
-	        navWindow.add(cm.navGroup);
-	    }
+	    //} else {
+	    //    navWindow = Ti.UI.createWindow();
+	    //    cm.navGroup = Ti.UI.iPhone.createNavigationGroup({
+	    //        window: win
+	    //    });
+	    //    navWindow.add(cm.navGroup);
+	    //}
 	    
 		return navWindow;
 	}
