@@ -4,16 +4,32 @@
 
 (function() {
 	
-	function createStoreTables(_args) {
-		var data = _args.data || [],
-		sectionlist = [],
-		tableView, row, section, item;
+	function createStoreTable(_args) {
+		return Titanium.UI.createTableView({
+			//search:search,
+			//headerView:headerView,
+			//footerView:footerView,
+			filterAttribute:'filter',
+			backgroundColor:'transparent',
+			//opacity: 0.0,
+			maxRowHeight:145,
+			minRowHeight:145,
+			style:Titanium.UI.iPhone.TableViewStyle.GROUPED,
+			separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
+			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
+		});
+	}
+	
+	function setStoreTableData(tableView, data) {
+		var sectionlist = [], row, section, item;
 		
 		for (var i = 0, l = data.length; i<l; i++) {
 			item = data[i];
 			row = Ti.UI.createTableViewRow();
 			//row.height = 145;
 			//row.width = 309;
+			row.data = item;
+			row.hasChild = true;
 			row.className = 'datarow';
 			row.clickName = 'row';
 			row.backgroundImage = 'images/Bgrnd_Store-Card.png';
@@ -72,7 +88,7 @@
 				height:'auto',
 				width:'auto',
 				clickName:'storeName',
-				text:'Store Name '+item.title  // TODO change
+				text:item.storeName  // TODO change
 			}));
 			row.add(storeName);
 			
@@ -120,7 +136,7 @@
 				height:'auto',
 				width:'auto',
 				clickName:'phone',
-				text:'phone'+item.phone  // TODO change
+				text:item.phone  // TODO change
 			}));
 			row.add(phone);
 			
@@ -132,7 +148,7 @@
 				height:'auto',
 				width:'auto',
 				clickName:'distance',
-				text:'distance'+item.distance  // TODO change
+				text:item.distance  // TODO change
 			}));
 			row.add(distance);
 			
@@ -142,20 +158,7 @@
 			sectionlist.push(section);
 		}
 		
-		tableView = Titanium.UI.createTableView({
-			data:sectionlist,
-			//search:search,
-			//headerView:headerView,
-			//footerView:footerView,
-			filterAttribute:'filter',
-			backgroundColor:'transparent',
-			//opacity: 0.0,
-			maxRowHeight:145,
-			minRowHeight:145,
-			style:Titanium.UI.iPhone.TableViewStyle.GROUPED,
-			separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
-			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
-		});
+		tableView.setData(sectionlist);
 		
 		tableView.addEventListener('click', function(e)
 		{
@@ -164,9 +167,14 @@
 			var rowNum = e.index;
 			Ti.API.info('You clicked on row# '+rowNum);
 			Ti.API.info('You clicked on the '+e.source.clickName);
+            cm.navGroup.open(cm.ui.createStoreDetailsWindow({
+            	model: e.rowData.data,
+            	modal: true,
+            	//barImage:$$.headerView.backgroundImage,
+            	//backgroundColor : 'blue',
+				navBarHidden : true  // this is very important
+            }), { animated: true });
 		});
-
-		return tableView;
 	}
 	
 	//create the stores view
@@ -181,6 +189,7 @@
 		//
 		// CREATE SEARCH BAR
 		//
+/*
 		var search = Titanium.UI.createSearchBar({
 			barColor:'#385292',
 			showCancel:false
@@ -197,40 +206,36 @@
 		{
 			search.blur();
 		});
+*/
 
-		
-		var data = [{title:"Row 1"},{title:"Row 2"}];
-		var data2 = [{title:"Row 2"},{title:"Row 1"}];
-		
-		var viewData = [{
-        	title: 'Nearby',
-        	view: createStoreTables({data:data}),
-            tabbedBarBackgroundImage: 'images/Frame_Stores-tab_Nearby.png'
-        }, {
-            title: 'Favorites',
-            view: createStoreTables({data:data2}),
-            tabbedBarBackgroundImage: 'images/Frame_Stores-tab_Favorites.png'
+		// request remote data
+		cm.model.requestNearbyStores();
+		cm.model.requestFavoritesStores();
+
+		var viewData = [{ // Nearby
+        	view: createStoreTable(),
+            tabbedBarBackgroundImage: 'images/Frame_Stores-tab_Nearby.png',
+            loadEvent: 'app:nearby.stores.loaded'
+        }, { // Favorites
+            view: createStoreTable(),
+            tabbedBarBackgroundImage: 'images/Frame_Stores-tab_Favorites.png',
+            loadEvent: 'app:fav.stores.loaded'
         }];
         
+		for (i = 0, l = viewData.length; i < l; i++) {
+			Ti.App.addEventListener(viewData[i].loadEvent, function(idx) {
+				return function(e) {
+					setStoreTableData(viewData[idx].view, e.data);
+				}
+			}(i));
+		}
+
 		var storeView = cm.ui.createTabbedScrollableView(cm.combine($$.TabGroup,{
 			data:viewData,
 			activeIndex: 0,
 			shadow:12,
 			top:36
 		}));
-		
-        for (var index in viewData) {
-            item = viewData[index];
-            item.view.addEventListener('click', function (e) {
-            	Ti.API.info('table view item clicked: ' + e.rowData.title);
-                cm.navGroup.open(cm.ui.createStoreDetailsWindow({
-                	title: e.rowData.title
-                	//barImage:$$.headerView.backgroundImage,
-                	//backgroundColor : 'blue',
-					//navBarHidden : false  // this is very important
-                }), { animated: true });
-            });
-        }
 
 		view.add(storeView);
 

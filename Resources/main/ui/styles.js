@@ -134,17 +134,25 @@
 		},
 		headerView: {
 			backgroundImage:'images/Frame_top_01.png',
+			left:0,
 			height:36,
 			width:Ti.Platform.displayCaps.platformWidth
 		},
 		subHeaderView: {
 			backgroundImage:'images/Frame_sub_01.png',
+			left:0,
 			height:36,
 			width:Ti.Platform.displayCaps.platformWidth
 		},
 		dashView: {
 			backgroundImage:'images/Dash_User-bgrnd.png',
+			left:0,
 			height:36,
+			width:Ti.Platform.displayCaps.platformWidth
+		},
+		summaryView: {
+			left:0,
+			height:84,
 			width:Ti.Platform.displayCaps.platformWidth
 		},
 		boldHeaderText: {
