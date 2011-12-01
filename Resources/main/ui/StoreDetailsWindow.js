@@ -146,27 +146,117 @@
 		});
 		view.add(mapIcon);
 		
-		var cameraIcon = Ti.UI.createView({
-			backgroundImage:'images/Icon_Camera.png',
-			bottom:12,
-			width:34,
-			height:24,
-			clickName:'cameraIcon'
+		var cameraView = cm.ui.createCameraView({
+			bottom:0
 		});
-		view.add(cameraIcon);
+		view.add(cameraView);
 			
 		return view;
 	}
 	
-	function createStoreReviewView(_args) {
-		var view = Ti.UI.createView(cm.combine($$.stretch, {
-			backgroundColor : 'black',
-			borderWidth:2,
-			borderColor:'#006cb1'
-       }));
-       return view;
+	function createReviewStars(_args) {
+		var model = _args.model;
+		var view = Ti.UI.createView(_args);
+		
+		var p = Math.floor(model.rating);
+		var n = 5 - Math.ceil(model.rating);
+		var h = 5 - p -n;
+		var favIcon, curPos = 0;
+		for (var i = 0; i < p; i++) {
+			favIcon = Ti.UI.createView({
+				backgroundImage:'images/Icon_Favorite_ON.png',
+				top:0,
+				left:curPos * 21,
+				width:18,
+				height:18,
+				clickName:'favIcon'
+			});
+			view.add(favIcon);
+			curPos++;
+		}
+		for (var i = 0; i < h; i++) {
+			favIcon = Ti.UI.createView({
+				backgroundImage:'images/Icon_Favorite_ON.png',  // TODO change to half star
+				top:0,
+				left: curPos * 21,
+				width:18,
+				height:18,
+				clickName:'favIcon'
+			});
+			view.add(favIcon);
+			curPos++;
+		}
+		for (var i = 0; i < n; i++) {
+			favIcon = Ti.UI.createView({
+				backgroundImage:'images/Icon_Favorite_OFF.png',
+				top:0,
+				left:curPos * 21,
+				width:18,
+				height:18,
+				clickName:'favIcon'
+			});
+			view.add(favIcon);
+			curPos++;
+		}
+
+		return view;
 	}
 	
+	function createStoreReviewView(_args) {
+		var model = _args.model;
+		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
+       
+		var reviewSummaryView = Ti.UI.createView({
+			backgroundImage:'images/Bgrnd_Store-Review.png',
+			top:0,
+			left:0,
+			width:$$.platformWidth,
+			height:48,
+			clickName:'reviewSummaryView'
+		});
+		
+		reviewSummaryView.add(createReviewStars({
+			top:12,
+			left:6,
+			height:18,
+			width:102,
+			model:model
+		}));
+		
+		var numReviews = Ti.UI.createLabel(cm.combine($$.Label, {
+			color:'#999999',
+			font:{fontStyle:'normal',fontSize:12,fontWeight:'normal'},
+			right:12,
+			top:12,
+			height:'auto',
+			width:'auto',
+			clickName:'numReviews',
+			text:model.numReviews + " reviews: " + model.rating + " / 5.0"
+		}));
+		reviewSummaryView.add(numReviews);
+		
+		view.add(reviewSummaryView);
+		
+		return view;
+	}
+	
+	function addStoreReviewTable(view, data) {
+		var reviewTableView = Titanium.UI.createTableView({
+			//search:search,
+			//headerView:headerView,
+			//footerView:footerView,
+			filterAttribute:'filter',
+			backgroundColor:'transparent',
+			//opacity: 0.0,
+			maxRowHeight:145,
+			minRowHeight:145,
+			style:Titanium.UI.iPhone.TableViewStyle.GROUPED,
+			separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
+			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
+		});
+		view.add(reviewTableView);
+	}		
+
 	function createStorePromoView(_args) {
 		var view = Ti.UI.createView(cm.combine($$.stretch, {
 			backgroundColor : 'black',
@@ -216,6 +306,8 @@
 		});
 		view.add(summaryView);
 		
+		cm.model.requestStoreDetails();
+		
 		var viewData = [{
         	title: 'Basic',
         	view: createStoreBasicView({model:model}),
@@ -243,6 +335,10 @@
 		view.add(storeDetailsView);
 
 		win.add(view);
+		
+		Ti.App.addEventListener("app:store.details.loaded", function(e) {
+			addStoreReviewTable(viewData[1].view, e.data);
+		});
 
 		return win;
 		

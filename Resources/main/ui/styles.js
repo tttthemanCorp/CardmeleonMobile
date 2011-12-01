@@ -155,6 +155,12 @@
 			height:84,
 			width:Ti.Platform.displayCaps.platformWidth
 		},
+		cameraView: {
+			backgroundImage:'images/Frame_Sub_03.png',
+			left:0,
+			height:36,
+			width:Ti.Platform.displayCaps.platformWidth
+		},
 		boldHeaderText: {
 			height:'auto',
 			color:'#000000',

@@ -5,6 +5,25 @@
 (function() {
 	cm.ui = {};
 	
+	cm.ui.createCameraView = function(params) {
+		var view = Ti.UI.createView(cm.combine($$.cameraView, params));
+		
+		var cameraIcon = Ti.UI.createView({
+			backgroundImage:'images/Icon_Camera.png',
+			bottom:6,
+			width:34,
+			height:24,
+			clickName:'cameraIcon'
+		});
+
+		cameraIcon.addEventListener('click', function(e) {
+			Ti.API.info('cameraIcon clicked!');
+		});
+		
+		view.add(cameraIcon);
+		return view;
+	};
+	
 	cm.ui.createHeaderView = function(params) {
 		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
 		var settingsIcon = Ti.UI.createImageView({
