@@ -18,28 +18,38 @@
 		var data = [{
         	title: 'Stores',
         	tabbedBarBackgroundImage: 'images/Frame_Base_Stores.png',
+        	winBackgroundImage: 'images/Bgrnd_G-B.png',
         	view: cm.ui.createStoresView()
         }, {
         	title: 'Rewards',
         	tabbedBarBackgroundImage: 'images/Frame_Base_Rewards.png',
+        	winBackgroundImage: 'images/Bgrnd_G-Y.png',
         	view: cm.ui.createRewardsView()
         }, {
         	title: 'Market',
         	tabbedBarBackgroundImage: 'images/Frame_Base_Market.png',
+        	winBackgroundImage: 'images/Bgrnd_O-Y.png',
         	view: cm.ui.createMarketView()
         }];
 		var tabGroup = cm.ui.createFilmstripTabGrpView(cm.combine($$.TabGroup,{
 			top:$$.headerView.height,
-			shadow:23,
+			shadow:$$.TabGroup.shadowAtBottom,
 			activeIndex: 0,
+			win: win,
 			data:data
 		}));
 		
 		//create a loading view which we can show on long data loads
 		var loader = cm.ui.createLoadingView();
 		
+		var cameraView = cm.ui.createCameraView({
+			zIndex: 1,
+			bottom:$$.TabGroup.heightAtBottom - $$.TabGroup.shadowAtBottom
+		});
+		
 		//assemble main app window
 		win.add(headerView);
+		win.add(cameraView);
 		win.add(tabGroup);
 		win.add(loader);
 

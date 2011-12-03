@@ -105,6 +105,7 @@
 		top = params.top || 0,
 		activeIndex = params.activeIndex || 0,
 		shadow = params.shadow || 0,
+		win = params.win,
 		item, tab;
 		
 		var container = Ti.UI.createView(cm.combine($$.stretch, {top:top}));
@@ -136,6 +137,7 @@
 		function selectIndex(_idx) {
 			Ti.API.info('selecting base tab index: '+_idx);
 			tabbedBar.backgroundImage = data[_idx].tabbedBarBackgroundImage;
+			win.backgroundImage = data[_idx].winBackgroundImage;
 			filmStripView.fireEvent('changeIndex',{idx:_idx});
 			container.currentActive = _idx;
 		}

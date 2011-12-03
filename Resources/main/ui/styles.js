@@ -57,7 +57,7 @@
 			height:'auto'
 		},
 		Window: {
-			backgroundImage:'images/Bgrnd_Y-B.png',
+			backgroundImage:'images/Bgrnd_G-B.png',
 			navBarHidden:true,
 			softInputMode:(Ti.UI.Android) ? Ti.UI.Android.SOFT_INPUT_ADJUST_RESIZE : ''
 		},
@@ -92,7 +92,9 @@
 		},
 		TabGroup: {
 			heightAtTop:36,
-			heightAtBottom:60
+			shadowAtTop:12,
+			heightAtBottom:60,
+			shadowAtBottom:23
 		},
 		
 		//we use these as JS-based 'style classes'

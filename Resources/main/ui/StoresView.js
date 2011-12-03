@@ -180,10 +180,8 @@
 	//create the stores view
 	cm.ui.createStoresView = function(_args) {
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
+		
 		var dashView = cm.ui.createDashView();
-		
-		//cm.mixin(view, $$.debug); // TODO - debug only
-		
 		view.add(dashView);
 		
 		//
@@ -233,10 +231,9 @@
 		var storeView = cm.ui.createTabbedScrollableView(cm.combine($$.TabGroup,{
 			data:viewData,
 			activeIndex: 0,
-			shadow:12,
+			shadow:$$.TabGroup.shadowAtTop,
 			top:36
 		}));
-
 		view.add(storeView);
 
 		return view;

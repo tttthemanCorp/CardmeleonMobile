@@ -73,6 +73,20 @@ var cm = {};
 			else { return def; }
 		}
 	};
+	
+	cm.sortByExpiration = function(data) {
+		return data.sort(function(a, b){
+			var ad = new Date(a.expire);
+			var bd = new Date(b.expire);
+			return ad - bd;
+		});
+	};
+	
+	cm.formatDateShort = function(dateStr) {
+		var d = new Date(dateStr);
+		return d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
+	};
+	
 })();
 
 //Include additional Tweetanium namespaces

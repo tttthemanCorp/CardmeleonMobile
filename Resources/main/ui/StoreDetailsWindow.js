@@ -145,11 +145,6 @@
 			clickName:'mapIcon'
 		});
 		view.add(mapIcon);
-		
-		var cameraView = cm.ui.createCameraView({
-			bottom:0
-		});
-		view.add(cameraView);
 			
 		return view;
 	}
@@ -240,8 +235,8 @@
 		return view;
 	}
 	
-	function addStoreReviewTable(view, data) {
-		var reviewTableView = Titanium.UI.createTableView({
+	function addStoreReviewTable(view, data, params) {
+		var tableView = Titanium.UI.createTableView(cm.combine({
 			//search:search,
 			//headerView:headerView,
 			//footerView:footerView,
@@ -253,24 +248,198 @@
 			style:Titanium.UI.iPhone.TableViewStyle.GROUPED,
 			separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
 			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
+		}, params));
+		
+		var sectionlist = [], reviewList = data.reviews;
+		
+		for (var i = 0, l = reviewList.length; i<l; i++) {
+			item = reviewList[i];
+			row = Ti.UI.createTableViewRow();
+			//row.height = 145;
+			//row.width = 309;
+			row.data = item;
+			//row.hasChild = true;
+			row.className = 'datarow';
+			row.clickName = 'row';
+			row.backgroundImage = 'images/Bgrnd_Store-Card.png';
+			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
+			//row.filter = '';
+			//row.borderWidth = 2;
+			//row.borderColor = '#006cb1';
+			
+			var avatarIcon = Ti.UI.createView({
+				backgroundImage:'images/Icon_No-Avatar.png',  // TODO
+				top:12,
+				left:12,
+				width:48,
+				height:48,
+				clickName:'avatarIcon'
+			});
+			row.add(avatarIcon);
+			
+			var userLevelIcon = Ti.UI.createView({
+				backgroundImage:'images/Icon_Level_01.png',  // TODO
+				top:12,
+				right:12,
+				width:30,
+				height:26,
+				clickName:'userLevelIcon'
+			});
+			row.add(userLevelIcon);
+			
+			var userName = Ti.UI.createLabel(cm.combine($$.Label, {
+				color:'#4BBEB4',
+				font:{fontStyle:'normal',fontSize:12,fontWeight:'bold'},
+				left:72,
+				top:36,
+				height:'auto',
+				width:'auto',
+				clickName:'userName',
+				text:item.userName  // TODO change
+			}));
+			row.add(userName);
+			
+			var reviewTime = Ti.UI.createLabel(cm.combine($$.Label, {
+				color:'#999999',
+				font:{fontStyle:'italic',fontSize:10,fontWeight:'normal'},
+				left:72,
+				top:56,
+				height:'auto',
+				width:'auto',
+				clickName:'reviewTime',
+				text:item.time  // TODO change
+			}));
+			row.add(reviewTime);
+			
+			var reviewText = Ti.UI.createLabel(cm.combine($$.Label, {
+				color:'#999999',
+				font:{fontStyle:'italic',fontSize:12,fontWeight:'normal'},
+				left:12,
+				top:102,
+				height:'auto',
+				width:'auto',
+				clickName:'reviewText',
+				text:item.review  // TODO change
+			}));
+			row.add(reviewText);
+			
+			var stars = createReviewStars({
+				top:72,
+				left:12,
+				height:18,
+				width:102,
+				model:item
+			});
+			row.add(stars);
+			
+			section = Ti.UI.createTableViewSection();
+			section.add(row);	
+			
+			sectionlist.push(section);
+		}
+		
+		tableView.setData(sectionlist);
+		
+		tableView.addEventListener('click', function(e)
+		{
+			Ti.API.info('review table view row clicked - source ' + e.source);
 		});
-		view.add(reviewTableView);
+		
+		view.add(tableView);
 	}		
 
 	function createStorePromoView(_args) {
-		var view = Ti.UI.createView(cm.combine($$.stretch, {
-			backgroundColor : 'black',
-			borderWidth:2,
-			borderColor:'#006cb1'
-       }));
-       return view;
+		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
+       	return view;
 	}
+	
+	function addStorePromoTable(view, data, params) {
+		var tableView = Titanium.UI.createTableView(cm.combine({
+			//search:search,
+			//headerView:headerView,
+			//footerView:footerView,
+			filterAttribute:'filter',
+			backgroundColor:'transparent',
+			//opacity: 0.0,
+			maxRowHeight:145,
+			minRowHeight:145,
+			style:Titanium.UI.iPhone.TableViewStyle.GROUPED,
+			separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
+			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
+		}, params));
+		
+		var sectionlist = [], promoList = data.promotions;
+		
+		for (var i = 0, l = promoList.length; i<l; i++) {
+			item = promoList[i];
+			row = Ti.UI.createTableViewRow();
+			//row.height = 145;
+			//row.width = 309;
+			row.data = item;
+			//row.hasChild = true;
+			row.className = 'datarow';
+			row.clickName = 'row';
+			row.backgroundImage = 'images/Bgrnd_Store-Card.png';
+			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
+			//row.filter = '';
+			//row.borderWidth = 2;
+			//row.borderColor = '#006cb1';
+			
+			var promoTitle = Ti.UI.createLabel(cm.combine($$.Label, {
+				color:'#8CC841',
+				font:{fontStyle:'normal',fontSize:24,fontWeight:'bold'},
+				left:12,
+				top:12,
+				height:'auto',
+				width:'auto',
+				clickName:'promoTitle',
+				text:item.title
+			}));
+			row.add(promoTitle);
+			
+			var expireTime = Ti.UI.createLabel(cm.combine($$.Label, {
+				color:'#999999',
+				font:{fontStyle:'italic',fontSize:12,fontWeight:'normal'},
+				right:12,
+				bottom:12,
+				height:'auto',
+				width:'auto',
+				clickName:'expireTime',
+				text:'Valid until '+item.expire
+			}));
+			row.add(expireTime);
+			
+			var promoDesc = Ti.UI.createLabel(cm.combine($$.Label, {
+				color:'#0087A0',
+				font:{fontStyle:'italic',fontSize:12,fontWeight:'normal'},
+				left:12,
+				top:50,
+				height:'auto',
+				width:'auto',
+				clickName:'promoDesc',
+				text:item.desc
+			}));
+			row.add(promoDesc);
+			
+			section = Ti.UI.createTableViewSection();
+			section.add(row);	
+			
+			sectionlist.push(section);
+		}
+		
+		tableView.setData(sectionlist);
+		
+		tableView.addEventListener('click', function(e)
+		{
+			Ti.API.info('promo table view row clicked - source ' + e.source);
+		});
+		
+		view.add(tableView);
+	}		
 	
 	function createStoreMenuView(_args) {
 		var view = Ti.UI.createView(cm.combine($$.stretch, {
-			backgroundColor : 'black',
-			borderWidth:2,
-			borderColor:'#006cb1'
+
        }));
        return view;
 	}
@@ -336,8 +505,24 @@
 
 		win.add(view);
 		
+		var cameraView = cm.ui.createCameraView({
+			bottom:0
+		});
+		win.add(cameraView);
+		
 		Ti.App.addEventListener("app:store.details.loaded", function(e) {
-			addStoreReviewTable(viewData[1].view, e.data);
+			addStoreReviewTable(viewData[1].view, e.data, {
+				top:48,
+				left:0,
+				width:$$.platformWidth,
+				bottom:0
+			});
+			addStorePromoTable(viewData[2].view, e.data, {
+				top:0,
+				left:0,
+				width:$$.platformWidth,
+				bottom:0
+			});
 		});
 
 		return win;
