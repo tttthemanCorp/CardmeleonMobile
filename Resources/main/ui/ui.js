@@ -372,7 +372,10 @@ Ti.include(
 	'/main/ui/MarketView.js',
 	'/main/ui/SignupView.js',
 	'/main/ui/ApplicationWindow.js',
-	'/main/ui/StoreDetailsWindow.js'
+	'/main/ui/StoreDetailsWindow.js',
+	'/main/ui/RewardsRedeemWindow.js',
+	'/main/ui/RewardsGiftWindow.js',
+	'/main/ui/RewardsShareWindow.js'
 );
 
 /*	

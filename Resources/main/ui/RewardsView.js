@@ -105,10 +105,18 @@
 				width:90,
 				height:24,
 			});
-			redeemButton.addEventListener('click',function(e)
+			redeemButton.addEventListener('click',function(model)
 			{
-			   	Titanium.API.info("You clicked the redeemButton");
-			});
+				return function(e) {
+				   	Titanium.API.info("You clicked the redeemButton");
+		            cm.navGroup.open(cm.ui.createRewardsRedeemWindow({
+		            	model: model,
+		            	modal: true,
+		            	//barImage:$$.headerView.backgroundImage,
+		            	//backgroundColor : 'blue',
+						navBarHidden : true  // this is very important
+		            }), { animated: true });
+			}}(item));
 			row.add(redeemButton);
 			
 			var giftButton = Titanium.UI.createButton({
@@ -119,10 +127,18 @@
 				width:90,
 				height:24,
 			});
-			giftButton.addEventListener('click',function(e)
+			giftButton.addEventListener('click',function(model)
 			{
-			   	Titanium.API.info("You clicked the giftButton");
-			});
+				return function(e) {
+				   	Titanium.API.info("You clicked the giftButton");
+		            cm.navGroup.open(cm.ui.createRewardsGiftWindow({
+		            	model: model,
+		            	modal: true,
+		            	//barImage:$$.headerView.backgroundImage,
+		            	//backgroundColor : 'blue',
+						navBarHidden : true  // this is very important
+		            }), { animated: true });
+			}}(item));
 			row.add(giftButton);
 			
 			var shareButton = Titanium.UI.createButton({
@@ -133,10 +149,18 @@
 				width:90,
 				height:24,
 			});
-			shareButton.addEventListener('click',function(e)
+			shareButton.addEventListener('click',function(model)
 			{
-			   	Titanium.API.info("You clicked the shareButton");
-			});
+				return function(e) {
+				   	Titanium.API.info("You clicked the shareButton");
+		            cm.navGroup.open(cm.ui.createRewardsShareWindow({
+		            	model: model,
+		            	modal: true,
+		            	//barImage:$$.headerView.backgroundImage,
+		            	//backgroundColor : 'blue',
+						navBarHidden : true  // this is very important
+		            }), { animated: true });
+			}}(item));
 			row.add(shareButton);
 			
 			var forsaleSwitch = Titanium.UI.createButton({

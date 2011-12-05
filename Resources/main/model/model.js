@@ -122,9 +122,9 @@
 		
 		xhr.onload = function () {
 			var data = [
-				{name:'a cup of StarBucks',eCardmeleon:30,expire:'June 4, 2012 9:10 PM',forSale:0},
-				{name:'a free meal',eCardmeleon:40,expire:'April 12, 2011 2:45 AM',forSale:1},
-				{name:'10% off any purchase',eCardmeleon:30,expire:'June 4, 2012 11:15 AM',forSale:0}
+				{name:'a cup of StarBucks',eCardmeleon:30,expire:'June 4, 2012 9:10 PM',forSale:0,redeemCode:'THISISATESTREDEEMCODE'},
+				{name:'a free meal',eCardmeleon:40,expire:'April 12, 2011 2:45 AM',forSale:1,redeemCode:'289ABC523XYZ'},
+				{name:'10% off any purchase',eCardmeleon:30,expire:'June 4, 2012 11:15 AM',forSale:0,redeemCode:'KJHKSUIREJKLDSD'}
 			];
 			// Once data loaded, fire event to trigger UI update
 			Ti.App.fireEvent('app:nearby.rewards.loaded',{
@@ -208,6 +208,10 @@
 		
 		// Get the data
 		xhr.send();
+	};
+	
+	cm.model.redeemReward = function(userId, rewardId) {
+		// TODO
 	};
 	
 })();
