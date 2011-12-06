@@ -91,6 +91,8 @@ var cm = {};
 
 //Include additional Tweetanium namespaces
 Ti.include(
+	'/main/utils/utils.js',
+	'/main/utils/barcode.js',
 	'/main/ui/ui.js',
 	'/main/model/model.js',
 	'/main/config/config.js'

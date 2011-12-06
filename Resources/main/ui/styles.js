@@ -26,10 +26,9 @@
 		
 		//we use these for default components
 		Button: {
-			backgroundImage:'images/Button_bg.png',
-			height:50,
-			width:250,
-			color:'#000',
+			height:36,
+			color:'#000000',
+			backgroundColor:'#00A4AB',
 			font: {
 				fontSize:18,
 				fontWeight:'bold'

@@ -10,7 +10,7 @@
 
 	cm.ui.createRewardsRedeemWindow = function(_args) {
 		var model = _args.model, redeemed = false, myInterval = null,
-		countdown = 18;  // 3 minutes
+		countdown = 180;  // 3 minutes
 		var win = Ti.UI.createWindow(cm.combine($$.stretch, _args));
 
 		var headerView = cm.ui.createHeaderView();
@@ -112,13 +112,13 @@
 		}));
 		bgView.add(alertLabel);
 		
-		var button = Titanium.UI.createButton(cm.combine($$.Button, {
+		var button = Titanium.UI.createButton({
 		   	backgroundImage:'images/Button_Redeem-Lg_OFF.png',
 		   	backgroundSelectedImage:'images/Button_Redeem-Lg_ON.png',
 			top:230,
 			height:36,
 			width:135
-		}));
+		});
 		bgView.add(button);
 		
 		var redeemCode = Ti.UI.createLabel(cm.combine($$.Label, {

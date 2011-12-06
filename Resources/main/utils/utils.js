@@ -3,9 +3,6 @@
  */
 
 (function() {
-
-	cm.utils.call = function(_args) {
-
-	};
+	cm.utils = {};
 	
 })();

@@ -27,7 +27,43 @@
 			backgroundImage:'images/Bgrnd_G-Y.png'
 		}));
 		
-
+		/*
+		Ti.Contacts.showContacts({cancel: function() {
+			
+		}, selectedPerson: function() {
+			
+		}, animated: true);
+		*/
+		
+		var memberLabel = Ti.UI.createLabel(cm.combine($$.Label, {
+			text: 'Cardmeleon Member ID',
+			top: 60,
+			left: 20
+		}));
+		mainView.add(memberLabel);
+		
+		var memberField = Titanium.UI.createTextField(cm.combine($$.TextField, {
+			hintText:'enter Cardmeleon member ID',
+			top: 86,
+			left: 20,
+			right: 20
+		}));
+		mainView.add(memberField);
+		
+		var sendButton = Titanium.UI.createButton({
+		   	backgroundImage:'images/Button_Gift_OFF.png',
+		   	backgroundSelectedImage:'images/Button_Gift_ON.png',
+			top:140,
+			width:90,
+			height:24,
+		});
+		mainView.add(sendButton);	
+  		
+  		sendButton.addEventListener('click', function(){
+			Ti.API.log('sendButton clicked!');
+			// TODO
+			win.close();
+  		});
 		
 		var cameraView = cm.ui.createCameraView({
 			bottom:0

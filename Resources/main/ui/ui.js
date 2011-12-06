@@ -18,6 +18,7 @@
 
 		cameraIcon.addEventListener('click', function(e) {
 			Ti.API.info('cameraIcon clicked!');
+			cm.utils.scanBarcode();
 		});
 		
 		view.add(cameraIcon);
