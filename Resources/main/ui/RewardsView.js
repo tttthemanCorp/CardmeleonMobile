@@ -156,6 +156,7 @@
 		            cm.navGroup.open(cm.ui.createRewardsShareWindow({
 		            	model: model,
 		            	modal: true,
+		            	backgroundImage: 'images/Bgrnd_G-Y.png',
 		            	//barImage:$$.headerView.backgroundImage,
 		            	//backgroundColor : 'blue',
 						navBarHidden : true  // this is very important

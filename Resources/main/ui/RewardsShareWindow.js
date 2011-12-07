@@ -24,7 +24,7 @@
 		
 		var mainView = Ti.UI.createView(cm.combine($$.stretch, {
 			top:$$.headerView.height,
-			backgroundImage:'images/Bgrnd_G-Y.png'
+			backgroundImage:_args.backgroundImage
 		}));
 		
 		var msgLabel = Ti.UI.createLabel(cm.combine($$.Label, {

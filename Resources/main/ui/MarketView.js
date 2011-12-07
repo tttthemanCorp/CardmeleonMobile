@@ -109,6 +109,13 @@
 			buyButton.addEventListener('click',function(e)
 			{
 			   	Titanium.API.info("You clicked the buyButton");
+				var confirmDialog = Titanium.UI.createAlertDialog({
+				    title: 'Buy a Reward',
+				    message: 'Confirm Purchase ?',
+				    buttonNames: ['OK','Cancel'],
+				    cancel: 1
+				});
+				confirmDialog.show();
 			});
 			row.add(buyButton);
 			
@@ -123,6 +130,14 @@
 			shareButton.addEventListener('click',function(e)
 			{
 			   	Titanium.API.info("You clicked the shareButton");
+	            cm.navGroup.open(cm.ui.createRewardsShareWindow({
+	            	model: model,
+	            	modal: true,
+	            	backgroundImage: 'images/Bgrnd_O-Y.png',
+	            	//barImage:$$.headerView.backgroundImage,
+	            	//backgroundColor : 'blue',
+					navBarHidden : true  // this is very important
+	            }), { animated: true });
 			});
 			row.add(shareButton);
 			
