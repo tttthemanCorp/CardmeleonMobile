@@ -110,11 +110,18 @@
 			{
 			   	Titanium.API.info("You clicked the buyButton");
 				var confirmDialog = Titanium.UI.createAlertDialog({
-				    title: 'Buy a Reward',
+				    title: 'You are buying a reward',
 				    message: 'Confirm Purchase ?',
 				    buttonNames: ['OK','Cancel'],
 				    cancel: 1
 				});
+				confirmDialog.addEventListener('click', function(myrow)
+				{
+					return function(e) {
+					   	if (e.index == 0) {
+					   		myrow.visible = false;
+					   	}
+				}}(row));
 				confirmDialog.show();
 			});
 			row.add(buyButton);
@@ -127,18 +134,19 @@
 				width:90,
 				height:24,
 			});
-			shareButton.addEventListener('click',function(e)
+			shareButton.addEventListener('click',function(model)
 			{
-			   	Titanium.API.info("You clicked the shareButton");
-	            cm.navGroup.open(cm.ui.createRewardsShareWindow({
-	            	model: model,
-	            	modal: true,
-	            	backgroundImage: 'images/Bgrnd_O-Y.png',
-	            	//barImage:$$.headerView.backgroundImage,
-	            	//backgroundColor : 'blue',
-					navBarHidden : true  // this is very important
-	            }), { animated: true });
-			});
+				return function(e) {
+				   	Titanium.API.info("You clicked the shareButton");
+		            cm.navGroup.open(cm.ui.createRewardsShareWindow({
+		            	model: model,
+		            	modal: true,
+		            	backgroundImage: 'images/Bgrnd_O-Y.png',
+		            	//barImage:$$.headerView.backgroundImage,
+		            	//backgroundColor : 'blue',
+						navBarHidden : true  // this is very important
+		            }), { animated: true });
+			}}(item));
 			row.add(shareButton);
 			
 			var watchingSwitch = Titanium.UI.createButton({
