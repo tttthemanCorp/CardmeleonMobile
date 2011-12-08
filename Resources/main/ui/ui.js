@@ -37,6 +37,7 @@
 		});
 		settingsIcon.addEventListener('click', function(e) {
 			Ti.API.info('settingsIcon clicked!');
+			Ti.App.fireEvent('app:show.drawer', {showing:'settings'});
 		});
 		headerView.add(settingsIcon);
 		return headerView;
@@ -85,6 +86,7 @@
 		});
 		userlevelIcon.addEventListener('click', function(e) {
 			Ti.API.info('userlevelIcon clicked!');
+			Ti.App.fireEvent('app:show.drawer', {showing:'userLevel'});
 		});
 		dashView.add(userlevelIcon);
 		
@@ -376,7 +378,10 @@ Ti.include(
 	'/main/ui/StoreDetailsWindow.js',
 	'/main/ui/RewardsRedeemWindow.js',
 	'/main/ui/RewardsGiftWindow.js',
-	'/main/ui/RewardsShareWindow.js'
+	'/main/ui/RewardsShareWindow.js',
+	'/main/ui/SettingsView.js',
+	'/main/ui/UserLevelView.js',
+	'/main/ui/DrawerView.js'
 );
 
 /*	

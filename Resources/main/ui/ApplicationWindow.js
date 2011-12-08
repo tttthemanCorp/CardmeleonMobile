@@ -42,6 +42,8 @@
 		//create a loading view which we can show on long data loads
 		var loader = cm.ui.createLoadingView();
 		
+		var drawer = cm.ui.createDrawerView();
+		
 		var cameraView = cm.ui.createCameraView({
 			zIndex: 1,
 			bottom:$$.TabGroup.heightAtBottom - $$.TabGroup.shadowAtBottom
@@ -52,6 +54,7 @@
 		win.add(cameraView);
 		win.add(tabGroup);
 		win.add(loader);
+		win.add(drawer);
 
 	    // handle cross-platform navigation
 	    //if (Ti.Platform.osname == 'android') {

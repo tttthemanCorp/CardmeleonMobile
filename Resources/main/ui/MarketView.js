@@ -106,24 +106,25 @@
 				width:90,
 				height:24,
 			});
-			buyButton.addEventListener('click',function(e)
+			buyButton.addEventListener('click',function(idx)
 			{
-			   	Titanium.API.info("You clicked the buyButton");
-				var confirmDialog = Titanium.UI.createAlertDialog({
-				    title: 'You are buying a reward',
-				    message: 'Confirm Purchase ?',
-				    buttonNames: ['OK','Cancel'],
-				    cancel: 1
-				});
-				confirmDialog.addEventListener('click', function(myrow)
-				{
-					return function(e) {
-					   	if (e.index == 0) {
-					   		myrow.visible = false;
-					   	}
-				}}(row));
-				confirmDialog.show();
-			});
+				return function(e) {
+				   	Titanium.API.info("You clicked the buyButton");
+					var confirmDialog = Titanium.UI.createAlertDialog({
+					    title: 'You are buying a reward',
+					    message: 'Confirm Purchase ?',
+					    buttonNames: ['OK','Cancel'],
+					    cancel: 1
+					});
+					confirmDialog.addEventListener('click', function(e)
+					{
+						   	if (e.index == 0) {
+						   		tableView.deleteRow(idx, {animate:true});
+						   	}
+					});
+					confirmDialog.show();
+				};
+			}(i));
 			row.add(buyButton);
 			
 			var shareButton = Titanium.UI.createButton({
