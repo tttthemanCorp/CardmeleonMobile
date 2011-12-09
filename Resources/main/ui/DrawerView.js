@@ -4,44 +4,41 @@
 
 (function() {
 	cm.ui.createDrawerView = function(_args) {
-		var drawerView = Ti.UI.createView(cm.combine($$.stretch,{
-			visible:false
-		})),
+		var drawerView = Ti.UI.createView(cm.combine($$.stretch,_args)),
 		backdrop = Ti.UI.createView(cm.combine($$.stretch, {
 			backgroundColor:'#787878',
-			opacity:0.85
+			opacity:0.5
 		})),
 		drawer = Ti.UI.createView({
-			top:30,
-			bottom:30,
-			left:$$.platformWidth-10,
-			width:$$.platformWidth,
-			borderRadius:10,
-			backgroundColor:'#efefef',
+			height:$$.platformHeight - $$.headerView.height - $$.dashView.height - 53,
+			bottom:$$.platformHeight - $$.headerView.height - $$.dashView.height - 12,
+			left:12,
+			right:12,
+			borderRadius:15,
+			//backgroundColor:'#efefef',
+			zIndex:2,
 			//gradient will only work on iOS
-			backgroundGradient:{
-				type:'linear',
-				colors:[
-					{color:'#efefef',position:0.0},
-					{color:'#cdcdcd',position:0.50},
-					{color:'#efefef',position:1.0}
-				]
-			}
+			// backgroundGradient:{
+				// type:'linear',
+				// colors:[
+					// {color:'#efefef',position:0.0},
+					// {color:'#cdcdcd',position:0.50},
+					// {color:'#efefef',position:1.0}
+				// ]
+			// }
 		}),
 		closeView = Ti.UI.createView({
-			width:15,
-			borderRadius:10,
+			height:30,
+			borderRadius:15,
 			backgroundColor:cm.ui.theme.darkBlue,
 			left:0,
-			top:0,
+			right:0,
 			bottom:0
 		}),
 		arrow = Ti.UI.createImageView({
-			image:'images/arrow_details.png',
-			height:'auto',
-			width:'auto',
-			left:2,
-			right:2
+			image:'images/Button_Up_ON.png',
+			height:20,
+			width:28
 		});
 		
 		drawerView.add(backdrop);
@@ -52,14 +49,18 @@
 		//Add necessary drawer views
 		var stack = cm.ui.createStackView({
 			views: [
-				cm.ui.createUserLevelView(),
-				cm.ui.createSettingsView()
+				cm.ui.createUserLevelView({
+					backgroundImage: "images/Bgrnd_User-Card.png" 
+				}),
+				cm.ui.createSettingsView({
+					backgroundColor:'black'
+				})
 			],
 			props: {
-				top:10,
-				left:25,
-				right:20,
-				bottom:10
+				top:0,
+				left:0,
+				right:0,
+				bottom:30
 			}
 		});
 		
@@ -79,7 +80,7 @@
 			
 			drawer.animate({
 				duration:$$.animationDuration,
-				left:10
+				bottom:30
 			}, function() {
 				Ti.App.fireEvent('app:drawer.opened');
 			});
@@ -88,7 +89,7 @@
 		Ti.App.addEventListener('app:hide.drawer', function(e) {
 			drawer.animate({
 				duration:$$.animationDuration,
-				left:$$.platformWidth-10
+				bottom:$$.platformHeight - $$.headerView.height - $$.dashView.height - 12
 			}, function() {
 				drawerView.visible = false;
 			});

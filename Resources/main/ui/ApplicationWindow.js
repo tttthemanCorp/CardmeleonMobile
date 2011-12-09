@@ -42,7 +42,10 @@
 		//create a loading view which we can show on long data loads
 		var loader = cm.ui.createLoadingView();
 		
-		var drawer = cm.ui.createDrawerView();
+		var drawer = cm.ui.createDrawerView({
+			zIndex:2,
+			visible:false
+		});
 		
 		var cameraView = cm.ui.createCameraView({
 			zIndex: 1,
