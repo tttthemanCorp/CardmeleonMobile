@@ -87,6 +87,10 @@ var cm = {};
 		return d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
 	};
 	
+	cm.isLoggedIn = function(_args) {
+		return false;  // TODO
+	};
+	
 })();
 
 //Include additional Tweetanium namespaces

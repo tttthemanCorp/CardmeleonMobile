@@ -3,8 +3,29 @@
  */
 
 (function() {
-	//create the login view
-	cm.ui.createSignupView = function(_args) {
+	cm.ui.createSignupWindow = function(_args) {
+		var win = Ti.UI.createWindow(cm.combine($$.Window,{
+			exitOnClose:true,
+			orientationModes:[Ti.UI.PORTRAIT]
+		}));
+		
+		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
+		
+		var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
+		
+		var signupView = createSignupView(cm.combine({
+			top: $$.headerView.height + $$.subHeaderView.height,
+			win: win
+		}, $$.empty));
+		
+		win.add(headerView);
+		win.add(subHeaderView);
+		win.add(signupView);
+		
+		return win;
+	}; 
+	
+	function createSignupView(_args) {
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
 		
 		var fieldvalues = ['', ''];
@@ -62,6 +83,9 @@
   		// Event Handling
   		//
   		signupButton.addEventListener('click', function(){
+  			_args.win.close();
+  			Ti.App.fireEvent('app:user.signup.succeed', {});
+  			/*
 			var client = Titanium.Network.createHTTPClient();
 			client.onerror = function(e)
 			{
@@ -71,12 +95,14 @@
 				} else {
 					alert("Server connection failure!");
 				}
+				Ti.App.fireEvent('app:user.signup.failed', {data:result});
 			};
 			client.onload = function()
 			{
 				result = JSON.parse(this.responseText);
 				Ti.API.info('User ID: '+result.id);
-				alert("User logged in.  User ID = "+result.id);
+				//alert("User logged in.  User ID = "+result.id);
+				Ti.App.fireEvent('app:user.signup.succeed', {data:result});
 			};
 
 			client.open('GET',cm.config.SERVICE_ENDPOINT+'api/auth');
@@ -85,10 +111,13 @@
 			client.setRequestHeader('Authorization','Basic '+Ti.Utils.base64encode(fieldvalues[0]+':'+fieldvalues[1]));
 	
 			client.send();
+			*/
   		});
   		
   		loginButton.addEventListener('click', function(){
-			cm.ui.alert("Existing User Login button clicked");
+			//cm.ui.alert("Existing User Login button clicked");
+			_args.win.close();
+			Ti.App.fireEvent('app:user.signup.existing', {});
   		});
   		
 		return view;

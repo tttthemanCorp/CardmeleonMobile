@@ -90,14 +90,6 @@
 	    if (Ti.Platform.osname != 'android') {
 	        Ti.UI.orientation = Ti.UI.PORTRAIT;
 	    }
-	
-		//initialize Twitter goodness and let folks know most of the awesomeness will not be available offline
-		if (Ti.Network.online == false) {
-			Ti.UI.createAlertDialog({
-				title:'No Network Connection', 
-				message:'Sorry, but we couldn\'t detect a connection to the internet - new Twitter data will not be available.'
-			}).show();
-		}
 	    
 	    return win;
 	};

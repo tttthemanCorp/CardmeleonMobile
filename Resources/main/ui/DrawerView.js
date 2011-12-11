@@ -10,7 +10,7 @@
 			opacity:0.5
 		})),
 		drawer = Ti.UI.createView({
-			height:$$.platformHeight - $$.headerView.height - $$.dashView.height - 53,
+			height:$$.platformHeight - $$.headerView.height - $$.dashView.height - 83,
 			bottom:$$.platformHeight - $$.headerView.height - $$.dashView.height - 12,
 			left:12,
 			right:12,
@@ -30,7 +30,7 @@
 		closeView = Ti.UI.createView({
 			height:30,
 			borderRadius:15,
-			backgroundColor:cm.ui.theme.darkBlue,
+			backgroundColor:"#AADCD7",
 			left:0,
 			right:0,
 			bottom:0
@@ -53,14 +53,14 @@
 					backgroundImage: "images/Bgrnd_User-Card.png" 
 				}),
 				cm.ui.createSettingsView({
-					backgroundColor:'black'
+					backgroundColor:'white'
 				})
 			],
 			props: {
 				top:0,
 				left:0,
 				right:0,
-				bottom:30
+				bottom:0
 			}
 		});
 		
@@ -80,7 +80,7 @@
 			
 			drawer.animate({
 				duration:$$.animationDuration,
-				bottom:30
+				bottom:40
 			}, function() {
 				Ti.App.fireEvent('app:drawer.opened');
 			});

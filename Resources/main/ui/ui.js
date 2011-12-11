@@ -363,17 +363,28 @@
 			message:_message
 		}).show();
 	};
+	
+	cm.ui.createWindowAnimation = function() {
+		var t1 = Ti.UI.create2DMatrix();
+		t1 = t1.scale(0.001);
+		var a1 = Titanium.UI.createAnimation();
+		a1.transform = t1;
+		a1.duration = $$.animationDuration;
+		return a1;
+	};
+	
 })();
 
 //Include major UI components and styling properties
 Ti.include(
 	'/main/ui/styles.js',
-	'/main/ui/LoginView.js',
+	'/main/ui/LoginWindow.js',
 	'/main/ui/LoadingView.js',
 	'/main/ui/StoresView.js',
 	'/main/ui/RewardsView.js',
 	'/main/ui/MarketView.js',
-	'/main/ui/SignupView.js',
+	'/main/ui/SignupWindow.js',
+	'/main/ui/FriendsReferWindow.js',
 	'/main/ui/ApplicationWindow.js',
 	'/main/ui/StoreDetailsWindow.js',
 	'/main/ui/RewardsRedeemWindow.js',
