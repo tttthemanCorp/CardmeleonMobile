@@ -12,15 +12,15 @@
 		
 		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
 		
-		var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
+		//var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
 		
-		var referView = createReferView(cm.combine({
-			top: $$.headerView.height + $$.subHeaderView.height,
+		var referView = createReferView(cm.combine($$.stretch, {
+			top: $$.headerView.height, // + $$.subHeaderView.height,
 			win: win
-		}, $$.empty));
+		}));
 		
 		win.add(headerView);
-		win.add(subHeaderView);
+		//win.add(subHeaderView);
 		win.add(referView);
 		
 		return win;
@@ -29,40 +29,42 @@
 	function createReferView(_args) {
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
 		
+		var tableView = Ti.UI.createTableView({
+			top: 18,
+			left: 18,
+			right: 18,
+			bottom: 86
+		});
+		view.add(tableView);
 
 		//
 		// SKIP REFER LINK
 		//
 		var skipLabel = Ti.UI.createLabel(cm.combine($$.Link, {
 			text:'or Skip??',
-			textAlign:'right',
+			textAlign:'center',
 			font:cm.combine($$.Label.font, {fontSize:14}),
-			top:146,
-			right:20
+			bottom:18
 		}));
 		view.add(skipLabel);
 
 		//
 		//  CREATE REFER BUTTON
 		//
-		var referButton = Titanium.UI.createButton(cm.combine($$.Button, {
-			image:'images/Frame_Login_OFF.png',
-			//backgroundImage:'images/Button_bg.png',
-			//title:'Log in!',
-			//borderRadius:8,
-			bottom:0,
-			left:0,
-			right:0,
-			height:36,
-			width:'auto'
-		}));
+		var referButton = Titanium.UI.createButton({
+			backgroundImage:'images/Button_Refer_OFF.png',
+			backgroundSelectedImage:'images/Button_Refer_ON.png',
+			bottom:44,
+			height:24,
+			width:90
+		});
 		view.add(referButton);	
   		
   		//
   		// Event Handling
   		//
   		referButton.addEventListener('click', function(){
-  			_args.win.close();
+  			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
   			Ti.App.fireEvent('app:friend.refer.done', {});
   			/*
 			var client = Titanium.Network.createHTTPClient();
@@ -95,7 +97,7 @@
   		
   		skipLabel.addEventListener('click', function(){
   			//alert('New user clicked!');
-  			_args.win.close();
+  			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
   			Ti.App.fireEvent('app:friend.refer.done', {});
   		});
   		

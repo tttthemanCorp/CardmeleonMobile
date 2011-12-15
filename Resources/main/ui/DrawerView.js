@@ -36,9 +36,9 @@
 			bottom:0
 		}),
 		arrow = Ti.UI.createImageView({
-			image:'images/Button_Up_ON.png',
-			height:20,
-			width:28
+			image:'images/Button_OK_OFF.png',
+			height:24,
+			width:90
 		});
 		
 		drawerView.add(backdrop);

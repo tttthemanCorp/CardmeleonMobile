@@ -11,7 +11,7 @@
 		
 		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
 		
-		var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
+		//var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
 		
 		var signupView = createSignupView(cm.combine({
 			top: $$.headerView.height + $$.subHeaderView.height,
@@ -19,7 +19,7 @@
 		}, $$.empty));
 		
 		win.add(headerView);
-		win.add(subHeaderView);
+		//win.add(subHeaderView);
 		win.add(signupView);
 		
 		return win;
@@ -50,40 +50,31 @@
  		//
 		//  CREATE SIGNUP BUTTON
 		//
-		var signupButton = Titanium.UI.createButton(cm.combine($$.Button, {
-			image:'images/Frame_Signup_OFF.png',
+		var signupButton = Titanium.UI.createButton({
+			backgroundImage:'images/Button_signup_OFF.png',
+			backgroundSelectedImage:'images/Button_signup_ON.png',
 			//backgroundImage:'images/Button_bg.png',
 			//title:'Log in!',
 			//borderRadius:8,
-			bottom:36,
-			left:0,
-			right:0,
-			height:36,
-			width:'auto'
-		}));
+			bottom:45,
+			height:25,
+			width:90
+		});
 		view.add(signupButton);	
   		
- 		//
-		//  CREATE LOGIN BUTTON
-		//
-		var loginButton = Titanium.UI.createButton(cm.combine($$.Button, {
-			image:'images/Frame_User-login_OFF.png',
-			//backgroundImage:'images/Button_bg.png',
-			//title:'Log in!',
-			//borderRadius:8,
-			bottom:0,
-			left:0,
-			right:0,
-			height:36,
-			width:'auto'
+		var loginLink = Ti.UI.createLabel(cm.combine($$.Link, {
+			text:'Existing User Login',
+			textAlign:'center',
+			font:cm.combine($$.Label.font, {fontSize:14}),
+			bottom:16
 		}));
-		view.add(loginButton);	
+		view.add(loginLink);
   		
   		//
   		// Event Handling
   		//
   		signupButton.addEventListener('click', function(){
-  			_args.win.close();
+  			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
   			Ti.App.fireEvent('app:user.signup.succeed', {});
   			/*
 			var client = Titanium.Network.createHTTPClient();
@@ -114,9 +105,9 @@
 			*/
   		});
   		
-  		loginButton.addEventListener('click', function(){
+  		loginLink.addEventListener('click', function(){
 			//cm.ui.alert("Existing User Login button clicked");
-			_args.win.close();
+			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
 			Ti.App.fireEvent('app:user.signup.existing', {});
   		});
   		

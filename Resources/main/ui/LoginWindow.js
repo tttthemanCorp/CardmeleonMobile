@@ -11,7 +11,7 @@
 		
 		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
 		
-		var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
+		//var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
 		
 		var loginView = createLoginView(cm.combine({
 			top: $$.headerView.height + $$.subHeaderView.height,
@@ -19,7 +19,7 @@
 		}, $$.empty));
 		
 		win.add(headerView);
-		win.add(subHeaderView);
+		//win.add(subHeaderView);
 		win.add(loginView);
 		
 		return win;
@@ -31,7 +31,7 @@
 		var fieldvalues = ['', ''];
 		var labelinputs = cm.ui.createLabelInputView(
 			{label: {x_offset: 0, y_offset: -24, texts: ['Username or Phone', 'Password']}, 
-			 input: {top_start: 96, left: 20, right: 20, spacing: 84}},
+			 input: {top_start: 72, left: 20, right: 20, spacing: 84}},
 			fieldvalues
 		);
 		view.add(labelinputs);
@@ -43,7 +43,7 @@
 			text:'New user?',
 			textAlign:'right',
 			font:cm.combine($$.Label.font, {fontSize:14}),
-			top:146,
+			top:126,
 			right:20
 		}));
 		view.add(newuserLabel);
@@ -55,7 +55,7 @@
 			text:'Forgot password?',
 			textAlign:'right',
 			font:cm.combine($$.Link.font, {fontSize:14}),
-			top:266,
+			top:246,
 			right:20
 		}));
 		view.add(forgotpwdLabel);
@@ -63,24 +63,23 @@
 		/{}/
 		//  CREATE LOGIN BUTTON
 		//
-		var loginButton = Titanium.UI.createButton(cm.combine($$.Button, {
-			image:'images/Frame_Login_OFF.png',
+		var loginButton = Titanium.UI.createButton({
+			backgroundImage:'images/Button_Login_OFF.png',
+			backgroundSelectedImage:'images/Button_Login_ON.png',
 			//backgroundImage:'images/Button_bg.png',
 			//title:'Log in!',
 			//borderRadius:8,
-			bottom:0,
-			left:0,
-			right:0,
-			height:36,
-			width:'auto'
-		}));
+			bottom:55,
+			height:24,
+			width:90
+		});
 		view.add(loginButton);	
   		
   		//
   		// Event Handling
   		//
   		loginButton.addEventListener('click', function(){
-  			_args.win.close();
+  			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
   			Ti.App.fireEvent('app:user.login.succeed', {});
   			/*
 			var client = Titanium.Network.createHTTPClient();
@@ -113,7 +112,7 @@
   		
   		newuserLabel.addEventListener('click', function(){
   			//alert('New user clicked!');
-  			_args.win.close();
+  			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
   			Ti.App.fireEvent('app:user.login.new', {});
   		});
   		

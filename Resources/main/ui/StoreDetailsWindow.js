@@ -149,54 +149,6 @@
 		return view;
 	}
 	
-	function createReviewStars(_args) {
-		var model = _args.model;
-		var view = Ti.UI.createView(_args);
-		
-		var p = Math.floor(model.rating);
-		var n = 5 - Math.ceil(model.rating);
-		var h = 5 - p -n;
-		var favIcon, curPos = 0;
-		for (var i = 0; i < p; i++) {
-			favIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Favorite_ON.png',
-				top:0,
-				left:curPos * 21,
-				width:18,
-				height:18,
-				clickName:'favIcon'
-			});
-			view.add(favIcon);
-			curPos++;
-		}
-		for (var i = 0; i < h; i++) {
-			favIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Favorite_ON.png',  // TODO change to half star
-				top:0,
-				left: curPos * 21,
-				width:18,
-				height:18,
-				clickName:'favIcon'
-			});
-			view.add(favIcon);
-			curPos++;
-		}
-		for (var i = 0; i < n; i++) {
-			favIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Favorite_OFF.png',
-				top:0,
-				left:curPos * 21,
-				width:18,
-				height:18,
-				clickName:'favIcon'
-			});
-			view.add(favIcon);
-			curPos++;
-		}
-
-		return view;
-	}
-	
 	function createStoreReviewView(_args) {
 		var model = _args.model;
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
@@ -210,7 +162,7 @@
 			clickName:'reviewSummaryView'
 		});
 		
-		reviewSummaryView.add(createReviewStars({
+		reviewSummaryView.add(cm.ui.createReviewStars({
 			top:12,
 			left:6,
 			height:18,
