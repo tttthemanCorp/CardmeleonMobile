@@ -12,9 +12,9 @@
 			filterAttribute:'filter',
 			backgroundColor:'transparent',
 			//opacity: 0.0,
-			maxRowHeight:145,
-			minRowHeight:145,
-			style:Titanium.UI.iPhone.TableViewStyle.GROUPED,
+			maxRowHeight:98,
+			minRowHeight:98,
+			style:Titanium.UI.iPhone.TableViewStyle.PLAIN,
 			separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
 			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
 		});
@@ -29,41 +29,66 @@
 			//row.height = 145;
 			//row.width = 309;
 			row.data = item;
-			row.hasChild = true;
+			//row.hasChild = true;
+			//row.rightImage = 'images/Icon_Arrow_RT.png'
 			row.className = 'datarow';
-			row.clickName = 'row';
-			row.backgroundImage = 'images/Bgrnd_Store-Card.png';
-			row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
+			row.clickName = 'storerow';
+			//row.backgroundImage = 'images/Bgrnd_Store-Card.png';
+			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
+			//row.selectedColor = "blue";
 			//row.filter = '';
 			//row.borderWidth = 2;
 			//row.borderColor = '#006cb1';
 			
-			var moreIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Stores-More.png',
-				top:4,
-				right:4,
-				width:18,
-				height:18,
-				clickName:'moreIcon'
+			var backgroundImg = Ti.UI.createView({
+				backgroundImage:'images/Bgrnd_Store-Card.png',
+				top:1,
+				left:0,
+				width:320,
+				height:96,
+				zIndex: 1
 			});
-			row.add(moreIcon);
+			row.add(backgroundImg);
+			
+			var storeIcon = Ti.UI.createView({
+				backgroundImage:'images/Bgrnd_Store-Progress-bar_OFF.png',  // TODO - from data
+				top:12,
+				left:12,
+				width:48,
+				height:48,
+				clickName:'storeIcon',
+				zIndex: 3
+			});
+			row.add(storeIcon);
 			
 			var favIcon = Ti.UI.createView({
 				backgroundImage:'images/Icon_Favorite_ON.png',
-				top:4,
-				right:28,
+				top:5,
+				right:4,
 				width:18,
 				height:18,
-				clickName:'favIcon'
+				clickName:'favIcon',
+				zIndex: 3
 			});
 			row.add(favIcon);
 			
+			var arrowIcon = Ti.UI.createView({
+				backgroundImage:'images/Icon_Arrow_RT.png',
+				top:43,
+				right:4,
+				width:12,
+				height:20,
+				clickName:'arrowIcon',
+				zIndex: 3
+			});
+			row.add(arrowIcon);
+			
 			var progressOnIcon = Ti.UI.createView({
 				backgroundImage:'images/Bgrnd_Store-Progress-bar_ON.png',
-				top:50,
-				left:12,
+				top:36,
+				left:70,
 				width:38,  // TODO real data change
-				height:32,
+				height:22,
 				clickName:'progressOnIcon',
 				zIndex: 5
 			});
@@ -71,63 +96,28 @@
 			
 			var progressOffIcon = Ti.UI.createView({
 				backgroundImage:'images/Bgrnd_Store-Progress-bar_OFF.png',
-				top:50,
-				left:12,
-				width:276,
-				height:32,
-				clickName:'progressOnIcon',
+				top:36,
+				left:70,
+				width:220,
+				height:22,
+				clickName:'progressOffIcon',
 				zIndex: 3
 			});
 			row.add(progressOffIcon);
 		
 			var storeName = Ti.UI.createLabel(cm.combine($$.Label, {
 				color:'#8CC841',
-				font:{fontStyle:'normal',fontSize:16},
-				left:12,
+				font:{fontStyle:'normal',fontSize:14,fontWeight:'bold'},
+				left:70,
 				top:12,
 				height:'auto',
 				width:'auto',
 				clickName:'storeName',
-				text:item.storeName  // TODO change
+				text:item.storeName,  // TODO change
+				zIndex: 3
 			}));
 			row.add(storeName);
-			
-			var rewards = Ti.UI.createLabel(cm.combine($$.Label, {
-				color:'#999999',
-				font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
-				left:12,
-				top:32,
-				height:'auto',
-				width:'auto',
-				clickName:'rewards',
-				text:item.numRewards+' of rewards gained'  // TODO change
-			}));
-			row.add(rewards);
-			
-			var purchases = Ti.UI.createLabel(cm.combine($$.Label, {
-				color:'#8CC841',
-				font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
-				left:12,
-				top:84,
-				height:'auto',
-				width:'auto',
-				clickName:'purchases',
-				text:item.numPurchases+' of purchases left to earn a reward'  // TODO change
-			}));
-			row.add(purchases);
-			
-			var marketMsg = Ti.UI.createLabel(cm.combine($$.Label, {
-				color:'#999999',
-				font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
-				left:12,
-				top:102,
-				height:'auto',
-				width:'auto',
-				clickName:'marketMsg',
-				text:'Can\'t wait? Find a deal from the Market!'  // TODO change
-			}));
-			row.add(marketMsg);
-			
+
 			var phone = Ti.UI.createLabel(cm.combine($$.Link, {
 				color:'#0087A0',
 				font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
@@ -136,7 +126,8 @@
 				height:'auto',
 				width:'auto',
 				clickName:'phone',
-				text:item.phone  // TODO change
+				text:item.phone,  // TODO change
+				zIndex: 3
 			}));
 			row.add(phone);
 			
@@ -148,7 +139,8 @@
 				height:'auto',
 				width:'auto',
 				clickName:'distance',
-				text:item.distance  // TODO change
+				text:item.distance + " miles",  // TODO change
+				zIndex: 3
 			}));
 			row.add(distance);
 			
@@ -160,7 +152,7 @@
 		
 		tableView.setData(sectionlist);
 		
-		tableView.addEventListener('click', function(e)
+		arrowIcon.addEventListener('click', function(e)
 		{
 			Ti.API.info('table view row clicked - source ' + e.source);
 			// use rowNum property on object to get row number
