@@ -60,7 +60,7 @@
 		}));
 		view.add(forgotpwdLabel);
 		
-		/{}/
+		//
 		//  CREATE LOGIN BUTTON
 		//
 		var loginButton = Titanium.UI.createButton({

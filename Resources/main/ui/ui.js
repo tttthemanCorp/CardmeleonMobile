@@ -85,7 +85,9 @@
 		});
 		settingsIcon.addEventListener('click', function(e) {
 			Ti.API.info('settingsIcon clicked!');
-			Ti.App.fireEvent('app:show.drawer', {showing:'settings'});
+			//Ti.App.fireEvent('app:show.drawer', {showing:'settings'});
+			var win = cm.ui.createSettingsWindow();
+			win.open();
 		});
 		headerView.add(settingsIcon);
 		return headerView;
@@ -370,17 +372,23 @@
 	};
 	
 	// _args example: 
-	// {label: {x_offset: 0, y_offset: -20, texts: ['username', 'password']}, input: {top_start: 30, left: 10, right: 10, spacing: 40}}
+	//	var fieldvalues = ['', '', '', '', ''];
+	//	var labelinputs = cm.ui.createLabelInputView(
+	//		{label: {x_offset: -84, y_offset: 0, texts: ['Username', 'Password', 'New Password', 'Confirm', 'Phone']}, 
+	//		 input: {top_start: 76, left: 102, right: 18, spacing: 12}},
+	//		fieldvalues
+	//	);
+	//	view.add(labelinputs);
 	cm.ui.createLabelInputView = function(_args, fieldvalues) {
 		var view = Ti.UI.createView(cm.combine($$.stretch,_args));
 		var curFieldTopPos = _args.input.top_start,
 		curFieldLeftPos = _args.input.left;
 		for (var i = 0, l = _args.label.texts.length; i<l; i++) {
-			var label = Ti.UI.createLabel(cm.combine($$.Label, {
+			var label = Ti.UI.createLabel(cm.combine(cm.combine($$.Label, {
 				text: _args.label.texts[i],
 				top: curFieldTopPos + _args.label.y_offset,
 				left: curFieldLeftPos + _args.label.x_offset
-			}));
+				}), _args.label));
 			view.add(label);
 			
 			var field = Titanium.UI.createTextField(cm.combine($$.TextField, {
@@ -401,6 +409,68 @@
 			//Ti.API.info("i="+i+", current field top position="+curFieldTopPos);
 			curFieldTopPos += $$.TextField.height + _args.input.spacing;
 		}
+		return view;
+	};
+	
+	cm.ui.createTabbedBar = function(params) {
+		var data = params.tabs || [],
+		tabBarHeight = params.height || 36,
+		tabWidth = $$.platformWidth / data.length,
+		initBackgroundImage = params.initBackgroundImage,
+		tabView, i;
+		
+        var tabbedBar = Ti.UI.createView(cm.combine(params, {
+        	backgroundImage: initBackgroundImage,
+            height: tabBarHeight,
+            width: $$.platformWidth
+        }));
+        
+        for (i = 0; i < data.length; i++) {
+        	// create each tab bar button
+            tabView = Ti.UI.createView({
+                height: tabBarHeight,
+                left: i * tabWidth,
+                right: $$.platformWidth - ((parseInt(i) + 1) * tabWidth),
+                index: i
+            });
+
+            tabView.addEventListener('touchstart', function (e) {
+            	var index = e.source.index;
+            	tabbedBar.backgroundImage = data[index].backgroundImage;
+            });
+            tabView.addEventListener('touchend', function (e) {
+            	var index = e.source.index;
+            	data[index].handler();
+            });
+
+			// layout the tabbed bar
+            tabbedBar.add(tabView);
+        }
+        return tabbedBar;
+	};
+	
+	cm.ui.createLink = function(params) {
+		var view = Ti.UI.createView(params);
+		
+		var color = params.color || cm.ui.theme.linkColor,
+		font = params.font || {	fontFamily:cm.ui.theme.fontFamily,
+							   	fontSize:14,
+							   	fontStyle:'Italic',
+								fontWeight:'bold'
+							  };
+		var label = Ti.UI.createLabel({
+			color: color,
+			font: font,
+			touchEnabled: true,
+			top: 0,
+			left: 0,
+			width: "auto",
+			height: "auto",
+			text: params.text
+		});
+		
+		view.add(label);
+
 		return view;
 	};
 	
@@ -426,6 +496,7 @@
 //Include major UI components and styling properties
 Ti.include(
 	'/main/ui/styles.js',
+	'/main/ui/SettingsWindow.js',
 	'/main/ui/LoginWindow.js',
 	'/main/ui/LoadingView.js',
 	'/main/ui/StoresView.js',
@@ -438,7 +509,6 @@ Ti.include(
 	'/main/ui/RewardsRedeemWindow.js',
 	'/main/ui/RewardsGiftWindow.js',
 	'/main/ui/RewardsShareWindow.js',
-	'/main/ui/SettingsView.js',
 	'/main/ui/UserLevelView.js',
 	'/main/ui/DrawerView.js'
 );

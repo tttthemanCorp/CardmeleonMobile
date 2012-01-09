@@ -72,8 +72,8 @@
 		
 		xhr.onload = function () {
 			var data = [
-				{storeName:"Safeway",numRewards:3,numPurchases:5,numReviews:9,rating:2.5,phone:"408-555-8888",distance:12.3,desc:"this is a description for store"},
-				{storeName:"Outback",numRewards:6,numPurchases:2,numReviews:3,rating:4.5,phone:"408-090-4366",distance:5.8,desc:"this is a description for store"}
+				{storeName:"Safeway",numRewards:3,numPurchases:5,purchasesPerReward:9,rating:2.5,phone:"408-555-8888",distance:12.3,desc:"this is a description for store"},
+				{storeName:"Outback",numRewards:6,numPurchases:2,purchasesPerReward:3,rating:4.5,phone:"408-090-4366",distance:5.8,desc:"this is a description for store"}
 			];
 			// Once data loaded, fire event to trigger UI update
 			Ti.App.fireEvent('app:nearby.stores.loaded',{

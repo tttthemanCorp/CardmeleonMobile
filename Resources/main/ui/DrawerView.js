@@ -11,7 +11,7 @@
 		})),
 		drawer = Ti.UI.createView({
 			height:$$.platformHeight - $$.headerView.height - $$.dashView.height - 83,
-			bottom:$$.platformHeight - $$.headerView.height - $$.dashView.height - 12,
+			bottom:$$.platformHeight,  //$$.platformHeight - $$.headerView.height - $$.dashView.height - 12,
 			left:12,
 			right:12,
 			borderRadius:15,
@@ -36,9 +36,9 @@
 			bottom:0
 		}),
 		arrow = Ti.UI.createImageView({
-			image:'images/Button_OK_OFF.png',
-			height:24,
-			width:90
+			image:'images/Icon_Arrow_UP.png',
+			height:13,
+			width:20
 		});
 		
 		drawerView.add(backdrop);
@@ -52,9 +52,9 @@
 				cm.ui.createUserLevelView({
 					backgroundImage: "images/Bgrnd_User-Card.png" 
 				}),
-				cm.ui.createSettingsView({
-					backgroundColor:'white'
-				})
+				//cm.ui.createSettingsView({
+				//	backgroundColor:'white'
+				//})
 			],
 			props: {
 				top:0,
@@ -89,7 +89,7 @@
 		Ti.App.addEventListener('app:hide.drawer', function(e) {
 			drawer.animate({
 				duration:$$.animationDuration,
-				bottom:$$.platformHeight - $$.headerView.height - $$.dashView.height - 12
+				bottom:$$.platformHeight, // $$.platformHeight - $$.headerView.height - $$.dashView.height - 12
 			}, function() {
 				drawerView.visible = false;
 			});

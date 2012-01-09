@@ -32,13 +32,14 @@
 			//row.hasChild = true;
 			//row.rightImage = 'images/Icon_Arrow_RT.png'
 			row.className = 'datarow';
-			row.clickName = 'storerow';
+			//row.clickName = 'storerow';
 			//row.backgroundImage = 'images/Bgrnd_Store-Card.png';
 			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
 			//row.selectedColor = "blue";
 			//row.filter = '';
 			//row.borderWidth = 2;
 			//row.borderColor = '#006cb1';
+			row.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
 			
 			var backgroundImg = Ti.UI.createView({
 				backgroundImage:'images/Bgrnd_Store-Card.png',
@@ -83,11 +84,29 @@
 			});
 			row.add(arrowIcon);
 			
+			arrowIcon.addEventListener('click', function(e)
+			{
+				Ti.API.info('table view row clicked - source ' + e.source);
+				// use rowNum property on object to get row number
+				var rowNum = e.index;
+				Ti.API.info('You clicked on row# '+rowNum);
+				Ti.API.info('You clicked on the '+e.source.clickName);
+	            cm.navGroup.open(cm.ui.createStoreDetailsWindow({
+	            	model: e.rowData.data,
+	            	modal: true,
+	            	//barImage:$$.headerView.backgroundImage,
+	            	//backgroundColor : 'blue',
+					navBarHidden : true  // this is very important
+	            }), { animated: true });
+			});
+			
+			var progressOnLength = item.numPurchases / item.purchasesPerReward * 220;
+			
 			var progressOnIcon = Ti.UI.createView({
 				backgroundImage:'images/Bgrnd_Store-Progress-bar_ON.png',
-				top:36,
+				top:42,
 				left:70,
-				width:38,  // TODO real data change
+				width:progressOnLength,
 				height:22,
 				clickName:'progressOnIcon',
 				zIndex: 5
@@ -96,7 +115,7 @@
 			
 			var progressOffIcon = Ti.UI.createView({
 				backgroundImage:'images/Bgrnd_Store-Progress-bar_OFF.png',
-				top:36,
+				top:42,
 				left:70,
 				width:220,
 				height:22,
@@ -104,12 +123,25 @@
 				zIndex: 3
 			});
 			row.add(progressOffIcon);
+			
+			var progressLabel = Ti.UI.createLabel(cm.combine($$.Label, {
+				color:'#FFFFFF',
+				font:{fontStyle:'normal',fontSize:12,fontWeight:'normal'},
+				right:45,
+				top:45,
+				height:'auto',
+				width:'auto',
+				clickName:'progressLabel',
+				text:item.numPurchases + " / " + item.purchasesPerReward,
+				zIndex: 6
+			}));
+			row.add(progressLabel);
 		
 			var storeName = Ti.UI.createLabel(cm.combine($$.Label, {
 				color:'#8CC841',
 				font:{fontStyle:'normal',fontSize:14,fontWeight:'bold'},
 				left:70,
-				top:12,
+				top:18,
 				height:'auto',
 				width:'auto',
 				clickName:'storeName',
@@ -152,21 +184,6 @@
 		
 		tableView.setData(sectionlist);
 		
-		arrowIcon.addEventListener('click', function(e)
-		{
-			Ti.API.info('table view row clicked - source ' + e.source);
-			// use rowNum property on object to get row number
-			var rowNum = e.index;
-			Ti.API.info('You clicked on row# '+rowNum);
-			Ti.API.info('You clicked on the '+e.source.clickName);
-            cm.navGroup.open(cm.ui.createStoreDetailsWindow({
-            	model: e.rowData.data,
-            	modal: true,
-            	//barImage:$$.headerView.backgroundImage,
-            	//backgroundColor : 'blue',
-				navBarHidden : true  // this is very important
-            }), { animated: true });
-		});
 	}
 	
 	//create the stores view
