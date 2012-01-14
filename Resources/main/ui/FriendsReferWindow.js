@@ -6,7 +6,7 @@
 
 	cm.ui.createFriendsReferWindow = function(_args) {
 		var win = Ti.UI.createWindow(cm.combine($$.Window,{
-			exitOnClose:true,
+			exitOnClose:false,
 			orientationModes:[Ti.UI.PORTRAIT]
 		}));
 		
@@ -52,8 +52,8 @@
 		//  CREATE REFER BUTTON
 		//
 		var referButton = Titanium.UI.createButton({
-			backgroundImage:'images/Button_Refer_OFF.png',
-			backgroundSelectedImage:'images/Button_Refer_ON.png',
+			backgroundImage:'/images/Button_Refer_OFF.png',
+			backgroundSelectedImage:'/images/Button_Refer_ON.png',
 			bottom:44,
 			height:24,
 			width:90
@@ -64,8 +64,14 @@
   		// Event Handling
   		//
   		referButton.addEventListener('click', function(){
-  			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+			if (Ti.Platform.osname == 'android') {
+				_args.win.close({animated:true});
+			} else {
+				_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+			}
+  			
   			Ti.App.fireEvent('app:friend.refer.done', {});
+  			
   			/*
 			var client = Titanium.Network.createHTTPClient();
 			client.onerror = function(e)
@@ -97,7 +103,12 @@
   		
   		skipLabel.addEventListener('click', function(){
   			//alert('New user clicked!');
-  			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+			if (Ti.Platform.osname == 'android') {
+				_args.win.close({animated:true});
+			} else {
+				_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+			}
+  			
   			Ti.App.fireEvent('app:friend.refer.done', {});
   		});
   		

@@ -184,12 +184,18 @@
 			text:'Facebook account',
 			color:"#FFFFFF",
 			font:{fontStyle:'normal',fontSize:12,fontWeight:'bold'},
-			bottom:86,
+			bottom:91,
 			left:196,
-			width:120,
-			height:25
+			width:110,
+			height:20
 		});
 		view.add(facebookLink);
+		
+		facebookLink.addEventListener('change',function(e)
+		{
+			Ti.API.info('facebookLink clicked!');
+			// TODO
+		});
 		
 		var twitterIcon = Ti.UI.createView({
 			backgroundImage:'images/Icon_Twitter_32.png',
@@ -204,12 +210,18 @@
 			text:'Twitter account',
 			color:"#FFFFFF",
 			font:{fontStyle:'normal',fontSize:12,fontWeight:'bold'},
-			bottom:36,
+			bottom:41,
 			left:196,
-			width:120,
-			height:25
+			width:95,
+			height:20
 		});
 		view.add(twitterLink);
+		
+		twitterLink.addEventListener('change',function(e)
+		{
+			Ti.API.info('twitterLink clicked!');
+			// TODO
+		});
 		
 		var buttons = cm.ui.createTabbedBar({
 			bottom: 0,

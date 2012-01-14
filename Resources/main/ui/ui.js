@@ -451,25 +451,28 @@
 	
 	cm.ui.createLink = function(params) {
 		var view = Ti.UI.createView(params);
-		
-		var color = params.color || cm.ui.theme.linkColor,
-		font = params.font || {	fontFamily:cm.ui.theme.fontFamily,
-							   	fontSize:14,
-							   	fontStyle:'Italic',
-								fontWeight:'bold'
-							  };
-		var label = Ti.UI.createLabel({
-			color: color,
-			font: font,
+
+		var label = Ti.UI.createLabel(cm.combine(params, {
 			touchEnabled: true,
 			top: 0,
+			right: 0,
+			bottom: 4,
 			left: 0,
 			width: "auto",
-			height: "auto",
-			text: params.text
+			height: "auto"
+		}));
+		
+		var line = Ti.UI.createView({
+			borderColor:params.color || $$.linkColor,
+			borderWidth:2,
+			bottom:2,
+			left:0,
+			width:params.width,
+			height:1
 		});
 		
 		view.add(label);
+		view.add(line);
 
 		return view;
 	};

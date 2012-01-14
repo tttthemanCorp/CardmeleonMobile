@@ -88,7 +88,37 @@ var cm = {};
 	};
 	
 	cm.isLoggedIn = function(_args) {
-		return false;  // TODO
+		return cm.getToken() != null;
+	};
+	
+	cm.getToken = function() {
+		return Ti.App.Properties.getString('token');
+	}
+	
+	cm.storeToken = function(token) {
+		Ti.App.Properties.setString('token', token);
+	}
+	
+	cm.restcall = function(method, url, payload, errorFunc, successFunc) {
+		var token = cm.getToken();
+		cm.restcallWithToken(method, url, payload, token, errorFunc, successFunc);
+	};
+		
+	cm.restcallWithToken = function(method, url, payload, token, errorFunc, successFunc) {
+		var client = Titanium.Network.createHTTPClient();
+		
+		client.onerror = function(e) {
+			errorFunc(e, client);
+		};
+		client.onload = function() {
+			successFunc(client);
+		};
+		
+		client.open(method,cm.config.SERVICE_ENDPOINT+'api/'+url);
+		
+		client.setRequestHeader('Authorization','Basic '+token);
+		
+		client.send(payload);
 	};
 	
 })();
