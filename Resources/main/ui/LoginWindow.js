@@ -101,6 +101,7 @@
 					Ti.API.info('User ID: '+result.id);
 					//alert("User logged in.  User ID = "+result.id);
 					cm.storeToken(token);
+					cm.storeUserID(result.id);
 					
 		 			if (Ti.Platform.osname == 'android') {
 						_args.win.close({animated:true});

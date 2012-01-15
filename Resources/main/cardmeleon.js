@@ -99,6 +99,14 @@ var cm = {};
 		Ti.App.Properties.setString('token', token);
 	}
 	
+	cm.getUserID = function() {
+		return Ti.App.Properties.getString('id');
+	}
+	
+	cm.storeUserID = function(id) {
+		Ti.App.Properties.setString('id', id);
+	}
+	
 	cm.restcall = function(method, url, payload, errorFunc, successFunc) {
 		var token = cm.getToken();
 		cm.restcallWithToken(method, url, payload, token, errorFunc, successFunc);
@@ -117,6 +125,7 @@ var cm = {};
 		client.open(method,cm.config.SERVICE_ENDPOINT+'api/'+url);
 		
 		client.setRequestHeader('Authorization','Basic '+token);
+		client.setRequestHeader('Content-Type','application/json');
 		
 		client.send(payload);
 	};

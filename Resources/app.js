@@ -63,7 +63,8 @@ Ti.App.addEventListener('app:friend.refer.done', function(e) {
 if (!cm.isLoggedIn()) {
 	Ti.App.fireEvent('app:user.signup.existing', {});	
 } else {
-	Ti.App.fireEvent('app:friend.refer.done', {});
+	//Ti.App.fireEvent('app:friend.refer.done', {});
+	Ti.App.fireEvent('app:user.login.succeed', {});
 }
 
 //initialize Twitter goodness and let folks know most of the awesomeness will not be available offline

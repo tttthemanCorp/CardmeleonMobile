@@ -26,9 +26,95 @@
 		return win;
 	};
 	
+	function setContactTableData(tableView, contacts, items) {
+		var rowlist = [], row, contact, data;
+		
+		for (var i = 0, l = contacts.length; i<l; i++) {
+			contact = contacts[i];
+			
+			var phone = contact.getPhone();
+			var phonenumber = phone['iPhone'];
+			if (phonenumber == null || phonenumber.length == 0) {
+				phonenumber = phone['mobile'];
+			}
+			if (phonenumber == null || phonenumber.length == 0) {
+				phonenumber = phone['main'];
+			}
+			if (phonenumber == null || phonenumber.length == 0) {
+				phonenumber = phone['home'];
+			}
+			if (phonenumber == null || phonenumber.length == 0) {
+				phonenumber = phone['work'];
+			}
+			if (phonenumber == null || phonenumber.length == 0) {
+				phonenumber = phone['other'];
+			}
+			if (phonenumber == null || phonenumber.length == 0) {
+				continue;
+			}
+			var name = contact.getFullName();
+
+			row = Ti.UI.createTableViewRow();
+			//row.height = 145;
+			//row.width = 309;
+			//row.hasChild = true;
+			//row.rightImage = 'images/Icon_Arrow_RT.png'
+			row.className = 'contact';
+			//row.clickName = 'storerow';
+			//row.backgroundImage = 'images/Bgrnd_Store-Card.png';
+			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
+			//row.selectedColor = "blue";
+			//row.filter = '';
+			//row.borderWidth = 2;
+			//row.borderColor = '#006cb1';
+			row.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
+			
+			data = {checked:false, contactName:name, contactPhone:phonenumber[0]};
+			
+			var checkbox = cm.ui.createCheckbox({
+				top:7,
+				left:7,
+				model:data
+			});
+			row.add(checkbox);
+			
+			var nameLabel = Ti.UI.createLabel(cm.combine($$.Label, {
+				color:'#0087A0',
+				font:{fontStyle:'normal',fontSize:16,fontWeight:'bold'},
+				left:47,
+				top:12,
+				height:'auto',
+				width:'auto',
+				clickName:'nameLabel',
+				text:name
+			}));
+			row.add(nameLabel);
+			Ti.API.info('name: '+name);
+		
+			var phoneLabel = Ti.UI.createLabel(cm.combine($$.Label, {
+				color:'#0087A0',
+				font:{fontStyle:'normal',fontSize:16,fontWeight:'bold'},
+				left:160,
+				top:12,
+				height:'auto',
+				width:'auto',
+				clickName:'phoneLabel',
+				text:phonenumber[0]
+			}));
+			row.add(phoneLabel);
+			Ti.API.info('phone: '+phonenumber[0]);
+			
+			rowlist.push(row);
+			items.push(data);
+		}
+		
+		tableView.setData(rowlist);
+	}
+	
 	function createReferView(_args) {
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
 		
+		var items = [];
 		var tableView = Ti.UI.createTableView({
 			top: 18,
 			left: 18,
@@ -36,6 +122,9 @@
 			bottom: 86
 		});
 		view.add(tableView);
+		
+		var contacts = Ti.Contacts.getAllPeople();
+		setContactTableData(tableView, contacts, items);
 
 		//
 		// SKIP REFER LINK
@@ -64,41 +153,40 @@
   		// Event Handling
   		//
   		referButton.addEventListener('click', function(){
-			if (Ti.Platform.osname == 'android') {
-				_args.win.close({animated:true});
-			} else {
-				_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+  			var payloadObjs = [], payload, item;
+  			var userId = cm.getUserID();
+  			for (var i = 0, l = items.length; i<l; i++) {
+  				item = items[i];
+  				if (item.checked == false) continue;
+	  			payloadObj = {referee_name:item.contactName, refer_method:1};
+	  			payloadObjs.push(payloadObj);
 			}
-  			
-  			Ti.App.fireEvent('app:friend.refer.done', {});
-  			
-  			/*
-			var client = Titanium.Network.createHTTPClient();
-			client.onerror = function(e)
-			{
-				Ti.API.error(e.error + "\nResponse: " + this.responseText);
-				if (this.status == 401) {
-					alert('Wrong Username or Password!');
-				} else {
-					alert("Server connection failure!");
+			
+			var payload = JSON.stringify(payloadObjs);
+			cm.restcall('POST', 'users/'+userId+'/refer', payload,
+				function(e, client)
+				{
+					Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+					alert(e.error + "\nResponse: " + client.responseText);
+				},
+				function(client)
+				{
+					result = JSON.parse(client.responseText);
+					for (var i = 0, l = result.length; i < l; i++) {
+						Ti.API.info('Referral Code for '+result[i].referee_name+': '+result[i].refer_code);
+					}
+					
+					// TODO: send SMS
+					
+					if (Ti.Platform.osname == 'android') {
+						_args.win.close({animated:true});
+					} else {
+						_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+					}
+		  			
+		  			Ti.App.fireEvent('app:friend.refer.done', {});
 				}
-				Ti.App.fireEvent('app:user.refer.done', {});
-			};
-			client.onload = function()
-			{
-				result = JSON.parse(this.responseText);
-				Ti.API.info('User ID: '+result.id);
-				//alert("User logged in.  User ID = "+result.id);
-				Ti.App.fireEvent('app:user.refer.done', {});
-			};
-
-			client.open('GET',cm.config.SERVICE_ENDPOINT+'api/auth');
-
-			//cm.ui.alert(fieldvalues[0]+':'+fieldvalues[1]);
-			client.setRequestHeader('Authorization','Basic '+Ti.Utils.base64encode(fieldvalues[0]+':'+fieldvalues[1]));
-	
-			client.send();
-			*/
+			);
   		});
   		
   		skipLabel.addEventListener('click', function(){

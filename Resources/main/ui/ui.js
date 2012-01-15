@@ -477,6 +477,49 @@
 		return view;
 	};
 	
+	cm.ui.createCheckbox = function(params) {
+		var model = params.model;
+		
+		var checkbox = Ti.UI.createButton(cm.combine(params, {
+		    title: '',
+		    width: 30,
+		    height: 30,
+		    borderColor: '#666',
+		    borderWidth: 2,
+		    borderRadius: 15,
+		    backgroundColor: '#aaa',
+		    backgroundImage: 'none',
+		    color: '#fff',
+		    font:{fontSize: 25, fontWeight: 'bold'},
+		    value: false //value is a custom property in this casehere.
+		}));
+		 
+		//Attach some simple on/off actions
+		checkbox.on = function() {
+		    this.backgroundColor = '#159902';
+		    this.title = '\u2713';
+		    this.value = true;
+		    model.checked = true;
+		};
+		 
+		checkbox.off = function() {
+		    this.backgroundColor = '#aaa';
+		    this.title = '';
+		    this.value = false;
+		    model.checked = false;
+		};
+		 
+		checkbox.addEventListener('click', function(e) {
+		    if(false == e.source.value) {
+		        e.source.on();
+		    } else {
+		        e.source.off();
+		    }
+		});
+		
+		return checkbox;
+	};
+	
 	//shorthand for alert dialog
 	cm.ui.alert = function(/*String*/ _title, /*String*/ _message) {
 		Ti.UI.createAlertDialog({
