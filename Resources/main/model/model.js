@@ -4,7 +4,7 @@
 
 (function() {
 	cm.model = {
-
+		NEARBY_RADIUS:'nearby_radius',
 	};
 	
 	cm.model.requestStoreDetails = function(_args) {
@@ -58,31 +58,74 @@
 		
 		// Get the data
 		xhr.send();
-	}
+	};
+	
+	cm.model.requestUserInfo = function(_args) {
+		Ti.API.info("User Info Requested!");
+		
+		cm.restcall("GET", "users/"+cm.getUserID(), null, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				alert("User Info Data Not Available", e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				result = JSON.parse(client.responseText);
+				cm.model.userinfo = result;
+				
+				// init settings properties
+				var radius = result.pref.nearby_radius;
+				if (radius == null) radius = 5.0;
+				Ti.App.Properties.setDouble(cm.model.NEARBY_RADIUS, radius);
+				
+				// Once data loaded, fire event to trigger other actions
+				Ti.App.fireEvent('app:userinfo.loaded',{});
+			}
+		);
+	};
 	
 	cm.model.requestNearbyStores = function(_args) {
 		Ti.API.info("Nearby Stores Requested!");
-		var xhr = Ti.Network.createHTTPClient();
-		xhr.timeout = 10000;
-		xhr.open("GET", 'http://www.google.com');
 		
-		xhr.onerror = function (e) {
-			cm.ui.alert('Network Error',e.error);
-		};
-		
-		xhr.onload = function () {
-			var data = [
-				{storeName:"Safeway",numRewards:3,numPurchases:5,purchasesPerReward:9,rating:2.5,phone:"408-555-8888",distance:12.3,desc:"this is a description for store"},
-				{storeName:"Outback",numRewards:6,numPurchases:2,purchasesPerReward:3,rating:4.5,phone:"408-090-4366",distance:5.8,desc:"this is a description for store"}
-			];
-			// Once data loaded, fire event to trigger UI update
-			Ti.App.fireEvent('app:nearby.stores.loaded',{
-				data:data
-			});
-		};
-		
-		// Get the data
-		xhr.send();
+		var radius = Ti.App.Properties.getDouble(cm.model.NEARBY_RADIUS);
+		cm.restcall("GET", "stores/prox/"+cm.getLongitude()+","+cm.getLatitude()+","+radius, null, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				alert("Nearby Stores Data Not Available", e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				var result = JSON.parse(client.responseText);
+				cm.model.stores = result;
+				
+				var data = [], storeItem, resultItem, storeId, progressList, progressItem;
+				for (var i = 0, l = result.length; i < l; i++) {
+					resultItem = result[i];
+					storeItem = {};
+					storeId = resultItem.id;
+					storeItem.storeName = resultItem.name;
+					storeItem.phone = cm.formatPhoneNumber(resultItem.phone);
+					storeItem.logo = resultItem.logo;
+					storeItem.distance = resultItem.distance.toFixed(1);
+					storeItem.purchasesPerReward = resultItem.reward_trigger;
+					storeItem.numPurchases = 0;  // set initial value first, then correct it below
+					progressList = cm.model.userinfo.userprogresses;
+					for (var j = 0, m = progressList.length; j < m; j++) {
+						progressItem = progressList[j];
+						if (storeId == progressItem.merchant.id) {
+							storeItem.numPurchases = progressItem.cur_times;
+							break;
+						}
+					}
+					data.push(storeItem);
+				}
+
+				// Once data loaded, fire event to trigger UI update
+				Ti.App.fireEvent('app:nearby.stores.loaded',{data:data});
+			}
+		);
 	};
 	
 	cm.model.requestFavoritesStores = function(_args) {

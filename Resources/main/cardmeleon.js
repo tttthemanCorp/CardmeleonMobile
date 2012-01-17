@@ -87,33 +87,132 @@ var cm = {};
 		return d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
 	};
 	
+	cm.formatPhoneNumber = function(phoneStr) {
+		var p = phoneStr.replace(/[^\d]/g, '');
+		var phone = '('+p.substr(0,3)+') '+p.substr(3,3)+'-'+p.substr(6,4);
+		return phone;
+	};
+	
+	cm.getLongitude = function() {
+		return Ti.App.Properties.getDouble('longitude');
+	};
+	
+	cm.getLatitude = function() {
+		return Ti.App.Properties.getDouble('latitude');
+	};
+	
+	cm.requestGeoLocation = function() {
+		if(Ti.Platform.model == 'x86_64') {
+			var longitude = 201.32;
+			var latitude = 102.45;
+		    Ti.App.Properties.setDouble('longitude', longitude);
+		    Ti.App.Properties.setDouble('latitude', latitude);
+		    Ti.App.fireEvent('app:geoloc.available', {longitude: longitude, latitude: latitude});
+		    return;
+		}
+		
+		if (Ti.Geolocation.locationServicesEnabled === false)
+		{
+			Ti.UI.createAlertDialog({title:'Cardmeleon', message:'Your device has geo location service turned off'}).show();
+		}
+		else
+		{
+			if (Ti.Platform.name != 'android') {
+				var authorization = Ti.Geolocation.locationServicesAuthorization;
+				Ti.API.info('Authorization: '+authorization);
+				if (authorization == Ti.Geolocation.AUTHORIZATION_DENIED) {
+					Ti.UI.createAlertDialog({
+						title:'Cardmeleon',
+						message:'You have disallowed Titanium from running geolocation services.'
+					}).show();
+				}
+				else if (authorization == Ti.Geolocation.AUTHORIZATION_RESTRICTED) {
+					Ti.UI.createAlertDialog({
+						title:'Cardmeleon',
+						message:'Your system has disallowed Titanium from running geolocation services.'
+					}).show();
+				}
+			}
+			
+			Ti.Geolocation.preferredProvider = "gps";
+			Ti.Geolocation.purpose = "Find nearby merchants and rewards";
+			Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
+			Ti.Geolocation.distanceFilter = 10;
+		
+			Ti.Geolocation.getCurrentPosition(function(e)
+			{
+				var longitude = e.coords.longitude;
+				var latitude = e.coords.latitude;
+				var altitude = e.coords.altitude;
+				var heading = e.coords.heading;
+				var accuracy = e.coords.accuracy;
+				var speed = e.coords.speed;
+				var timestamp = e.coords.timestamp;
+				var altitudeAccuracy = e.coords.altitudeAccuracy;
+				
+				Ti.API.info('speed ' + speed);
+				Ti.API.info('geo - current location: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
+			});
+			
+			var locationCallback = function(e)
+			{
+				var longitude = e.coords.longitude;
+				var latitude = e.coords.latitude;
+				var altitude = e.coords.altitude;
+				var heading = e.coords.heading;
+				var accuracy = e.coords.accuracy;
+				var speed = e.coords.speed;
+				var timestamp = e.coords.timestamp;
+				var altitudeAccuracy = e.coords.altitudeAccuracy;
+		
+				Ti.API.info('geo - location updated: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
+				
+			    Ti.App.Properties.setDouble('longitude', longitude);
+			    Ti.App.Properties.setDouble('latitude', latitude);
+				Ti.App.fireEvent('app:geoloc.available', {longitude: longitude, latitude: latitude});
+				
+				Ti.Geolocation.removeEventListener('location', locationCallback);
+			};
+			Ti.Geolocation.addEventListener('location', locationCallback);
+		}
+	};
+		
 	cm.isLoggedIn = function(_args) {
 		return cm.getToken() != null;
 	};
 	
-	cm.getToken = function() {
-		return Ti.App.Properties.getString('token');
+	cm.login = function(token, id, name) {
+		Ti.App.Properties.setString('token', token);
+		Ti.App.Properties.setString('id', id);
+		Ti.App.Properties.setString('login', name);
 	}
 	
-	cm.storeToken = function(token) {
-		Ti.App.Properties.setString('token', token);
+	cm.logout = function() {
+		Ti.App.Properties.removeProperty('token');
+		Ti.App.Properties.removeProperty('id');
+		Ti.App.Properties.removeProperty('login');
+	}
+	
+	cm.getToken = function() {
+		return Ti.App.Properties.getString('token');
 	}
 	
 	cm.getUserID = function() {
 		return Ti.App.Properties.getString('id');
 	}
 	
-	cm.storeUserID = function(id) {
-		Ti.App.Properties.setString('id', id);
+	cm.getUserName = function() {
+		return Ti.App.Properties.getString('login');
 	}
 	
-	cm.restcall = function(method, url, payload, errorFunc, successFunc) {
+	cm.restcall = function(method, urlpath, payload, errorFunc, successFunc) {
 		var token = cm.getToken();
-		cm.restcallWithToken(method, url, payload, token, errorFunc, successFunc);
+		cm.restcallWithToken(method, urlpath, payload, token, errorFunc, successFunc);
 	};
 		
-	cm.restcallWithToken = function(method, url, payload, token, errorFunc, successFunc) {
-		var client = Titanium.Network.createHTTPClient();
+	cm.restcallWithToken = function(method, urlpath, payload, token, errorFunc, successFunc) {
+		var client = Ti.Network.createHTTPClient();
+		client.timeout = 10000;
 		
 		client.onerror = function(e) {
 			errorFunc(e, client);
@@ -122,12 +221,16 @@ var cm = {};
 			successFunc(client);
 		};
 		
-		client.open(method,cm.config.SERVICE_ENDPOINT+'api/'+url);
+		client.open(method,cm.config.SERVICE_ENDPOINT+'api/'+urlpath);
 		
 		client.setRequestHeader('Authorization','Basic '+token);
 		client.setRequestHeader('Content-Type','application/json');
 		
 		client.send(payload);
+	};
+	
+	cm.getImageUrl = function(urlpath) {
+		return cm.config.SERVICE_ENDPOINT+'image/'+urlpath;
 	};
 	
 })();

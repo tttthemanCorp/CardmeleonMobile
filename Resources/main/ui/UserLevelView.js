@@ -10,13 +10,9 @@
 		
 		var contentView = Ti.UI.createScrollView(cm.combine($$.stretch, {
 			scrollType: "vertical",
-			//borderWidth:2,
-			//borderColor:'#006cb1',
-			//backgroundColor:"yellow",
 			showVerticalScrollIndicator:true,
-			zoomScale:1.5,
-			contentHeight:200,
-			bottom: 40
+			contentHeight:'auto',
+			bottom: 30
 		}));
 
 		// level 1
@@ -177,7 +173,7 @@
 			height:'auto',
 			width:'auto',
 			clickName:'details',
-			text:'This is the details for this special deal: blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah'  // TODO change
+			text:'This is the details for this special deal: blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah\n\nThis is the details for this special deal: blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah\n\nThis is the details for this special deal: blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah\n\n\n'  // TODO change
 		}));
 		contentView.add(details);
 		

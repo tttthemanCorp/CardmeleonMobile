@@ -87,7 +87,12 @@
 			Ti.API.info('settingsIcon clicked!');
 			//Ti.App.fireEvent('app:show.drawer', {showing:'settings'});
 			var win = cm.ui.createSettingsWindow();
-			win.open();
+			//if (Ti.Platform.osname == 'android') {
+			//	win.open({animated:true});
+			//} else {
+			//	win.open({transition:Ti.UI.iPhone.AnimationStyle.CURL_DOWN});
+			//}
+			win.open({animated:true});
 		});
 		headerView.add(settingsIcon);
 		return headerView;
@@ -126,6 +131,17 @@
 		});
 		dashView.add(dollarIcon);
 		
+		var dollarLabel = Ti.UI.createLabel(cm.combine($$.Label, {
+			color:'#FFFFFF',
+			font:{fontStyle:'normal',fontSize:14,fontWeight:'normal'},
+			text: '',
+			top: 9,
+			left: 223,
+			zIndex: 2
+		}));
+		dashView.add(dollarLabel);
+		dashView.dollarLabel = dollarLabel;
+
 		var userlevelIcon = Ti.UI.createImageView({
 			top: 6,
 			right: 160,
@@ -141,7 +157,7 @@
 		dashView.add(userlevelIcon);
 		
 		var userLabel = Ti.UI.createLabel(cm.combine($$.Label, {
-			text: 'user name',  // TODO change
+			text: cm.getUserName(),
 			top: 9,
 			left: 18
 		}));

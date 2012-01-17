@@ -275,7 +275,7 @@
 			}));
 			row.add(reviewText);
 			
-			var stars = createReviewStars({
+			var stars = cm.ui.createReviewStars({
 				top:72,
 				left:12,
 				height:18,

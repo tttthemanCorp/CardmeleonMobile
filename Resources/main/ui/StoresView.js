@@ -51,8 +51,9 @@
 			});
 			row.add(backgroundImg);
 			
-			var storeIcon = Ti.UI.createView({
-				backgroundImage:'images/Bgrnd_Store-Progress-bar_OFF.png',  // TODO - from data
+			var storeIcon = Ti.UI.createImageView({
+				//backgroundImage:'images/Icon_No-Avatar.png',
+				image:cm.getImageUrl(item.logo),
 				top:12,
 				left:12,
 				width:48,
@@ -63,7 +64,7 @@
 			row.add(storeIcon);
 			
 			var favIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Favorite_ON.png',
+				backgroundImage:'images/Icon_Favorite_ON.png',  // TODO
 				top:5,
 				right:4,
 				width:18,
@@ -145,7 +146,7 @@
 				height:'auto',
 				width:'auto',
 				clickName:'storeName',
-				text:item.storeName,  // TODO change
+				text:item.storeName,
 				zIndex: 3
 			}));
 			row.add(storeName);
@@ -158,7 +159,7 @@
 				height:'auto',
 				width:'auto',
 				clickName:'phone',
-				text:item.phone,  // TODO change
+				text:item.phone,
 				zIndex: 3
 			}));
 			row.add(phone);
@@ -171,7 +172,7 @@
 				height:'auto',
 				width:'auto',
 				clickName:'distance',
-				text:item.distance + " miles",  // TODO change
+				text:item.distance + " miles",
 				zIndex: 3
 			}));
 			row.add(distance);
@@ -216,8 +217,11 @@
 */
 
 		// request remote data
-		cm.model.requestNearbyStores();
-		cm.model.requestFavoritesStores();
+		Ti.App.addEventListener('app:userinfo.loaded', function(e) {
+			dashView.dollarLabel.text = cm.model.userinfo.userpoint.points;
+			cm.model.requestNearbyStores();
+			cm.model.requestFavoritesStores();
+		});
 
 		var viewData = [{ // Nearby
         	view: createStoreTable(),

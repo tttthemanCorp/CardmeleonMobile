@@ -8,7 +8,8 @@
 	cm.ui.createSettingsWindow = function(_args) {
 		var win = Ti.UI.createWindow(cm.combine($$.Window,{
 			exitOnClose:true,
-			orientationModes:[Ti.UI.PORTRAIT]
+			orientationModes:[Ti.UI.PORTRAIT],
+			modal: true
 		}));
 		
 		var scrollView = Titanium.UI.createScrollView(cm.combine($$.stretch, {
@@ -32,7 +33,10 @@
 		
 		logoutButton.addEventListener('click', function(e) {
 			Ti.API.info('logoutButton clicked!');
-			// TODO
+			cm.logout();
+			win.close({animated:true});
+			cm.app.mainWindow.close();
+			Ti.App.fireEvent('app:user.signup.existing', {});
 		});
 		
 		var settingsView = createSettingsView(cm.combine({

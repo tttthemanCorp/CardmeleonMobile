@@ -10,13 +10,15 @@
 			opacity:0.5
 		})),
 		drawer = Ti.UI.createView({
-			height:$$.platformHeight - $$.headerView.height - $$.dashView.height - 83,
+			borderWidth:2,
+			borderColor:'#9FD1F5', //"#AADCD7",
+			height:$$.platformHeight - 80,
 			bottom:$$.platformHeight,  //$$.platformHeight - $$.headerView.height - $$.dashView.height - 12,
 			left:12,
 			right:12,
 			borderRadius:15,
-			//backgroundColor:'#efefef',
 			zIndex:2,
+		    //backgroundColor:'#efefef',
 			//gradient will only work on iOS
 			// backgroundGradient:{
 				// type:'linear',
@@ -30,7 +32,7 @@
 		closeView = Ti.UI.createView({
 			height:30,
 			borderRadius:15,
-			backgroundColor:"#AADCD7",
+			backgroundColor:'#9FD1F5', //"#AADCD7",
 			left:0,
 			right:0,
 			bottom:0
@@ -50,7 +52,8 @@
 		var stack = cm.ui.createStackView({
 			views: [
 				cm.ui.createUserLevelView({
-					backgroundImage: "images/Bgrnd_User-Card.png" 
+					backgroundColor:'#FFFFFF',
+					//backgroundImage: "images/Bgrnd_User-Card.png" 
 				}),
 				//cm.ui.createSettingsView({
 				//	backgroundColor:'white'
@@ -80,7 +83,7 @@
 			
 			drawer.animate({
 				duration:$$.animationDuration,
-				bottom:40
+				bottom:30
 			}, function() {
 				Ti.App.fireEvent('app:drawer.opened');
 			});
