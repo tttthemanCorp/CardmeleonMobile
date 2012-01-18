@@ -93,11 +93,21 @@
 	        Ti.UI.orientation = Ti.UI.PORTRAIT;
 	    }
 	    
-	    // load initial data
+	    // init default settings
+	    if (!Ti.App.Properties.hasProperty(cm.model.NEARBY_RADIUS)) {
+	    	Ti.App.Properties.setDouble(cm.model.NEARBY_RADIUS, 5.0);
+	    }
+	    
+	    // load favorites and watches locally
+	    cm.model.loadFavorites();
+	    cm.model.loadWatches();
+	    
+	    // load data remotely
 		Ti.App.addEventListener('app:geoloc.available', function(e) {
 			cm.model.requestUserInfo();
 		});
 		
+		// get GEO location
 		cm.requestGeoLocation();
 	    
 	    return win;

@@ -21,7 +21,7 @@
 	}
 	
 	function setStoreTableData(tableView, data) {
-		var sectionlist = [], row, section, item;
+		var rowlist = [], row, item;
 		
 		for (var i = 0, l = data.length; i<l; i++) {
 			item = data[i];
@@ -63,8 +63,10 @@
 			});
 			row.add(storeIcon);
 			
+			var image = 'images/Icon_Favorite_OFF.png';
+			if (item.favorite) image = 'images/Icon_Favorite_ON.png';
 			var favIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Favorite_ON.png',  // TODO
+				backgroundImage:image,
 				top:5,
 				right:4,
 				width:18,
@@ -73,6 +75,27 @@
 				zIndex: 3
 			});
 			row.add(favIcon);
+			row.favIcon = favIcon;
+			
+			favIcon.addEventListener('click', function(myitem, myfavicon) {
+				return function(e) {
+					if (!myitem.favorite) {
+						myitem.favorite = true;
+						myfavicon.backgroundImage = 'images/Icon_Favorite_ON.png';
+						cm.model.favorites.push(myitem);
+					} else {
+						myitem.favorite = false;
+						myfavicon.backgroundImage = 'images/Icon_Favorite_OFF.png';
+						for (var j = 0, m = cm.model.favorites.length; j < m; j++) {
+							if (myitem.id == cm.model.favorites[j].id) {
+								cm.model.favorites.splice(j, 1);
+							}
+						}
+						Ti.App.fireEvent('app:nearby.stores.updated', {});
+					}
+					Ti.App.fireEvent('app:fav.stores.loaded',{data:cm.model.favorites});
+				}
+			}(item, favIcon));
 			
 			var arrowIcon = Ti.UI.createView({
 				backgroundImage:'images/Icon_Arrow_RT.png',
@@ -176,14 +199,11 @@
 				zIndex: 3
 			}));
 			row.add(distance);
-			
-			section = Ti.UI.createTableViewSection();
-			section.add(row);	
-			
-			sectionlist.push(section);
+
+			rowlist.push(row);
 		}
 		
-		tableView.setData(sectionlist);
+		tableView.setData(rowlist);
 		
 	}
 	
@@ -240,6 +260,22 @@
 				}
 			}(i));
 		}
+
+		Ti.App.addEventListener('app:nearby.stores.updated', function(e) {
+			var rowList = viewData[0].view.data[0].rows;
+			for (var i = 0, l = rowList.length; i < l; i++) {
+				eachrow = rowList[i];
+				eachrow.data.favorite = false;
+				eachrow.favIcon.backgroundImage = 'images/Icon_Favorite_OFF.png';
+				for (var j = 0, m = cm.model.favorites.length; j < m; j++) {
+					if (eachrow.data.id == cm.model.favorites[j].id) {
+						eachrow.data.favorite = true;
+						eachrow.favIcon.backgroundImage = 'images/Icon_Favorite_ON.png';
+						break;
+					}
+				}
+			}
+		});
 
 		var storeView = cm.ui.createTabbedScrollableView(cm.combine($$.TabGroup,{
 			data:viewData,

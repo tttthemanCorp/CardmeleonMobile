@@ -60,6 +60,22 @@
 		xhr.send();
 	};
 	
+	cm.model.loadFavorites = function() {
+		cm.model.favorites = Ti.App.Properties.getList('store_favorites', []);
+	};
+	
+	cm.model.saveFavorites = function() {
+		Ti.App.Properties.setList('store_favorites', cm.model.favorites);
+	};
+	
+	cm.model.loadWatches = function() {
+		cm.model.watches = Ti.App.Properties.getList('store_watches', []);
+	};
+	
+	cm.model.saveWatches = function() {
+		Ti.App.Properties.setList('store_watches', cm.model.watches);
+	};
+	
 	cm.model.requestUserInfo = function(_args) {
 		Ti.API.info("User Info Requested!");
 		
@@ -76,8 +92,9 @@
 				
 				// init settings properties
 				var radius = result.pref.nearby_radius;
-				if (radius == null) radius = 5.0;
-				Ti.App.Properties.setDouble(cm.model.NEARBY_RADIUS, radius);
+				if (radius != null) {
+					Ti.App.Properties.setDouble(cm.model.NEARBY_RADIUS, radius);
+				}
 				
 				// Once data loaded, fire event to trigger other actions
 				Ti.App.fireEvent('app:userinfo.loaded',{});
@@ -103,13 +120,21 @@
 				var data = [], storeItem, resultItem, storeId, progressList, progressItem;
 				for (var i = 0, l = result.length; i < l; i++) {
 					resultItem = result[i];
-					storeItem = {};
 					storeId = resultItem.id;
+					storeItem = {};
+					storeItem.id = storeId;
 					storeItem.storeName = resultItem.name;
 					storeItem.phone = cm.formatPhoneNumber(resultItem.phone);
 					storeItem.logo = resultItem.logo;
 					storeItem.distance = resultItem.distance.toFixed(1);
 					storeItem.purchasesPerReward = resultItem.reward_trigger;
+					storeItem.favorite = false;
+					for (var j = 0, m = cm.model.favorites.length; j < m; j++) {
+						if (storeId == cm.model.favorites[j].id) {
+							storeItem.favorite = true;
+							break;
+						}
+					}
 					storeItem.numPurchases = 0;  // set initial value first, then correct it below
 					progressList = cm.model.userinfo.userprogresses;
 					for (var j = 0, m = progressList.length; j < m; j++) {
@@ -130,27 +155,8 @@
 	
 	cm.model.requestFavoritesStores = function(_args) {
 		Ti.API.info("Favorite Stores Requested!");
-		var xhr = Ti.Network.createHTTPClient();
-		xhr.timeout = 10000;
-		xhr.open("GET", 'http://www.google.com');
 		
-		xhr.onerror = function (e) {
-			cm.ui.alert('Network Error',e.error);
-		};
-		
-		xhr.onload = function () {
-			var data = [
-				{storeName:"Walmart",numRewards:12,numPurchases:9,numReviews:5,rating:1,phone:"650-423-8643",distance:9.4,desc:"this is a description for store"},
-				{storeName:"Safeway",numRewards:3,numPurchases:5,numReviews:9,rating:2.5,phone:"408-555-8888",distance:12.3,desc:"this is a description for store"}
-			];
-			// Once data loaded, fire event to trigger UI update
-			Ti.App.fireEvent('app:fav.stores.loaded',{
-				data:data
-			});
-		};
-		
-		// Get the data
-		xhr.send();
+		Ti.App.fireEvent('app:fav.stores.loaded',{data:cm.model.favorites});
 	};
 	
 	cm.model.requestNearbyRewards = function(_args) {
