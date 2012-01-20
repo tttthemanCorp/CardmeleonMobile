@@ -74,6 +74,15 @@ var cm = {};
 		}
 	};
 	
+	// (acos(sin(sLat * 0.017453292) * sin(tLat * 0.017453292) + cos(sLat * 0.017453292) * cos(tLat * 0.017453292) * cos((sLong - tLong) * 0.017453292)) * 3958.565474745)
+	cm.getDistance = function(sLong, sLat, tLong, tLat) {
+		var deltaLong = sLong - tLong;
+		var dist = Math.sin(sLat * 0.017453292) * Math.sin(tLat * 0.017453292) + 
+				   Math.cos(sLat * 0.017453292) * Math.cos(tLat * 0.017453292) * Math.cos(deltaLong * 0.017453292);
+		dist = Math.acos(dist) * 3958.565474745;
+		return dist;
+	};
+	
 	cm.sortByExpiration = function(data) {
 		return data.sort(function(a, b){
 			var ad = new Date(a.expire);
@@ -82,9 +91,26 @@ var cm = {};
 		});
 	};
 	
+	cm.sortByDistance = function(data) {
+		return data.sort(function(a, b){
+			var ad = a.distance;
+			var bd = b.distance;
+			return ad - bd;
+		});
+	};
+	
 	cm.formatDateShort = function(dateStr) {
-		var d = new Date(dateStr);
-		return d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
+		var ts = Date.parse(dateStr);
+		if (isNaN(ts)) {  // 2012-03-24, 2012-3-5, 2012-3-06
+			var tokens = dateStr.split('-');
+			var newstr = tokens[1] + "/" + tokens[2] + "/" + tokens[0];
+			return newstr;
+		} else {
+			var d = new Date(ts);
+			var month = d.getMonth() + 1;
+			var newstr = month + "/" + d.getDate() + "/" + d.getFullYear();
+			return newstr;
+		}
 	};
 	
 	cm.formatPhoneNumber = function(phoneStr) {

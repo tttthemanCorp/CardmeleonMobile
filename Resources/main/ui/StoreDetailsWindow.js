@@ -7,8 +7,8 @@
 		var model = _args.model;
 		var view = Ti.UI.createView(cm.combine($$.summaryView, _args));
        
-		var storeIcon = Ti.UI.createView({
-			backgroundImage:'images/Bgrnd_Store-Progress-bar_OFF.png',  // TODO - from data
+		var storeIcon = Ti.UI.createImageView({
+			image:cm.getImageUrl(model.logo),
 			top:6,
 			right:6,
 			width:72,
@@ -26,33 +26,35 @@
 			height:'auto',
 			width:'auto',
 			clickName:'storeName',
-			text:model.storeName,  // TODO change
+			text:model.storeName,
 			zIndex: 3
 		}));
 		view.add(storeName);
 		
-		var phone = Ti.UI.createLabel(cm.combine($$.Link, {
+		var phone = cm.ui.createLink(cm.combine($$.Link, {
 			color:'#FFFFFF',
 			font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
 			left:12,
 			top:42,
-			height:'auto',
-			width:'auto',
+			height:14,
+			width:73,
+			thickness:1,
 			clickName:'phone',
-			text:model.phone,  // TODO change
+			text:model.phone,
 			zIndex: 3
 		}));
 		view.add(phone);
 		
-		var distance = Ti.UI.createLabel(cm.combine($$.Link, {
+		var distance = cm.ui.createLink(cm.combine($$.Link, {
 			color:'#FFFFFF',
 			font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
 			left:12,
 			bottom:12,
-			height:'auto',
-			width:'auto',
+			height:14,
+			width:45,
+			thickness:1,
 			clickName:'distance',
-			text:model.distance + " miles",  // TODO change
+			text:model.distance + " miles",
 			zIndex: 3
 		}));
 		view.add(distance);
@@ -66,11 +68,13 @@
 			backgroundImage:'images/Bgrnd_Store-Basic.png'
 		}));
        
+       var progressOnLength = model.numPurchases / model.purchasesPerReward * 284;
+       
 		var progressOnIcon = Ti.UI.createView({
 			backgroundImage:'images/Bgrnd_Store-Progress-bar_ON.png',
 			top:116,
 			left:18,
-			width:38,  // TODO real data change
+			width:progressOnLength,
 			height:32,
 			clickName:'progressOnIcon',
 			zIndex: 5
@@ -96,9 +100,22 @@
 			top:24,
 			height:60,
 			clickName:'storeDesc',
-			text:model.desc  // TODO change
+			text:model.desc
 		}));
 		view.add(storeDesc);
+		
+		var progressLabel = Ti.UI.createLabel(cm.combine($$.Label, {
+			color:'#FFFFFF',
+			font:{fontStyle:'normal',fontSize:12,fontWeight:'normal'},
+			right:30,
+			top:124,
+			height:'auto',
+			width:'auto',
+			clickName:'progressLabel',
+			text:model.numPurchases + " / " + model.purchasesPerReward,
+			zIndex: 6
+		}));
+		view.add(progressLabel);
 		
 		var rewards = Ti.UI.createLabel(cm.combine($$.Label, {
 			color:'#999999',
@@ -120,17 +137,18 @@
 			height:'auto',
 			width:'auto',
 			clickName:'purchases',
-			text:model.numPurchases+' of purchases left to earn a reward'  // TODO change
+			text:(model.purchasesPerReward - model.numPurchases)+' of purchases left to earn a reward'  // TODO change
 		}));
 		view.add(purchases);
 		
-		var marketMsg = Ti.UI.createLabel(cm.combine($$.Label, {
+		var marketMsg = cm.ui.createLink(cm.combine($$.Label, {
 			color:'#0087A0',
 			font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
 			left:18,
 			top:208,
-			height:'auto',
-			width:'auto',
+			height:14,
+			width:188,
+			thickness:1,
 			clickName:'marketMsg',
 			text:'Can\'t wait? Find a deal from the Market!'  // TODO change
 		}));
@@ -145,6 +163,10 @@
 			clickName:'mapIcon'
 		});
 		view.add(mapIcon);
+		
+		mapIcon.addEventListener('click', function(e) {
+			Ti.Platform.openURL('http://maps.google.com/maps?q='+model.addr);
+		});
 			
 		return view;
 	}

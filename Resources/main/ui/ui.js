@@ -480,7 +480,7 @@
 		
 		var line = Ti.UI.createView({
 			borderColor:params.color || $$.linkColor,
-			borderWidth:2,
+			borderWidth:params.thickness || 2,
 			bottom:2,
 			left:0,
 			width:params.width,

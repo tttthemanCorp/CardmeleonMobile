@@ -94,6 +94,7 @@
 						Ti.App.fireEvent('app:nearby.stores.updated', {});
 					}
 					Ti.App.fireEvent('app:fav.stores.loaded',{data:cm.model.favorites});
+					cm.model.saveFavorites();
 				}
 			}(item, favIcon));
 			
@@ -151,7 +152,7 @@
 			var progressLabel = Ti.UI.createLabel(cm.combine($$.Label, {
 				color:'#FFFFFF',
 				font:{fontStyle:'normal',fontSize:12,fontWeight:'normal'},
-				right:45,
+				right:30,
 				top:45,
 				height:'auto',
 				width:'auto',

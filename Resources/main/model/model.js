@@ -128,6 +128,9 @@
 					storeItem.logo = resultItem.logo;
 					storeItem.distance = resultItem.distance.toFixed(1);
 					storeItem.purchasesPerReward = resultItem.reward_trigger;
+					storeItem.desc = resultItem.desc;
+					storeItem.addr = resultItem.address;
+					storeItem.numRewards = cm.model.userinfo.userrewards.length;
 					storeItem.favorite = false;
 					for (var j = 0, m = cm.model.favorites.length; j < m; j++) {
 						if (storeId == cm.model.favorites[j].id) {
@@ -161,52 +164,48 @@
 	
 	cm.model.requestNearbyRewards = function(_args) {
 		Ti.API.info("Nearby Rewards Requested!");
-		var xhr = Ti.Network.createHTTPClient();
-		xhr.timeout = 10000;
-		xhr.open("GET", 'http://www.google.com');
+
+		var userrewards = cm.model.userinfo.userrewards, reward, item, data = [];
+		for (var i = 0, l = userrewards.length; i < l; i++) {
+			item = userrewards[i];
+			reward = {};
+			reward.id = item.reward.id;
+			reward.name = item.reward.name;
+			reward.desc = item.reward.description;
+			reward.eCardmeleon = item.reward.equiv_points;
+			reward.expire = item.expiration;
+			reward.forSale = item.forsale;
+			reward.redeemCode = 'THISISATESTREDEEMCODE';  // TODO
+			reward.distance = cm.getDistance(cm.getLongitude(), cm.getLatitude(), item.reward.merchant.longitude, item.reward.merchant.latitude);
+			
+			data.push(reward);
+		}
 		
-		xhr.onerror = function (e) {
-			cm.ui.alert('Network Error',e.error);
-		};
+		cm.sortByDistance(data);
 		
-		xhr.onload = function () {
-			var data = [
-				{name:'a cup of StarBucks',eCardmeleon:30,expire:'June 4, 2012 9:10 PM',forSale:0,redeemCode:'THISISATESTREDEEMCODE'},
-				{name:'a free meal',eCardmeleon:40,expire:'April 12, 2011 2:45 AM',forSale:1,redeemCode:'289ABC523XYZ'},
-				{name:'10% off any purchase',eCardmeleon:30,expire:'June 4, 2012 11:15 AM',forSale:0,redeemCode:'KJHKSUIREJKLDSD'}
-			];
-			// Once data loaded, fire event to trigger UI update
-			Ti.App.fireEvent('app:nearby.rewards.loaded',{
-				data:data
-			});
-		};
-		
-		// Get the data
-		xhr.send();
+		// Once data loaded, fire event to trigger UI update
+		Ti.App.fireEvent('app:nearby.rewards.loaded',{data:data});
 	};
 	
-	cm.model.requestMySales = function(_args) {
-		Ti.API.info("My Sales Requested!");
-		var xhr = Ti.Network.createHTTPClient();
-		xhr.timeout = 10000;
-		xhr.open("GET", 'http://www.google.com');
+	cm.model.markForSale = function(rewardId, forsale) {
+		Ti.API.info("markForSale Requested!");
 		
-		xhr.onerror = function (e) {
-			cm.ui.alert('Network Error',e.error);
-		};
-		
-		xhr.onload = function () {
-			var data = [
-				{name:'a free meal',eCardmeleon:30,expire:'11:10 AM on March 4, 2012',forSale:0}
-			];
-			// Once data loaded, fire event to trigger UI update
-			Ti.App.fireEvent('app:my.sales.loaded',{
-				data:data
-			});
-		};
-		
-		// Get the data
-		xhr.send();
+		var req = {}, reward = {};
+		reward.id = rewardId;
+		req.forsale = forsale;
+		req.reward = reward;
+		var payload = JSON.stringify(req);
+		cm.restcall("PUT", "users/"+cm.getUserID()+"/reward", payload, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				alert("Mark ForSale flag failed", e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				Ti.API.info("markForSale succeed");
+			}
+		);
 	};
 	
 	cm.model.requestNearbyMarket = function(_args) {
