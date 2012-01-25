@@ -175,6 +175,22 @@
 			// TODO
 		});
 		
+		
+		// facebook integration
+		Ti.Facebook.appid = '324054270972428';
+		Ti.Facebook.permissions = ['publish_stream'];
+		Ti.Facebook.addEventListener('login', function(e) {
+		    if (e.success) {
+		        alert('Facebook Logged in');	        
+		    }
+		});
+		Ti.Facebook.addEventListener('logout', function(e) {
+		    alert('Facebook Logged out');
+		});
+		 
+		// add the button.  Note that it doesn't need a click event or anything.
+		view.add(Ti.Facebook.createLoginButton({ bottom:86, left:160 }));
+		/*
 		var facebookIcon = Ti.UI.createView({
 			backgroundImage:'images/Icon_Facebook_32.png',
 			bottom:86,
@@ -198,8 +214,8 @@
 		facebookLink.addEventListener('change',function(e)
 		{
 			Ti.API.info('facebookLink clicked!');
-			// TODO
 		});
+		*/
 		
 		var twitterIcon = Ti.UI.createView({
 			backgroundImage:'images/Icon_Twitter_32.png',

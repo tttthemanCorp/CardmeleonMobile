@@ -208,58 +208,97 @@
 		);
 	};
 	
+	cm.model.buyReward = function(rewardId, sellerId, desc) {
+		Ti.API.info("buyReward Requested!");
+		
+		var req = {}, reward = {}, from_user = {}; //{"reward":{"id":1}, "from_user":{'id':3}, "description":"test buy"}
+		reward.id = rewardId;
+		from_user.id = sellerId;
+		req.reward = reward;
+		req.from_user = from_user;
+		req.description = desc;
+		var payload = JSON.stringify(req);
+		cm.restcall("POST", "users/"+cm.getUserID()+"/buy", payload, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				alert("Buy reward failed", e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				Ti.API.info("buyReward succeed");
+			}
+		);
+	};
+	
 	cm.model.requestNearbyMarket = function(_args) {
 		Ti.API.info("Nearby Market Requested!");
-		var xhr = Ti.Network.createHTTPClient();
-		xhr.timeout = 10000;
-		xhr.open("GET", 'http://www.google.com');
 		
-		xhr.onerror = function (e) {
-			cm.ui.alert('Network Error',e.error);
-		};
-		
-		xhr.onload = function () {
-			var data = [
-				{name:'a cup of StarBucks',eCardmeleon:30,expire:'June 4, 2012 9:10 PM',forSale:0,watching:0},
-				{name:'a free meal',eCardmeleon:40,expire:'April 12, 2011 2:45 AM',forSale:1,watching:1},
-				{name:'10% off any purchase',eCardmeleon:30,expire:'June 4, 2012 11:15 AM',forSale:0,watching:0}
-			];
-			// Once data loaded, fire event to trigger UI update
-			Ti.App.fireEvent('app:nearby.market.loaded',{
-				data:data
-			});
-		};
-		
-		// Get the data
-		xhr.send();
+		cm.restcall("GET", "users/reward/forsell", null, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				alert("Reward for sell Not Available", e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				result = JSON.parse(client.responseText);
+				
+				var reward, item, data = [];
+				for (var i = 0, l = result.length; i < l; i++) {
+					item = result[i];
+					reward = {};
+					reward.id = item.reward.id;
+					reward.userid = item.user.id;
+					reward.username = item.user.username;
+					reward.name = item.reward.name;
+					reward.desc = item.reward.description;
+					reward.eCardmeleon = item.reward.equiv_points;
+					reward.expire = item.expiration;
+					reward.forSale = item.forsale;
+					reward.redeemCode = 'THISISATESTREDEEMCODE';  // TODO
+					reward.distance = cm.getDistance(cm.getLongitude(), cm.getLatitude(), item.reward.merchant.longitude, item.reward.merchant.latitude);
+					reward.watching = false;
+					for (var j = 0, m = cm.model.watches.length; j < m; j++) {
+						if (reward.id == cm.model.watches[j].id) {
+							reward.watching = true;
+							break;
+						}
+					}
+					
+					data.push(reward);
+				}
+				
+				cm.sortByDistance(data);
+				
+				// Once data loaded, fire event to trigger UI update
+				Ti.App.fireEvent('app:nearby.market.loaded',{data:data});
+			}
+		);
+
 	};
 	
 	cm.model.requestMyWatching = function(_args) {
-		Ti.API.info("Nearby Stores Requested!");
-		var xhr = Ti.Network.createHTTPClient();
-		xhr.timeout = 10000;
-		xhr.open("GET", 'http://www.google.com');
-		
-		xhr.onerror = function (e) {
-			cm.ui.alert('Network Error',e.error);
-		};
-		
-		xhr.onload = function () {
-			var data = [
-				{name:'a free meal',eCardmeleon:30,expire:'11:10 AM on March 4, 2012',forSale:0,watching:1}
-			];
-			// Once data loaded, fire event to trigger UI update
-			Ti.App.fireEvent('app:my.watching.loaded',{
-				data:data
-			});
-		};
-		
-		// Get the data
-		xhr.send();
+		Ti.API.info("Watching Market Requested!");
+		Ti.App.fireEvent('app:watching.market.loaded',{data:cm.model.watches});
 	};
 	
 	cm.model.redeemReward = function(userId, rewardId) {
 		// TODO
+	};
+	
+	cm.model.postToFacebook = function(message) {
+		Ti.Facebook.requestWithGraphPath('me/feed', {message: message}, "POST", function(e) {
+		    if (e.success) {
+		        alert("Success!  From FB: " + e.result);
+		    } else {
+		        if (e.error) {
+		            alert(e.error);
+		        } else {
+		            alert("Unkown result");
+		        }
+		    }
+		});	
 	};
 	
 })();

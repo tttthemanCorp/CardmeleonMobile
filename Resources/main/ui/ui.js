@@ -507,7 +507,7 @@
 		    backgroundImage: 'none',
 		    color: '#fff',
 		    font:{fontSize: 25, fontWeight: 'bold'},
-		    value: false //value is a custom property in this casehere.
+		    value: false //value is a custom property in this case here.
 		}));
 		 
 		//Attach some simple on/off actions
@@ -532,6 +532,9 @@
 		        e.source.off();
 		    }
 		});
+		
+		if (model.checked) checkbox.on();
+		else checkbox.off();
 		
 		return checkbox;
 	};

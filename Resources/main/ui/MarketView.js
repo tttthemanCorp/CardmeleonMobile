@@ -20,7 +20,7 @@
 		});
 	}
 	
-	function setMarketTableData(tableView, data) {
+	function setMarketTableData(tableView, data, index) {
 		var sectionlist = [], row, section, item;
 		
 		for (var i = 0, l = data.length; i<l; i++) {
@@ -28,7 +28,6 @@
 			row = Ti.UI.createTableViewRow();
 			//row.height = 145;
 			//row.width = 309;
-			row.data = item;
 			row.hasChild = false;
 			row.className = 'datarow';
 			row.clickName = 'row';
@@ -106,7 +105,7 @@
 				width:90,
 				height:24,
 			});
-			buyButton.addEventListener('click',function(idx)
+			buyButton.addEventListener('click',function(idx, myitem)
 			{
 				return function(e) {
 				   	Titanium.API.info("You clicked the buyButton");
@@ -118,13 +117,15 @@
 					});
 					confirmDialog.addEventListener('click', function(e)
 					{
-						   	if (e.index == 0) {
-						   		tableView.deleteRow(idx, {animate:true});
-						   	}
+					   	if (e.index == 0) { // OK
+					   		cm.model.buyReward(myitem.id, myitem.userid, 'buying a reward from smartphone');
+					   		Ti.App.fireEvent('app:geoloc.available', {longitude: cm.getLongitude(), latitude: cm.getLatitude()});
+					   		//tableView.deleteRow(idx, {animate:true});
+					   	}
 					});
 					confirmDialog.show();
 				};
-			}(i));
+			}(i, item));
 			row.add(buyButton);
 			
 			var shareButton = Titanium.UI.createButton({
@@ -150,31 +151,51 @@
 			}}(item));
 			row.add(shareButton);
 			
+			row.watching = item.watching;
+			row.data = item;
+			var image = 'images/Button_Sale_OFF.png';
+			if (item.watching) image = 'images/Button_Sale_ON.png';
 			var watchingSwitch = Titanium.UI.createButton({
-			   	backgroundImage:'images/Button_Sale_OFF.png',
+			   	backgroundImage:image,
 			   	//backgroundSelectedImage:'images/Button_Sale_ON.png',
 				right:16,
 				top:26,
 				height:18,
-				width:36,
-				value:false
+				width:36
 			});
-			watchingSwitch.addEventListener('click',function(model, sw){
-				return function(e)
-				{
-				    Titanium.API.info('forsaleSwitch value = ' + e.value + ' act val ' + sw.value);
-				    if (sw.value) {
-				    	sw.value = false;
-				    	sw.backgroundImage = 'images/Button_Sale_OFF.png';
-				    	model.watching = 0;
-				    } else {
-				    	sw.value = true;
-				    	sw.backgroundImage = 'images/Button_Sale_ON.png';
-				    	model.watching = 1;
-				    }
+			watchingSwitch.addEventListener('click', function(mywatchingswitch, myrow, myitem) {
+				return function(e) {
+					if (myrow.watching == false) {
+						myrow.watching = true;
+						myitem.watching = true;
+						mywatchingswitch.backgroundImage = 'images/Button_Sale_ON.png';
+						cm.model.watches.push(myitem);
+					} else {
+						myrow.watching = false;
+						myitem.watching = false;
+						mywatchingswitch.backgroundImage = 'images/Button_Sale_OFF.png';
+						for (var j = 0; j < cm.model.watches.length; j++) {
+							if (myitem.id == cm.model.watches[j].id && myitem.userid == cm.model.watches[j].userid) {
+								cm.model.watches.splice(j, 1);
+							}
+						}
+					}
+					if (index == 0) {
+						Ti.App.fireEvent('app:expiresoon.market.updated', {id:myitem.id, userid:myitem.userid, watching:myitem.watching});
+						Ti.App.fireEvent('app:watching.market.loaded',{data:cm.model.watches});
+					} else if (index == 1) {
+						Ti.App.fireEvent('app:nearby.market.updated', {id:myitem.id, userid:myitem.userid, watching:myitem.watching});
+						Ti.App.fireEvent('app:watching.market.loaded',{data:cm.model.watches});
+					} else {
+						Ti.App.fireEvent('app:nearby.market.updated', {id:myitem.id, userid:myitem.userid, watching:myitem.watching});
+						Ti.App.fireEvent('app:expiresoon.market.updated',{id:myitem.id, userid:myitem.userid, watching:myitem.watching});
+						Ti.App.fireEvent('app:watching.market.loaded',{data:cm.model.watches});
+					}
+					cm.model.saveWatches();
 				}
-			}(item, watchingSwitch));
+			}(watchingSwitch, row, item));
 			row.add(watchingSwitch);
+			row.watchingSwitch = watchingSwitch;
 			
 			section = Ti.UI.createTableViewSection();
 			section.add(row);	
@@ -211,36 +232,55 @@
 		view.add(dashView);
 		
 		// request remote data
-		cm.model.requestNearbyMarket();
-		cm.model.requestMyWatching();
+		Ti.App.addEventListener('app:userinfo.loaded', function(e) {
+			dashView.dollarLabel.text = cm.model.userinfo.userpoint.points;
+			cm.model.requestNearbyMarket();
+			cm.model.requestMyWatching();
+		});
 
 		var viewData = [{ // Nearby
         	view: createMarketTable(),
             tabbedBarBackgroundImage: 'images/Frame_Market-tab_Nearby.png',
-            loadEvent: 'app:nearby.market.loaded'
+            updateEvent:'app:nearby.market.updated'
         }, { // Expire Soon
             view: createMarketTable(),
             tabbedBarBackgroundImage: 'images/Frame_Market-tab_Expire.png',
-            loadEvent: null
+            updateEvent:'app:expiresoon.market.updated'
         }, { // Watching
             view: createMarketTable(),
             tabbedBarBackgroundImage: 'images/Frame_Market-tab_Watching.png',
-            loadEvent: 'app:my.watching.loaded'
+            updateEvent:null
         }];
         
 		for (i = 0, l = viewData.length; i < l; i++) {
-			if (viewData[i].loadEvent != null) {
-				Ti.App.addEventListener(viewData[i].loadEvent, function(idx) {
-					return function(e) {
-						setMarketTableData(viewData[idx].view, e.data);
-						if (idx == 0) {
-							cm.sortByExpiration(e.data);
-							setMarketTableData(viewData[1].view, e.data);
+			if (viewData[i].updateEvent == null) continue;
+			Ti.App.addEventListener(viewData[i].updateEvent, function(idx) {
+				return function(e) {
+					var sectionList = viewData[idx].view.data;
+					for (var k = 0, n = sectionList.length; k < n; k++) {
+						eachrow = sectionList[k].rows[0];
+						if (e.id == eachrow.data.id && e.userid == eachrow.data.userid) {
+							eachrow.watching = e.watching;
+							if (eachrow.watching) {
+								eachrow.watchingSwitch.backgroundImage = 'images/Button_Sale_ON.png';
+							} else {
+								eachrow.watchingSwitch.backgroundImage = 'images/Button_Sale_OFF.png';
+							}
 						}
 					}
-				}(i));
-			}
+				}
+			}(i));
 		}
+		
+        Ti.App.addEventListener('app:nearby.market.loaded', function(e) {
+        	setMarketTableData(viewData[0].view, e.data, 0);
+        	cm.sortByExpiration(e.data);
+			setMarketTableData(viewData[1].view, e.data, 1);
+        });
+        
+        Ti.App.addEventListener('app:watching.market.loaded', function(e) {
+        	setMarketTableData(viewData[2].view, e.data, 2);
+        });
 
 		var marketView = cm.ui.createTabbedScrollableView(cm.combine($$.TabGroup,{
 			data:viewData,

@@ -20,7 +20,7 @@
 		});
 	}
 	
-	function setStoreTableData(tableView, data) {
+	function setStoreTableData(tableView, data, index) {
 		var rowlist = [], row, item;
 		
 		for (var i = 0, l = data.length; i<l; i++) {
@@ -76,27 +76,32 @@
 			});
 			row.add(favIcon);
 			row.favIcon = favIcon;
+			row.favorite = item.favorite;
 			
-			favIcon.addEventListener('click', function(myitem, myfavicon) {
+			favIcon.addEventListener('click', function(myitem, myfavicon, myrow) {
 				return function(e) {
-					if (!myitem.favorite) {
+					if (!myrow.favorite) {
 						myitem.favorite = true;
+						myrow.favorite = true;
 						myfavicon.backgroundImage = 'images/Icon_Favorite_ON.png';
 						cm.model.favorites.push(myitem);
 					} else {
 						myitem.favorite = false;
+						myrow.favorite = false;
 						myfavicon.backgroundImage = 'images/Icon_Favorite_OFF.png';
-						for (var j = 0, m = cm.model.favorites.length; j < m; j++) {
+						for (var j = 0; j < cm.model.favorites.length; j++) {
 							if (myitem.id == cm.model.favorites[j].id) {
 								cm.model.favorites.splice(j, 1);
 							}
 						}
-						Ti.App.fireEvent('app:nearby.stores.updated', {});
+					}
+					if (index == 1) {
+						Ti.App.fireEvent('app:nearby.stores.updated', {id:myitem.id,favorite:myitem.favorite});
 					}
 					Ti.App.fireEvent('app:fav.stores.loaded',{data:cm.model.favorites});
 					cm.model.saveFavorites();
 				}
-			}(item, favIcon));
+			}(item, favIcon, row));
 			
 			var arrowIcon = Ti.UI.createView({
 				backgroundImage:'images/Icon_Arrow_RT.png',
@@ -257,7 +262,7 @@
 		for (i = 0, l = viewData.length; i < l; i++) {
 			Ti.App.addEventListener(viewData[i].loadEvent, function(idx) {
 				return function(e) {
-					setStoreTableData(viewData[idx].view, e.data);
+					setStoreTableData(viewData[idx].view, e.data, idx);
 				}
 			}(i));
 		}
@@ -266,13 +271,12 @@
 			var rowList = viewData[0].view.data[0].rows;
 			for (var i = 0, l = rowList.length; i < l; i++) {
 				eachrow = rowList[i];
-				eachrow.data.favorite = false;
-				eachrow.favIcon.backgroundImage = 'images/Icon_Favorite_OFF.png';
-				for (var j = 0, m = cm.model.favorites.length; j < m; j++) {
-					if (eachrow.data.id == cm.model.favorites[j].id) {
-						eachrow.data.favorite = true;
+				if (e.id == eachrow.data.id) {
+					eachrow.favorite = e.favorite;
+					if (eachrow.favorite) {
 						eachrow.favIcon.backgroundImage = 'images/Icon_Favorite_ON.png';
-						break;
+					} else {
+						eachrow.favIcon.backgroundImage = 'images/Icon_Favorite_OFF.png';
 					}
 				}
 			}
