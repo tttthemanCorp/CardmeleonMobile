@@ -119,6 +119,26 @@ var cm = {};
 		return phone;
 	};
 	
+	cm.getPhoneNumber = function(phone) {
+		var phonenumber = phone['iPhone'];
+		if (phonenumber == null || phonenumber.length == 0) {
+			phonenumber = phone['mobile'];
+		}
+		if (phonenumber == null || phonenumber.length == 0) {
+			phonenumber = phone['main'];
+		}
+		if (phonenumber == null || phonenumber.length == 0) {
+			phonenumber = phone['home'];
+		}
+		if (phonenumber == null || phonenumber.length == 0) {
+			phonenumber = phone['work'];
+		}
+		if (phonenumber == null || phonenumber.length == 0) {
+			phonenumber = phone['other'];
+		}
+		return phonenumber;
+	};
+	
 	cm.getLongitude = function() {
 		return Ti.App.Properties.getDouble('longitude');
 	};

@@ -33,22 +33,7 @@
 			contact = contacts[i];
 			
 			var phone = contact.getPhone();
-			var phonenumber = phone['iPhone'];
-			if (phonenumber == null || phonenumber.length == 0) {
-				phonenumber = phone['mobile'];
-			}
-			if (phonenumber == null || phonenumber.length == 0) {
-				phonenumber = phone['main'];
-			}
-			if (phonenumber == null || phonenumber.length == 0) {
-				phonenumber = phone['home'];
-			}
-			if (phonenumber == null || phonenumber.length == 0) {
-				phonenumber = phone['work'];
-			}
-			if (phonenumber == null || phonenumber.length == 0) {
-				phonenumber = phone['other'];
-			}
+			var phonenumber = cm.getPhoneNumber(phone);
 			if (phonenumber == null || phonenumber.length == 0) {
 				continue;
 			}

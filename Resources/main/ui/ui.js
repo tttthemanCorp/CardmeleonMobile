@@ -248,7 +248,7 @@
 		activeIndex = params.activeIndex || 0,
 		tabWidth = platformWidth / data.length,
 		shadow = params.shadow || 0,
-		item, tabView, scrollable, i;
+		item, tabView, i;
 		
 		// Start creating the TabbedScrollableView
 		var container = Ti.UI.createView(cm.combine($$.stretch, {top:top}));
@@ -259,6 +259,29 @@
             height: tabBarHeight,
             width: platformWidth,
             zIndex: 1
+        });
+        
+        var scrollable = Ti.UI.createScrollableView({
+            backgroundColor:'transparent',
+            top: tabBarHeight - shadow,
+            zIndex: 0,
+            showPagingControl: false,
+			//borderWidth:2,
+			//borderColor:'#006cb1',
+            views: (function() {
+            	var views = [];
+            	for (var j = 0; j < data.length; j++) {
+            		views.push(data[j].view);	
+            	}
+            	return views;
+            })(),
+        });
+        scrollable.addEventListener('scroll', function (e) {
+            if (e.view) {
+            	if (e.currentPage != container.currentActive) {
+                	data[e.currentPage].tabView.fireEvent('click');
+            	}
+            }
         });
         
         for (i = 0; i < data.length; i++) {
@@ -285,29 +308,6 @@
             tabbedBar.add(tabView);
             item.tabView = tabView;
         }
-        
-        scrollable = Ti.UI.createScrollableView({
-            backgroundColor:'transparent',
-            top: tabBarHeight - shadow,
-            zIndex: 0,
-            showPagingControl: false,
-			//borderWidth:2,
-			//borderColor:'#006cb1',
-            views: (function() {
-            	var views = [];
-            	for (var j = 0; j < data.length; j++) {
-            		views.push(data[j].view);	
-            	}
-            	return views;
-            })()
-        });
-        scrollable.addEventListener('scroll', function (e) {
-            if (e.view) {
-            	if (e.currentPage != container.currentActive) {
-                	data[e.currentPage].tabView.fireEvent('click');
-            	}
-            }
-        });
         
         container.add(tabbedBar);
         container.add(scrollable);

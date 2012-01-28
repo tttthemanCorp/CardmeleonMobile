@@ -83,7 +83,7 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				alert("User Info Data Not Available", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("Error", "User Info Data Not Available", e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
@@ -110,7 +110,7 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				alert("Nearby Stores Data Not Available", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("Error", "Nearby Stores Data Not Available", e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
@@ -175,6 +175,7 @@
 			reward.eCardmeleon = item.reward.equiv_points;
 			reward.expire = item.expiration;
 			reward.forSale = item.forsale;
+			reward.storeLogo = item.reward.merchant.logo;
 			reward.redeemCode = 'THISISATESTREDEEMCODE';  // TODO
 			reward.distance = cm.getDistance(cm.getLongitude(), cm.getLatitude(), item.reward.merchant.longitude, item.reward.merchant.latitude);
 			
@@ -187,50 +188,6 @@
 		Ti.App.fireEvent('app:nearby.rewards.loaded',{data:data});
 	};
 	
-	cm.model.markForSale = function(rewardId, forsale) {
-		Ti.API.info("markForSale Requested!");
-		
-		var req = {}, reward = {};
-		reward.id = rewardId;
-		req.forsale = forsale;
-		req.reward = reward;
-		var payload = JSON.stringify(req);
-		cm.restcall("PUT", "users/"+cm.getUserID()+"/reward", payload, 
-			function(e, client)
-			{
-				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				alert("Mark ForSale flag failed", e.error + "\nDetails: " + client.responseText);
-			},
-			function(client)
-			{
-				Ti.API.info("markForSale succeed");
-			}
-		);
-	};
-	
-	cm.model.buyReward = function(rewardId, sellerId, desc) {
-		Ti.API.info("buyReward Requested!");
-		
-		var req = {}, reward = {}, from_user = {}; //{"reward":{"id":1}, "from_user":{'id':3}, "description":"test buy"}
-		reward.id = rewardId;
-		from_user.id = sellerId;
-		req.reward = reward;
-		req.from_user = from_user;
-		req.description = desc;
-		var payload = JSON.stringify(req);
-		cm.restcall("POST", "users/"+cm.getUserID()+"/buy", payload, 
-			function(e, client)
-			{
-				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				alert("Buy reward failed", e.error + "\nDetails: " + client.responseText);
-			},
-			function(client)
-			{
-				Ti.API.info("buyReward succeed");
-			}
-		);
-	};
-	
 	cm.model.requestNearbyMarket = function(_args) {
 		Ti.API.info("Nearby Market Requested!");
 		
@@ -238,7 +195,7 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				alert("Reward for sell Not Available", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("Error", "Reward for sell Not Available", e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
@@ -283,22 +240,108 @@
 		Ti.App.fireEvent('app:watching.market.loaded',{data:cm.model.watches});
 	};
 	
-	cm.model.redeemReward = function(userId, rewardId) {
-		// TODO
+	cm.model.markForSale = function(rewardId, forsale) {
+		Ti.API.info("markForSale Requested!");
+		
+		var req = {}, reward = {};
+		reward.id = rewardId;
+		req.forsale = forsale;
+		req.reward = reward;
+		var payload = JSON.stringify(req);
+		cm.restcall("PUT", "users/"+cm.getUserID()+"/reward", payload, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				cm.ui.alert("Error", "Mark ForSale flag failed", e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				Ti.API.info("markForSale succeed");
+			}
+		);
+	};
+	
+	cm.model.buyReward = function(rewardId, sellerId, desc) {
+		Ti.API.info("buyReward Requested!");
+		
+		var req = {}, reward = {}, from_user = {}; //{"reward":{"id":1}, "from_user":{'id':3}, "description":"test buy"}
+		reward.id = rewardId;
+		from_user.id = sellerId;
+		req.reward = reward;
+		req.from_user = from_user;
+		req.description = desc;
+		var payload = JSON.stringify(req);
+		cm.restcall("POST", "users/"+cm.getUserID()+"/buy", payload, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				cm.ui.alert("Error", "Buy reward failed", e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				Ti.API.info("buyReward succeed");
+			}
+		);
+	};
+	
+	cm.model.redeemReward = function(rewardId) {
+		Ti.API.info("redeemReward Requested!");
+		
+		var req = {}, reward = {}; //{"reward":{"id":1}, "description":"test redeem"}
+		reward.id = rewardId;
+		req.reward = reward;
+		req.description = 'redeem from Cardmeleon App';
+		var payload = JSON.stringify(req);
+		cm.restcall("POST", "users/"+cm.getUserID()+"/redeem", payload, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				cm.ui.alert("Error", "Redeem reward failed", e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				Ti.API.info("redeemReward succeed");
+			}
+		);
 	};
 	
 	cm.model.postToFacebook = function(message) {
 		Ti.Facebook.requestWithGraphPath('me/feed', {message: message}, "POST", function(e) {
 		    if (e.success) {
-		        alert("Success!  From FB: " + e.result);
+		        Ti.API.info("Success!  From FB: " + e.result);
 		    } else {
 		        if (e.error) {
-		            alert(e.error);
+		            cm.ui.alert("Error", e.error);
 		        } else {
-		            alert("Unkown result");
+		            cm.ui.alert("Error", "Unkown result");
 		        }
 		    }
 		});	
+	};
+	
+	cm.model.giftReward = function(rewardId, message, phone) {
+		Ti.API.info("giftReward Requested!");
+		
+		var req = {}, reward = {}; //{"reward":{"id":1}, "description":"I would like to send you a reward for gift"}
+		reward.id = rewardId;
+		req.reward = reward;
+		req.description = message;
+		var payload = JSON.stringify(req);
+		cm.restcall("PUT", "users/"+cm.getUserID()+"/gift", payload, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				cm.ui.alert("Error", "Gift reward failed", e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				var result = JSON.parse(client.responseText);
+				var giftcode = result.gift_code;
+				Ti.API.info("giftReward succeed.  Gift Code is: "+giftcode);
+				
+				Ti.App.fireEvent('app:giftcode.available', {giftCode:giftcode, phoneNumber:phone, gifterName:cm.getUserName()});
+			}
+		);
 	};
 	
 })();

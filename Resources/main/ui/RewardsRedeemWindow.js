@@ -5,12 +5,16 @@
 (function(){
 
 	function showCountdown(seconds) {
-		return seconds;
+		var min = Math.floor(seconds / 60);
+		var sec = seconds - 60 * min;
+		if (min < 10) min = '0' + min;
+		if (sec < 10) sec = '0' + sec;
+		return min + ':' + sec;
 	}
 
 	cm.ui.createRewardsRedeemWindow = function(_args) {
 		var model = _args.model, redeemed = false, myInterval = null,
-		countdown = 180;  // 3 minutes
+		countdown = 600;
 		var win = Ti.UI.createWindow(cm.combine($$.stretch, _args));
 
 		var headerView = cm.ui.createHeaderView();
@@ -23,6 +27,10 @@
 			height:18
 		});
 		backButton.addEventListener('click', function() {
+			if (redeemed) {
+				cm.model.redeemReward(model.id);
+				cm.model.requestNearbyRewards();
+			}
 			win.close();
 		});
 		headerView.add(backButton);
@@ -81,7 +89,7 @@
 			color:'#8CC841',
 			font:{fontStyle:'normal',fontSize:18,fontWeight:'normal'},
 			left:30,
-			top:40,
+			top:38,
 			height:'auto',
 			width:'auto',
 			clickName:'cardmeleonValue',
@@ -89,13 +97,14 @@
 		}));
 		bgView.add(cardmeleonValue);
 		
-		var storeIcon = Ti.UI.createView({
-			backgroundImage:'images/Bgrnd_Store-Progress-bar_OFF.png',  // TODO - from data
+		var storeIcon = Ti.UI.createImageView({
+			image:cm.getImageUrl(model.storeLogo),
 			top:12,
 			right:12,
 			width:96,
 			height:96,
-			clickName:'storeIcon'
+			clickName:'storeIcon',
+			zIndex: 3
 		});
 		bgView.add(storeIcon);
 		
@@ -107,7 +116,7 @@
 			top:142,
 			height:60,
 			clickName:'alertLabel',
-			text:'Alert! After clicking on the "Redeem" button below, the redeem code will be shown for 3 minutes',
+			text:'Alert! After clicking on the "Redeem" button below, the redeem code will be shown for 10 minutes',
 			textAlign:'center'
 		}));
 		bgView.add(alertLabel);
@@ -115,7 +124,7 @@
 		var button = Titanium.UI.createButton({
 		   	backgroundImage:'images/Button_Redeem-Lg_OFF.png',
 		   	backgroundSelectedImage:'images/Button_Redeem-Lg_ON.png',
-			top:230,
+			top:226,
 			height:36,
 			width:135
 		});
@@ -141,14 +150,13 @@
 			width:'auto',
 			visible:false,
 			clickName:'timeLeft',
-			text:'Time left: 03:00'  // TODO from data
+			text:'Time left: 10:00'
 		}));
 		bgView.add(timeLeft);
 		
 		button.addEventListener('click', function(){
 			Titanium.API.info("You clicked the redeemButton");
 			if (!redeemed) {
-				cm.model.redeemReward('', '');  // TODO
 				redeemed = true;
 				redeemCode.visible = true;
 				timeLeft.visible = true;
