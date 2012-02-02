@@ -12,8 +12,8 @@
 			filterAttribute:'filter',
 			backgroundColor:'transparent',
 			//opacity: 0.0,
-			maxRowHeight:98,
-			minRowHeight:98,
+			maxRowHeight:103,
+			minRowHeight:103,
 			style:Titanium.UI.iPhone.TableViewStyle.PLAIN,
 			separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
 			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
@@ -21,32 +21,32 @@
 	}
 	
 	function setStoreTableData(tableView, data, index) {
-		var rowlist = [], row, item;
+		var sectionlist = [], row, section, item;
 		
 		for (var i = 0, l = data.length; i<l; i++) {
 			item = data[i];
 			row = Ti.UI.createTableViewRow();
-			//row.height = 145;
-			//row.width = 309;
 			row.data = item;
-			//row.hasChild = true;
-			//row.rightImage = 'images/Icon_Arrow_RT.png'
+			row.hasChild = false;
 			row.className = 'datarow';
-			//row.clickName = 'storerow';
+			row.clickName = 'row';
+			row.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
 			//row.backgroundImage = 'images/Bgrnd_Store-Card.png';
 			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
+			//row.rightImage = 'images/Icon_Arrow_RT.png'
 			//row.selectedColor = "blue";
 			//row.filter = '';
 			//row.borderWidth = 2;
 			//row.borderColor = '#006cb1';
-			row.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
+			//row.height = 145;
+			//row.width = 309;
 			
 			var backgroundImg = Ti.UI.createView({
 				backgroundImage:'images/Bgrnd_Store-Card.png',
-				top:1,
+				top:3,
 				left:0,
 				width:320,
-				height:96,
+				height:97,
 				zIndex: 1
 			});
 			row.add(backgroundImg);
@@ -103,18 +103,26 @@
 				}
 			}(item, favIcon, row));
 			
-			var arrowIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Arrow_RT.png',
-				top:43,
-				right:4,
+			var arrowView = Ti.UI.createView({
+				top:3,
+				left:0,
+				width:320,
+				height:97,
+				clickName:'arrowView',
+				zIndex: 2
+			});
+			var arrowIcon = Ti.UI.createImageView({
+				image:'images/Icon_Arrow_RT.png',
+				top:40,
+				right:5,
 				width:12,
 				height:20,
-				clickName:'arrowIcon',
 				zIndex: 3
 			});
-			row.add(arrowIcon);
+			arrowView.add(arrowIcon);
+			row.add(arrowView);
 			
-			arrowIcon.addEventListener('click', function(e)
+			arrowView.addEventListener('click', function(e)
 			{
 				Ti.API.info('table view row clicked - source ' + e.source);
 				// use rowNum property on object to get row number
@@ -193,6 +201,10 @@
 			}));
 			row.add(phone);
 			
+			phone.addEventListener('click', function(e){
+				alert("phone clicked");
+			});
+			
 			var distance = Ti.UI.createLabel(cm.combine($$.Link, {
 				color:'#0087A0',
 				font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
@@ -205,11 +217,18 @@
 				zIndex: 3
 			}));
 			row.add(distance);
+			
+			distance.addEventListener('click', function(e){
+				alert("distance clicked");
+			});
 
-			rowlist.push(row);
+			section = Ti.UI.createTableViewSection();
+			section.add(row);	
+			
+			sectionlist.push(section);
 		}
 		
-		tableView.setData(rowlist);
+		tableView.setData(sectionlist);
 		
 	}
 	
@@ -219,28 +238,6 @@
 		
 		var dashView = cm.ui.createDashView();
 		view.add(dashView);
-		
-		//
-		// CREATE SEARCH BAR
-		//
-/*
-		var search = Titanium.UI.createSearchBar({
-			barColor:'#385292',
-			showCancel:false
-		});
-		search.addEventListener('change', function(e)
-		{
-			e.value; // search string as user types
-		});
-		search.addEventListener('return', function(e)
-		{
-			search.blur();
-		});
-		search.addEventListener('cancel', function(e)
-		{
-			search.blur();
-		});
-*/
 
 		// request remote data
 		Ti.App.addEventListener('app:userinfo.loaded', function(e) {
@@ -268,9 +265,9 @@
 		}
 
 		Ti.App.addEventListener('app:nearby.stores.updated', function(e) {
-			var rowList = viewData[0].view.data[0].rows;
-			for (var i = 0, l = rowList.length; i < l; i++) {
-				eachrow = rowList[i];
+			var sectionList = viewData[0].view.data;
+			for (var i = 0, l = sectionList.length; i < l; i++) {
+				eachrow = sectionList[i].rows[0];
 				if (e.id == eachrow.data.id) {
 					eachrow.favorite = e.favorite;
 					if (eachrow.favorite) {

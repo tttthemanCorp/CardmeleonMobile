@@ -12,9 +12,9 @@
 			filterAttribute:'filter',
 			backgroundColor:'transparent',
 			//opacity: 0.0,
-			maxRowHeight:108,
-			minRowHeight:108,
-			style:Titanium.UI.iPhone.TableViewStyle.GROUPED,
+			maxRowHeight:114,
+			minRowHeight:114,
+			style:Titanium.UI.iPhone.TableViewStyle.PLAIN,
 			separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
 			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
 		});
@@ -26,20 +26,31 @@
 		for (var i = 0, l = data.length; i<l; i++) {
 			item = data[i];
 			row = Ti.UI.createTableViewRow();
-			//row.height = 145;
-			//row.width = 309;
 			row.data = item;
 			row.hasChild = false;
 			row.className = 'datarow';
 			row.clickName = 'row';
-			row.backgroundImage = 'images/Bgrnd_Reward-Card.png';
 			row.selectionStyle = Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE;
+			//row.backgroundImage = 'images/Bgrnd_Reward-Card.png';
 			//row.selectedBackgroundColor = '#EAE1C1';
 			//row.filter = '';
 			//row.borderWidth = 2;
 			//row.borderColor = '#006cb1';
+			//row.height = 145;
+			//row.width = 309;
+			
+			var backgroundImg = Ti.UI.createView({
+				backgroundImage:'images/Bgrnd_Reward-Card.png',
+				top:3,
+				left:6,
+				width:308,
+				height:108,
+				zIndex: 1
+			});
+			row.add(backgroundImg);
 		
 			var rewardTitle = Ti.UI.createLabel(cm.combine($$.Label, {
+				zIndex: 3,
 				color:'#8CC841',
 				font:{fontStyle:'normal',fontSize:14,fontWeight:'bold'},
 				left:12,
@@ -52,6 +63,7 @@
 			row.add(rewardTitle);
 			
 			var rewardDesc = Ti.UI.createLabel(cm.combine($$.Label, {
+				zIndex: 3,
 				color:'#8CC841',
 				font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
 				left:12,
@@ -65,6 +77,7 @@
 			row.add(rewardDesc);
 			
 			var expireTime = Ti.UI.createLabel(cm.combine($$.Label, {
+				zIndex: 3,
 				color:'#999999',
 				font:{fontStyle:'italic',fontSize:10,fontWeight:'normal'},
 				right:12,
@@ -77,6 +90,7 @@
 			row.add(expireTime);
 			
 			var forSaleLabel = Ti.UI.createLabel(cm.combine($$.Label, {
+				zIndex: 3,
 				color:'#999999',
 				font:{fontStyle:'italic',fontSize:10,fontWeight:'bold'},
 				right:12,
@@ -89,6 +103,7 @@
 			row.add(forSaleLabel);
 			
 			var cardmeleonIcon = Ti.UI.createView({
+				zIndex: 3,
 				backgroundImage:'images/Icon_Points-Symbol_12x17.png',
 				top:52,
 				left:12,
@@ -99,6 +114,7 @@
 			row.add(cardmeleonIcon);
 			
 			var cardmeleonValue = Ti.UI.createLabel(cm.combine($$.Label, {
+				zIndex: 3,
 				color:'#8CC841',
 				font:{fontStyle:'normal',fontSize:14,fontWeight:'normal'},
 				left:28,
@@ -111,6 +127,7 @@
 			row.add(cardmeleonValue);
 			
 			var redeemButton = Titanium.UI.createButton({
+				zIndex: 3,
 			   	backgroundImage:'images/Button_Redeem_OFF.png',
 			   	backgroundSelectedImage:'images/Button_Redeem_ON.png',
 				bottom:10,
@@ -133,6 +150,7 @@
 			row.add(redeemButton);
 			
 			var giftButton = Titanium.UI.createButton({
+				zIndex: 3,
 			   	backgroundImage:'images/Button_Gift_OFF.png',
 			   	backgroundSelectedImage:'images/Button_Gift_ON.png',
 				bottom:10,
@@ -155,6 +173,7 @@
 			row.add(giftButton);
 			
 			var shareButton = Titanium.UI.createButton({
+				zIndex: 3,
 			   	backgroundImage:'images/Button_Share_OFF.png',
 			   	backgroundSelectedImage:'images/Button_Share_ON.png',
 				bottom:10,
@@ -180,6 +199,7 @@
 			var image = 'images/Button_Sale_OFF.png';
 			if (item.forSale) image = 'images/Button_Sale_ON.png';
 			var forsaleSwitch = Titanium.UI.createButton({
+				zIndex: 3,
 			   	backgroundImage:image,
 				right:16,
 				top:22,

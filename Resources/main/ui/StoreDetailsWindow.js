@@ -150,7 +150,7 @@
 			width:188,
 			thickness:1,
 			clickName:'marketMsg',
-			text:'Can\'t wait? Find a deal from the Market!'  // TODO change
+			text:'Can\'t wait? Find a deal from the Market!'  // TODO should jump to Market tab
 		}));
 		view.add(marketMsg);
 		
@@ -322,12 +322,12 @@
 		view.add(tableView);
 	}		
 
-	function createStorePromoView(_args) {
+	function createStoreProgramView(_args) {
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
        	return view;
 	}
 	
-	function addStorePromoTable(view, data, params) {
+	function addStoreProgramTable(view, data, params) {
 		var tableView = Titanium.UI.createTableView(cm.combine({
 			//search:search,
 			//headerView:headerView,
@@ -342,35 +342,37 @@
 			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
 		}, params));
 		
-		var sectionlist = [], promoList = data.promotions;
+		var sectionlist = [], programList = data.programs;
 		
-		for (var i = 0, l = promoList.length; i<l; i++) {
-			item = promoList[i];
+		for (var i = 0, l = programList.length; i<l; i++) {
+			item = programList[i];
 			row = Ti.UI.createTableViewRow();
-			//row.height = 145;
-			//row.width = 309;
 			row.data = item;
-			//row.hasChild = true;
+			row.hasChild = false;
 			row.className = 'datarow';
 			row.clickName = 'row';
 			row.backgroundImage = 'images/Bgrnd_Store-Card.png';
+			row.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
 			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
 			//row.filter = '';
 			//row.borderWidth = 2;
 			//row.borderColor = '#006cb1';
+			//row.height = 145;
+			//row.width = 309;
 			
-			var promoTitle = Ti.UI.createLabel(cm.combine($$.Label, {
+			var programTitle = Ti.UI.createLabel(cm.combine($$.Label, {
 				color:'#8CC841',
-				font:{fontStyle:'normal',fontSize:24,fontWeight:'bold'},
+				font:{fontStyle:'normal',fontSize:18,fontWeight:'bold'},
 				left:12,
 				top:12,
 				height:'auto',
 				width:'auto',
-				clickName:'promoTitle',
-				text:item.title
+				clickName:'programTitle',
+				text:item.name
 			}));
-			row.add(promoTitle);
+			row.add(programTitle);
 			
+			/*
 			var expireTime = Ti.UI.createLabel(cm.combine($$.Label, {
 				color:'#999999',
 				font:{fontStyle:'italic',fontSize:12,fontWeight:'normal'},
@@ -382,18 +384,37 @@
 				text:'Valid until '+item.expire
 			}));
 			row.add(expireTime);
+			*/
 			
-			var promoDesc = Ti.UI.createLabel(cm.combine($$.Label, {
+			var qualification;
+			if (item.prog_type == 1) {
+				qualification = 'Qualification: ' + Math.round(item.reward_trigger) + ' purchases';
+			} else {
+				qualification = 'Qualification: accumulated purchase amount of $' + item.reward_trigger;
+			}
+			var qualificationLabel = Ti.UI.createLabel(cm.combine($$.Label, {
 				color:'#0087A0',
 				font:{fontStyle:'italic',fontSize:12,fontWeight:'normal'},
 				left:12,
 				top:50,
 				height:'auto',
 				width:'auto',
-				clickName:'promoDesc',
-				text:item.desc
+				clickName:'qualificationLabel',
+				text:qualification
 			}));
-			row.add(promoDesc);
+			row.add(qualificationLabel);
+			
+			var rewardLabel = Ti.UI.createLabel(cm.combine($$.Label, {
+				color:'#0087A0',
+				font:{fontStyle:'italic',fontSize:12,fontWeight:'normal'},
+				left:12,
+				top:80,
+				height:'auto',
+				width:'auto',
+				clickName:'rewardLabel',
+				text:'Reward: ' + item.reward_name + '\nEquivalent Cardmeleon Points: ' + item.reward_points
+			}));
+			row.add(rewardLabel);
 			
 			section = Ti.UI.createTableViewSection();
 			section.add(row);	
@@ -449,7 +470,7 @@
 		});
 		view.add(summaryView);
 		
-		cm.model.requestStoreDetails();
+		cm.model.requestStoreDetails(model.id);
 		
 		var viewData = [{
         	title: 'Basic',
@@ -460,8 +481,8 @@
             view: createStoreReviewView({model:model}),
             tabbedBarBackgroundImage: 'images/Frame_Stores_Review.png'
         }, {
-            title: 'Promotion',
-            view: createStorePromoView({model:model}),
+            title: 'Program',
+            view: createStoreProgramView({model:model}),
             tabbedBarBackgroundImage: 'images/Frame_Stores_Promo.png'
         }, {
             title: 'Menu',
@@ -491,7 +512,7 @@
 				width:$$.platformWidth,
 				bottom:0
 			});
-			addStorePromoTable(viewData[2].view, e.data, {
+			addStoreProgramTable(viewData[2].view, e.data, {
 				top:0,
 				left:0,
 				width:$$.platformWidth,

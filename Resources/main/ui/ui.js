@@ -118,6 +118,28 @@
 		});
 		dashView.add(searchIcon);
 		
+		//
+		// CREATE SEARCH BAR
+		//
+/*
+		var search = Titanium.UI.createSearchBar({
+			barColor:'#385292',
+			showCancel:false
+		});
+		search.addEventListener('change', function(e)
+		{
+			e.value; // search string as user types
+		});
+		search.addEventListener('return', function(e)
+		{
+			search.blur();
+		});
+		search.addEventListener('cancel', function(e)
+		{
+			search.blur();
+		});
+*/
+		
 		var dollarIcon = Ti.UI.createImageView({
 			top: 6,
 			right: 48,

@@ -7,17 +7,39 @@
 		NEARBY_RADIUS:'nearby_radius',
 	};
 	
-	cm.model.requestStoreDetails = function(_args) {
+	cm.model.requestStoreDetails = function(storeId) {
 		Ti.API.info("Store Details Requested!");
-		var xhr = Ti.Network.createHTTPClient();
-		xhr.timeout = 10000;
-		xhr.open("GET", 'http://www.google.com');
-		
-		xhr.onerror = function (e) {
-			cm.ui.alert('Network Error',e.error);
-		};
-		
-		xhr.onload = function () {
+
+		cm.restcall("GET", "stores/"+storeId, null, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				cm.ui.alert("Error", "Store Details Data Not Available", e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				result = JSON.parse(client.responseText);
+
+				var storedetails = {}, programs = [], reviews = [], program;
+				storedetails.storeName = result.name;
+				for (var i = 0, l = result.rewardprogram_set.length; i < l; i++) {
+					program = {};
+					program.name = result.rewardprogram_set[i].name;
+					program.prog_type = result.rewardprogram_set[i].prog_type;
+					program.reward_trigger = result.rewardprogram_set[i].reward_trigger;
+					program.reward_points = result.rewardprogram_set[i].reward.equiv_points;
+					program.reward_name = result.rewardprogram_set[i].reward.name;
+					programs.push(program);
+				}
+				storedetails.programs = programs;
+				storedetails.reviews = reviews;
+				
+				
+				// Once data loaded, fire event to trigger UI update
+				Ti.App.fireEvent('app:store.details.loaded',{data:storedetails});
+			}
+		);
+		/*
 			var data = {
 				storeName:"Safeway",
 				reviews: [{
@@ -42,7 +64,7 @@
 					review:'I would be happy to come back again to this store',
 					rating:3.5
 				}],
-				promotions:[{
+				programs:[{
 					title:'10% Off Any Item!',
 					desc:'this is a great deal! Hurry up!',
 					expire:'12/21/2011'
@@ -50,14 +72,7 @@
 				distance:12.3,
 				desc:"this is a description for store"
 			};
-			// Once data loaded, fire event to trigger UI update
-			Ti.App.fireEvent('app:store.details.loaded',{
-				data:data
-			});
-		};
-		
-		// Get the data
-		xhr.send();
+		*/
 	};
 	
 	cm.model.loadFavorites = function() {
@@ -83,7 +98,7 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				cm.ui.alert("Error", "User Info Data Not Available", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("User Info Data Not Available", e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
