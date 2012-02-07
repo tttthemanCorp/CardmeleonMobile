@@ -14,13 +14,13 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				cm.ui.alert("Error", "Store Details Data Not Available", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("Error", "Store Details Data Not Available: " + e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
 				result = JSON.parse(client.responseText);
 
-				var storedetails = {}, programs = [], reviews = [], program;
+				var storedetails = {}, programs = [], reviews = [], program, review;
 				storedetails.storeName = result.name;
 				for (var i = 0, l = result.rewardprogram_set.length; i < l; i++) {
 					program = {};
@@ -30,6 +30,14 @@
 					program.reward_points = result.rewardprogram_set[i].reward.equiv_points;
 					program.reward_name = result.rewardprogram_set[i].reward.name;
 					programs.push(program);
+				}
+				for (var i = 0, l = result.userreview_set.length; i < l; i++) {
+					review = {};
+					review.review = result.userreview_set[i].review;
+					review.rating = result.userreview_set[i].rating;
+					review.time = result.userreview_set[i].time;
+					review.userName = result.userreview_set[i].user.username;
+					reviews.push(review);
 				}
 				storedetails.programs = programs;
 				storedetails.reviews = reviews;
@@ -98,7 +106,7 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				cm.ui.alert("User Info Data Not Available", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("User Info Data Not Available: " + e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
@@ -125,7 +133,7 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				cm.ui.alert("Error", "Nearby Stores Data Not Available", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("Error", "Nearby Stores Data Not Available: " + e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
@@ -141,8 +149,8 @@
 					storeItem.storeName = resultItem.name;
 					storeItem.phone = cm.formatPhoneNumber(resultItem.phone);
 					storeItem.logo = resultItem.logo;
-					storeItem.distance = resultItem.distance.toFixed(1);
-					storeItem.purchasesPerReward = resultItem.reward_trigger;
+					storeItem.distance = 1.0; //resultItem.distance.toFixed(1);  TODO
+					storeItem.purchasesPerReward = 10; //resultItem.reward_trigger;  TODO
 					storeItem.desc = resultItem.desc;
 					storeItem.addr = resultItem.address;
 					storeItem.numRewards = cm.model.userinfo.userrewards.length;
@@ -184,7 +192,7 @@
 		for (var i = 0, l = userrewards.length; i < l; i++) {
 			item = userrewards[i];
 			reward = {};
-			reward.id = item.reward.id;
+			reward.id = item.id;
 			reward.name = item.reward.name;
 			reward.desc = item.reward.description;
 			reward.eCardmeleon = item.reward.equiv_points;
@@ -210,7 +218,7 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				cm.ui.alert("Error", "Reward for sell Not Available", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("Error", "Reward for sell Not Available: " + e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
@@ -255,19 +263,18 @@
 		Ti.App.fireEvent('app:watching.market.loaded',{data:cm.model.watches});
 	};
 	
-	cm.model.markForSale = function(rewardId, forsale) {
+	cm.model.markForSale = function(userrewardId, forsale) {
 		Ti.API.info("markForSale Requested!");
 		
-		var req = {}, reward = {};
-		reward.id = rewardId;
+		var req = {};
 		req.forsale = forsale;
-		req.reward = reward;
+		req.userreward_id = userrewardId;
 		var payload = JSON.stringify(req);
 		cm.restcall("PUT", "users/"+cm.getUserID()+"/reward", payload, 
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				cm.ui.alert("Error", "Mark ForSale flag failed", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("Error", "Mark ForSale flag failed: " + e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
@@ -290,7 +297,7 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				cm.ui.alert("Error", "Buy reward failed", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("Error", "Buy reward failed: " + e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
@@ -311,7 +318,7 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				cm.ui.alert("Error", "Redeem reward failed", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("Error", "Redeem reward failed: " + e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
@@ -346,7 +353,7 @@
 			function(e, client)
 			{
 				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
-				cm.ui.alert("Error", "Gift reward failed", e.error + "\nDetails: " + client.responseText);
+				cm.ui.alert("Error", "Gift reward failed: " + e.error + "\nDetails: " + client.responseText);
 			},
 			function(client)
 			{
