@@ -43,11 +43,11 @@
 			//row.height = 145;
 			//row.width = 309;
 			//row.hasChild = true;
-			//row.rightImage = 'images/Icon_Arrow_RT.png'
+			//row.rightImage = '/images/Icon_Arrow_RT.png'
 			row.className = 'contact';
 			//row.clickName = 'storerow';
-			//row.backgroundImage = 'images/Bgrnd_Store-Card.png';
-			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
+			//row.backgroundImage = '/images/Bgrnd_Store-Card.png';
+			//row.selectedBackgroundImage = '/images/Bgrnd_Store-Card_Selected.png';
 			//row.selectedColor = "blue";
 			//row.filter = '';
 			//row.borderWidth = 2;
@@ -126,8 +126,8 @@
 		//  CREATE REFER BUTTON
 		//
 		var referButton = Titanium.UI.createButton({
-			backgroundImage:'/images/Button_Refer_OFF.png',
-			backgroundSelectedImage:'/images/Button_Refer_ON.png',
+			backgroundImage:'//images/Button_Refer_OFF.png',
+			backgroundSelectedImage:'//images/Button_Refer_ON.png',
 			bottom:44,
 			height:24,
 			width:90

@@ -56,16 +56,16 @@
 			height:'auto'
 		},
 		Window: {
-			backgroundImage:'images/Bgrnd_G-B.png',
+			backgroundImage:'//images/Bgrnd_G-B.png',
 			navBarHidden:true,
 			softInputMode:(Ti.UI.Android) ? Ti.UI.Android.SOFT_INPUT_ADJUST_RESIZE : ''
 		},
 		TableView: {
-			backgroundImage:'images/ruff.png',
+			backgroundImage:'//images/ruff.png',
 			separatorStyle:Ti.UI.iPhone.TableViewSeparatorStyle.NONE
 		},
 		TableViewRow: {
-			backgroundImage:'images/tweet_bg.png',
+			backgroundImage:'//images/tweet_bg.png',
 			selectedBackgroundColor: cm.ui.theme.darkBlue, //I know, this is dumb, but it's currently inconsistent x-platform
 			backgroundSelectedColor: cm.ui.theme.darkBlue,
 			//height:110,
@@ -114,7 +114,7 @@
 				fontSize:12,
 				fontWeight:'bold'
 			},
-			backgroundImage:'images/button_bg_black.png'
+			backgroundImage:'//images/button_bg_black.png'
 		},
 		topRightButton: {
 			top:5,
@@ -134,19 +134,19 @@
 			}
 		},
 		headerView: {
-			backgroundImage:'images/Frame_top_01.png',
+			backgroundImage:'//images/Frame_top_01.png',
 			left:0,
 			height:36,
 			width:Ti.Platform.displayCaps.platformWidth
 		},
 		subHeaderView: {
-			backgroundImage:'images/Frame_sub_01.png',
+			backgroundImage:'//images/Frame_sub_01.png',
 			left:0,
 			height:36,
 			width:Ti.Platform.displayCaps.platformWidth
 		},
 		dashView: {
-			backgroundImage:'images/Dash_User-bgrnd.png',
+			backgroundImage:'//images/Dash_User-bgrnd.png',
 			left:0,
 			height:36,
 			width:Ti.Platform.displayCaps.platformWidth
@@ -157,7 +157,7 @@
 			width:Ti.Platform.displayCaps.platformWidth
 		},
 		cameraView: {
-			backgroundImage:'images/Frame_Sub_03.png',
+			backgroundImage:'//images/Frame_Sub_03.png',
 			left:0,
 			height:36,
 			width:Ti.Platform.displayCaps.platformWidth
@@ -180,7 +180,7 @@
 			height:'auto'
 		},
 		spacerRow: {
-			backgroundImage:'images/spacer_row.png',
+			backgroundImage:'//images/spacer_row.png',
 			height:30,
 			className:'spacerRow'
 		},

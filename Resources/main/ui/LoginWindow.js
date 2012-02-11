@@ -68,9 +68,9 @@
 		//  CREATE LOGIN BUTTON
 		//
 		var loginButton = Titanium.UI.createButton({
-			backgroundImage:'/images/Button_Login_OFF.png',
-			backgroundSelectedImage:'/images/Button_Login_ON.png',
-			//backgroundImage:'images/Button_bg.png',
+			backgroundImage:'//images/Button_Login_OFF.png',
+			backgroundSelectedImage:'//images/Button_Login_ON.png',
+			//backgroundImage:'/images/Button_bg.png',
 			//title:'Log in!',
 			//borderRadius:8,
 			bottom:55,
@@ -210,8 +210,8 @@
 		//
 		currentPosition += FIELD_HEIGHT + FIELD_BUTTON_MARGIN;
 		var loginButton = Titanium.UI.createButton(cm.combine($$.Button, {
-			image:'images/Frame_Login_OFF.png',
-			//backgroundImage:'images/Button_bg.png',
+			image:'/images/Frame_Login_OFF.png',
+			//backgroundImage:'/images/Button_bg.png',
 			//title:'Log in!',
 			borderRadius:8,
 			bottom:0,

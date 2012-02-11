@@ -38,7 +38,7 @@
 			bottom:0
 		}),
 		arrow = Ti.UI.createImageView({
-			image:'images/Icon_Arrow_UP.png',
+			image:'/images/Icon_Arrow_UP.png',
 			height:13,
 			width:20
 		});
@@ -53,7 +53,7 @@
 			views: [
 				cm.ui.createUserLevelView({
 					backgroundColor:'#FFFFFF',
-					//backgroundImage: "images/Bgrnd_User-Card.png" 
+					//backgroundImage: "/images/Bgrnd_User-Card.png" 
 				}),
 				//cm.ui.createSettingsView({
 				//	backgroundColor:'white'

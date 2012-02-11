@@ -7,6 +7,36 @@
 		NEARBY_RADIUS:'nearby_radius',
 	};
 	
+	cm.model.requestStoreReviews = function(storeId) {
+		Ti.API.info("Store Reviews Requested!");
+
+		cm.restcall("GET", "stores/"+storeId, null, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				cm.ui.alert("Error", "Store Reviews Data Not Available: " + e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				result = JSON.parse(client.responseText);
+
+				var reviewSummary = {}, sum = 0, numReviews = result.userreview_set.length, rating;
+				for (var i = 0, l = numReviews; i < l; i++) {
+					rating = result.userreview_set[i].rating;
+					sum += parseFloat(rating);
+				}
+				reviewSummary.id = storeId;
+				reviewSummary.storeName = result.name;
+				var avgrating = sum / numReviews;
+				reviewSummary.rating = Math.round(avgrating * 2) / 2;
+				reviewSummary.numReviews = numReviews;
+				
+				// Once data loaded, fire event to trigger UI update
+				Ti.App.fireEvent('app:store.reviews.retrieved',{model:reviewSummary});  // 
+			}
+		);
+	};
+	
 	cm.model.requestStoreDetails = function(storeId) {
 		Ti.API.info("Store Details Requested!");
 
@@ -47,40 +77,6 @@
 				Ti.App.fireEvent('app:store.details.loaded',{data:storedetails});
 			}
 		);
-		/*
-			var data = {
-				storeName:"Safeway",
-				reviews: [{
-					userName:'abc',
-					userLevel:3,
-					userAvatar:'http://abc.com/images/a.png',
-					time:'8:00 AM on June 12, 2011',
-					review:'this store is very good',
-					rating:1.0
-				},{
-					userName:'test user',
-					userLevel:1,
-					userAvatar:'http://abc.com/images/a.png',
-					time:'10:45 AM on March 4, 2011',
-					review:'awesome!',
-					rating:5.0
-				},{
-					userName:'John',
-					userLevel:2,
-					userAvatar:'http://abc.com/images/a.png',
-					time:'11:10 AM on March 4, 2011',
-					review:'I would be happy to come back again to this store',
-					rating:3.5
-				}],
-				programs:[{
-					title:'10% Off Any Item!',
-					desc:'this is a great deal! Hurry up!',
-					expire:'12/21/2011'
-				}],
-				distance:12.3,
-				desc:"this is a description for store"
-			};
-		*/
 	};
 	
 	cm.model.loadFavorites = function() {
@@ -192,7 +188,8 @@
 		for (var i = 0, l = userrewards.length; i < l; i++) {
 			item = userrewards[i];
 			reward = {};
-			reward.id = item.id;
+			reward.rewardid = item.reward.id;
+			reward.userrewardid = item.id;
 			reward.name = item.reward.name;
 			reward.desc = item.reward.description;
 			reward.eCardmeleon = item.reward.equiv_points;
@@ -228,7 +225,8 @@
 				for (var i = 0, l = result.length; i < l; i++) {
 					item = result[i];
 					reward = {};
-					reward.id = item.reward.id;
+					reward.rewardid = item.reward.id;
+					reward.userrewardid = item.id;
 					reward.userid = item.user.id;
 					reward.username = item.user.username;
 					reward.name = item.reward.name;
@@ -283,14 +281,11 @@
 		);
 	};
 	
-	cm.model.buyReward = function(rewardId, sellerId, desc) {
+	cm.model.buyReward = function(userrewardId, sellerId, desc) {
 		Ti.API.info("buyReward Requested!");
 		
-		var req = {}, reward = {}, from_user = {}; //{"reward":{"id":1}, "from_user":{'id':3}, "description":"test buy"}
-		reward.id = rewardId;
-		from_user.id = sellerId;
-		req.reward = reward;
-		req.from_user = from_user;
+		var req = {}; //{"userreward_id":2, "description":"test buy"}
+		req.userreward_id = userrewardId;
 		req.description = desc;
 		var payload = JSON.stringify(req);
 		cm.restcall("POST", "users/"+cm.getUserID()+"/buy", payload, 
@@ -306,12 +301,11 @@
 		);
 	};
 	
-	cm.model.redeemReward = function(rewardId) {
+	cm.model.redeemReward = function(userrewardId) {
 		Ti.API.info("redeemReward Requested!");
 		
-		var req = {}, reward = {}; //{"reward":{"id":1}, "description":"test redeem"}
-		reward.id = rewardId;
-		req.reward = reward;
+		var req = {}; //{"userreward_id":2, "description":"test redeem"}
+		req.userreward_id = userrewardId;
 		req.description = 'redeem from Cardmeleon App';
 		var payload = JSON.stringify(req);
 		cm.restcall("POST", "users/"+cm.getUserID()+"/redeem", payload, 
@@ -341,12 +335,11 @@
 		});	
 	};
 	
-	cm.model.giftReward = function(rewardId, message, phone) {
+	cm.model.giftReward = function(userrewardId, message, phone) {
 		Ti.API.info("giftReward Requested!");
 		
-		var req = {}, reward = {}; //{"reward":{"id":1}, "description":"I would like to send you a reward for gift"}
-		reward.id = rewardId;
-		req.reward = reward;
+		var req = {}; //{"userreward_id":2, "description":"I would like to send you a reward for gift"}
+		req.userreward_id = userrewardId;
 		req.description = message;
 		var payload = JSON.stringify(req);
 		cm.restcall("PUT", "users/"+cm.getUserID()+"/gift", payload, 
@@ -362,6 +355,58 @@
 				Ti.API.info("giftReward succeed.  Gift Code is: "+giftcode);
 				
 				Ti.App.fireEvent('app:giftcode.available', {giftCode:giftcode, phoneNumber:phone, gifterName:cm.getUserName()});
+			}
+		);
+	};
+	
+	cm.model.makePurchase = function(merchantId) {
+		Ti.API.info("makePurchase Requested!");
+		
+		var req = {}, merchant={}; //{"merchant":{"id":1}, "dollar_amount":0.0, "description":"QR-code scan"}
+		merchant.id = merchantId;
+		req.merchant = merchant;
+		req.dollar_amount = 0.0;
+		req.description = "QR-code Scan";
+		var payload = JSON.stringify(req);
+        cm.restcall("POST", "users/"+cm.getUserID()+"/purchase", payload, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				cm.ui.alert("Error", "makePurchase failed: " + e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				var result = JSON.parse(client.responseText);
+				var activityId = result.id;
+				Ti.API.info("makePurchase succeed.  purchase activity id is: "+activityId);
+				
+				Ti.App.fireEvent('app:purchase.recorded', {data:merchantId});
+			}
+		);
+	};
+	
+	cm.model.submitReview = function(merchantId, review, rating) {
+		Ti.API.info("submitReview Requested!");
+		
+		var req = {}, merchant={}; //{"merchant":{"id":1}, "review":"this merchant is awesome!", "rating":4.5}
+		merchant.id = merchantId;
+		req.merchant = merchant;
+		req.review = review;
+		req.rating = rating;
+		var payload = JSON.stringify(req);
+        cm.restcall("POST", "users/"+cm.getUserID()+"/review", payload, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				cm.ui.alert("Error", "submitReview failed: " + e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				var result = JSON.parse(client.responseText);
+				var reviewId = result.id;
+				Ti.API.info("submitReview succeed.  review id is: "+reviewId);
+				
+				Ti.App.fireEvent('app:review.submitted', {review_id:reviewId});
 			}
 		);
 	};

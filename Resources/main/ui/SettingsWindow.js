@@ -21,8 +21,8 @@
 		
 		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
 		var logoutButton = Titanium.UI.createButton({
-			backgroundImage:'images/Button_Logout_OFF.png',
-			backgroundSelectedImage:'images/Button_Logout_ON.png',
+			backgroundImage:'/images/Button_Logout_OFF.png',
+			backgroundSelectedImage:'/images/Button_Logout_ON.png',
 			top:6,
 			left:18,
 			height:24,
@@ -56,7 +56,7 @@
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
 		
 		var avatarIcon = Ti.UI.createView({
-			backgroundImage:'images/Icon_No-Avatar.png',  // TODO - from data
+			backgroundImage:'/images/Icon_No-Avatar.png',  // TODO - from data
 			top:10,
 			left:18,
 			width:48,
@@ -72,13 +72,13 @@
 			width: 30,
 			height: 26,
 			zIndex: 1,
-			image: 'images/Icon_Level_01.png'
+			image: '/images/Icon_Level_01.png'
 		});
 		view.add(userlevelIcon);
 		
 		var referButton = Titanium.UI.createButton({
-			backgroundImage:'images/Button_Refer_OFF.png',
-			backgroundSelectedImage:'images/Button_Refer_ON.png',
+			backgroundImage:'/images/Button_Refer_OFF.png',
+			backgroundSelectedImage:'/images/Button_Refer_ON.png',
 			top:22,
 			right:18,
 			height:24,
@@ -123,8 +123,8 @@
 		
 		var notification = false;
 		var notificationSwitch = Titanium.UI.createButton({
-		   	backgroundImage:'images/Button_Sale_OFF.png',
-		   	backgroundSelectedImage:'images/Button_Sale_ON.png',
+		   	backgroundImage:'/images/Button_Sale_OFF.png',
+		   	backgroundSelectedImage:'/images/Button_Sale_ON.png',
 			bottom:86,
 			left:46,
 			height:18,
@@ -137,11 +137,11 @@
 			    Titanium.API.info('notificationSwitch value = ' + e.value + ' act val ' + sw.value);
 			    if (sw.value) {
 			    	sw.value = false;
-			    	sw.backgroundImage = 'images/Button_Sale_OFF.png';
+			    	sw.backgroundImage = '/images/Button_Sale_OFF.png';
 			    	model = false;
 			    } else {
 			    	sw.value = true;
-			    	sw.backgroundImage = 'images/Button_Sale_ON.png';
+			    	sw.backgroundImage = '/images/Button_Sale_ON.png';
 			    	model = true;
 			    }
 			}
@@ -192,7 +192,7 @@
 		view.add(Ti.Facebook.createLoginButton({ bottom:86, left:160 }));
 		/*
 		var facebookIcon = Ti.UI.createView({
-			backgroundImage:'images/Icon_Facebook_32.png',
+			backgroundImage:'/images/Icon_Facebook_32.png',
 			bottom:86,
 			left:160,
 			width:32,
@@ -218,7 +218,7 @@
 		*/
 		
 		var twitterIcon = Ti.UI.createView({
-			backgroundImage:'images/Icon_Twitter_32.png',
+			backgroundImage:'/images/Icon_Twitter_32.png',
 			bottom:36,
 			left:160,
 			width:32,
@@ -246,16 +246,16 @@
 		var buttons = cm.ui.createTabbedBar({
 			bottom: 0,
 			left: 0,
-			initBackgroundImage: "images/Frame_Base-Settings_OFF.png",
+			initBackgroundImage: "/images/Frame_Base-Settings_OFF.png",
 			tabs: [{ // submit
-	            backgroundImage: 'images/Frame_Base-Settings_Submit.png',
+	            backgroundImage: '/images/Frame_Base-Settings_Submit.png',
 	            handler: function() {
 					Ti.API.info('submitButton clicked!');
 					_args.win.close();
 					// TODO
 				}
 	        }, { // cancel
-	            backgroundImage: 'images/Frame_Base-Settings_Cancel.png',
+	            backgroundImage: '/images/Frame_Base-Settings_Cancel.png',
 	            handler: function() {
 					Ti.API.info('cancelButton clicked!');
 					_args.win.close();

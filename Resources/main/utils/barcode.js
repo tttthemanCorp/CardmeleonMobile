@@ -33,7 +33,7 @@
 		        // simple configuration for iPhone simulator
 		        configure: {
 		            classType: "ZBarReaderController",
-		            sourceType: "Album",
+		            sourceType: "Album", //"Camera",
 		            cameraMode: "Default",
 		            symbol:{
 		                "QR-Code":true,
@@ -42,10 +42,21 @@
 		        success:function(data){
 		            Ti.API.info('TiBar success callback!');
 		            if(data && data.barcode){
+		            	/*
 		                Ti.UI.createAlertDialog({
 		                    title: "Scan result",
 		                    message: "Barcode: " + data.barcode + " Symbology:" + data.symbology
 		                }).show();
+		                */
+		                Ti.API.info("Barcode: " + data.barcode + "\nSymbology:" + data.symbology);
+		                
+		                var merchantId = parseInt(data.barcode);
+		                if (isNaN(merchantId)) {
+		                	cm.ui.alert("Error", "Invalid QR Code Scanned: " + data.barcode);
+		                } else {
+		                	cm.model.makePurchase(merchantId);
+		                }
+
 		            }
 		        },
 		        cancel:function(){

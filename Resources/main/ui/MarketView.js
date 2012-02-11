@@ -31,7 +31,7 @@
 			row.className = 'datarow';
 			row.clickName = 'row';
 			row.selectionStyle = Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE;
-			//row.backgroundImage = 'images/Bgrnd_Market-Card.png';
+			//row.backgroundImage = '//images/Bgrnd_Market-Card.png';
 			//row.height = 145;
 			//row.width = 309;
 			//row.selectedBackgroundColor = '#EAE1C1';
@@ -40,7 +40,7 @@
 			//row.borderColor = '#006cb1';
 			
 			var backgroundImg = Ti.UI.createView({
-				backgroundImage:'images/Bgrnd_Market-Card.png',
+				backgroundImage:'//images/Bgrnd_Market-Card.png',
 				top:3,
 				left:6,
 				width:308,
@@ -91,7 +91,7 @@
 			
 			var cardmeleonIcon = Ti.UI.createView({
 				zIndex: 3,
-				backgroundImage:'images/Icon_Points-Symbol_12x17.png',
+				backgroundImage:'//images/Icon_Points-Symbol_12x17.png',
 				top:30,
 				left:12,
 				width:12,
@@ -115,8 +115,8 @@
 			
 			var buyButton = Titanium.UI.createButton({
 				zIndex: 3,
-			   	backgroundImage:'images/Button_Buy_OFF.png',
-			   	backgroundSelectedImage:'images/Button_Buy_ON.png',
+			   	backgroundImage:'//images/Button_Buy_OFF.png',
+			   	backgroundSelectedImage:'//images/Button_Buy_ON.png',
 				bottom:10,
 				left:12,
 				width:90,
@@ -135,7 +135,7 @@
 					confirmDialog.addEventListener('click', function(e)
 					{
 					   	if (e.index == 0) { // OK
-					   		cm.model.buyReward(myitem.id, myitem.userid, 'buying a reward from smartphone');
+					   		cm.model.buyReward(myitem.userrewardid, myitem.userid, 'buying a reward from smartphone');
 					   		Ti.App.fireEvent('app:geoloc.available', {longitude: cm.getLongitude(), latitude: cm.getLatitude()});
 					   		//tableView.deleteRow(idx, {animate:true});
 					   	}
@@ -147,8 +147,8 @@
 			
 			var shareButton = Titanium.UI.createButton({
 				zIndex: 3,
-			   	backgroundImage:'images/Button_Share_OFF.png',
-			   	backgroundSelectedImage:'images/Button_Share_ON.png',
+			   	backgroundImage:'//images/Button_Share_OFF.png',
+			   	backgroundSelectedImage:'//images/Button_Share_ON.png',
 				bottom:10,
 				left:108,
 				width:90,
@@ -161,7 +161,7 @@
 		            cm.navGroup.open(cm.ui.createRewardsShareWindow({
 		            	model: model,
 		            	modal: true,
-		            	backgroundImage: 'images/Bgrnd_O-Y.png',
+		            	backgroundImage: '//images/Bgrnd_O-Y.png',
 		            	//barImage:$$.headerView.backgroundImage,
 		            	//backgroundColor : 'blue',
 						navBarHidden : true  // this is very important
@@ -170,8 +170,8 @@
 			row.add(shareButton);
 			
 			row.watching = item.watching;
-			var image = 'images/Button_Sale_OFF.png';
-			if (item.watching) image = 'images/Button_Sale_ON.png';
+			var image = '//images/Button_Sale_OFF.png';
+			if (item.watching) image = '//images/Button_Sale_ON.png';
 			var watchingSwitch = Titanium.UI.createButton({
 				zIndex: 3,
 			   	backgroundImage:image,
@@ -185,12 +185,12 @@
 					if (myrow.watching == false) {
 						myrow.watching = true;
 						myitem.watching = true;
-						mywatchingswitch.backgroundImage = 'images/Button_Sale_ON.png';
+						mywatchingswitch.backgroundImage = '//images/Button_Sale_ON.png';
 						cm.model.watches.push(myitem);
 					} else {
 						myrow.watching = false;
 						myitem.watching = false;
-						mywatchingswitch.backgroundImage = 'images/Button_Sale_OFF.png';
+						mywatchingswitch.backgroundImage = '//images/Button_Sale_OFF.png';
 						for (var j = 0; j < cm.model.watches.length; j++) {
 							if (myitem.id == cm.model.watches[j].id && myitem.userid == cm.model.watches[j].userid) {
 								cm.model.watches.splice(j, 1);
@@ -257,15 +257,15 @@
 
 		var viewData = [{ // Nearby
         	view: createMarketTable(),
-            tabbedBarBackgroundImage: 'images/Frame_Market-tab_Nearby.png',
+            tabbedBarBackgroundImage: '//images/Frame_Market-tab_Nearby.png',
             updateEvent:'app:nearby.market.updated'
         }, { // Expire Soon
             view: createMarketTable(),
-            tabbedBarBackgroundImage: 'images/Frame_Market-tab_Expire.png',
+            tabbedBarBackgroundImage: '//images/Frame_Market-tab_Expire.png',
             updateEvent:'app:expiresoon.market.updated'
         }, { // Watching
             view: createMarketTable(),
-            tabbedBarBackgroundImage: 'images/Frame_Market-tab_Watching.png',
+            tabbedBarBackgroundImage: '//images/Frame_Market-tab_Watching.png',
             updateEvent:null
         }];
         
@@ -279,9 +279,9 @@
 						if (e.id == eachrow.data.id && e.userid == eachrow.data.userid) {
 							eachrow.watching = e.watching;
 							if (eachrow.watching) {
-								eachrow.watchingSwitch.backgroundImage = 'images/Button_Sale_ON.png';
+								eachrow.watchingSwitch.backgroundImage = '//images/Button_Sale_ON.png';
 							} else {
-								eachrow.watchingSwitch.backgroundImage = 'images/Button_Sale_OFF.png';
+								eachrow.watchingSwitch.backgroundImage = '//images/Button_Sale_OFF.png';
 							}
 						}
 					}

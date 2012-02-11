@@ -65,13 +65,13 @@
 	function createStoreBasicView(_args) {
 		var model = _args.model;
 		var view = Ti.UI.createView(cm.combine($$.stretch, {
-			backgroundImage:'images/Bgrnd_Store-Basic.png'
+			backgroundImage:'//images/Bgrnd_Store-Basic.png'
 		}));
        
        var progressOnLength = model.numPurchases / model.purchasesPerReward * 284;
        
 		var progressOnIcon = Ti.UI.createView({
-			backgroundImage:'images/Bgrnd_Store-Progress-bar_ON.png',
+			backgroundImage:'//images/Bgrnd_Store-Progress-bar_ON.png',
 			top:116,
 			left:18,
 			width:progressOnLength,
@@ -82,7 +82,7 @@
 		view.add(progressOnIcon);
 		
 		var progressOffIcon = Ti.UI.createView({
-			backgroundImage:'images/Bgrnd_Store-Progress-bar_OFF.png',
+			backgroundImage:'//images/Bgrnd_Store-Progress-bar_OFF.png',
 			top:116,
 			left:18,
 			width:284,
@@ -155,7 +155,7 @@
 		view.add(marketMsg);
 		
 		var mapIcon = Ti.UI.createView({
-			backgroundImage:'images/Icon_Store-Map.png',
+			backgroundImage:'//images/Icon_Store-Map.png',
 			top:160,
 			right:18,
 			width:48,
@@ -176,7 +176,7 @@
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
        
 		var reviewSummaryView = Ti.UI.createView({
-			backgroundImage:'images/Bgrnd_Store-Review.png',
+			backgroundImage:'//images/Bgrnd_Store-Review.png',
 			top:0,
 			left:0,
 			width:$$.platformWidth,
@@ -235,14 +235,14 @@
 			//row.hasChild = true;
 			row.className = 'datarow';
 			row.clickName = 'row';
-			row.backgroundImage = 'images/Bgrnd_Store-Card.png';
-			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
+			row.backgroundImage = '//images/Bgrnd_Store-Card.png';
+			//row.selectedBackgroundImage = '//images/Bgrnd_Store-Card_Selected.png';
 			//row.filter = '';
 			//row.borderWidth = 2;
 			//row.borderColor = '#006cb1';
 			
 			var avatarIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_No-Avatar.png',  // TODO
+				backgroundImage:'//images/Icon_No-Avatar.png',  // TODO
 				top:12,
 				left:12,
 				width:48,
@@ -252,7 +252,7 @@
 			row.add(avatarIcon);
 			
 			var userLevelIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Level_01.png',  // TODO
+				backgroundImage:'//images/Icon_Level_01.png',  // TODO
 				top:12,
 				right:12,
 				width:30,
@@ -351,9 +351,9 @@
 			row.hasChild = false;
 			row.className = 'datarow';
 			row.clickName = 'row';
-			row.backgroundImage = 'images/Bgrnd_Store-Card.png';
+			row.backgroundImage = '//images/Bgrnd_Store-Card.png';
 			row.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
-			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
+			//row.selectedBackgroundImage = '//images/Bgrnd_Store-Card_Selected.png';
 			//row.filter = '';
 			//row.borderWidth = 2;
 			//row.borderColor = '#006cb1';
@@ -445,8 +445,8 @@
 
 		var headerView = cm.ui.createHeaderView();
 		var backButton = Titanium.UI.createButton({
-			backgroundSelectedImage:'images/Button_Stores-back_ON.png', 
-			backgroundImage:'images/Button_Stores-back_OFF.png',
+			backgroundSelectedImage:'//images/Button_Stores-back_ON.png', 
+			backgroundImage:'//images/Button_Stores-back_OFF.png',
 			top:9,
 			left:58,
 			width:62,
@@ -460,7 +460,7 @@
 	
 		var view = Ti.UI.createView(cm.combine($$.stretch, {
 			top:$$.headerView.height,
-			backgroundImage:'images/Bgrnd_G-B.png'
+			backgroundImage:'/images/Bgrnd_G-B.png'
 		}));
 
 		var summaryView = createSummaryView({
@@ -475,19 +475,19 @@
 		var viewData = [{
         	title: 'Basic',
         	view: createStoreBasicView({model:model}),
-            tabbedBarBackgroundImage: 'images/Frame_Stores_Basic.png'
+            tabbedBarBackgroundImage: '/images/Frame_Stores_Basic.png'
         }, {
             title: 'Review',
             view: createStoreReviewView({model:model}),
-            tabbedBarBackgroundImage: 'images/Frame_Stores_Review.png'
+            tabbedBarBackgroundImage: '/images/Frame_Stores_Review.png'
         }, {
             title: 'Program',
             view: createStoreProgramView({model:model}),
-            tabbedBarBackgroundImage: 'images/Frame_Stores_Promo.png'
+            tabbedBarBackgroundImage: '/images/Frame_Stores_Promo.png'
         }, {
             title: 'Menu',
             view: createStoreMenuView({model:model}),
-            tabbedBarBackgroundImage: 'images/Frame_Stores_Menu.png'
+            tabbedBarBackgroundImage: '/images/Frame_Stores_Menu.png'
         }];
         
 		var storeDetailsView = cm.ui.createTabbedScrollableView(cm.combine($$.TabGroup,{

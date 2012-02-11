@@ -29,7 +29,7 @@
 		contentView.add(levelTitle);
 		
 		var cardmeleonIcon = Ti.UI.createView({
-			backgroundImage:'images/Icon_Points-Symbol_12x17.png',
+			backgroundImage:'/images/Icon_Points-Symbol_12x17.png',
 			top:38,
 			left:12,
 			width:12,
@@ -51,7 +51,7 @@
 		contentView.add(cardmeleonValue);
 		
 		var cardmeleonIcon2 = Ti.UI.createView({
-			backgroundImage:'images/Icon_Points-Symbol_12x17.png',
+			backgroundImage:'/images/Icon_Points-Symbol_12x17.png',
 			top:63,
 			left:12,
 			width:12,
@@ -110,7 +110,7 @@
 		contentView.add(levelTitle);
 		
 		cardmeleonIcon = Ti.UI.createView({
-			backgroundImage:'images/Icon_Points-Symbol_12x17.png',
+			backgroundImage:'/images/Icon_Points-Symbol_12x17.png',
 			top:38 + spacing,
 			left:12,
 			width:12,
@@ -132,7 +132,7 @@
 		contentView.add(cardmeleonValue);
 		
 		cardmeleonIcon2 = Ti.UI.createView({
-			backgroundImage:'images/Icon_Points-Symbol_12x17.png',
+			backgroundImage:'/images/Icon_Points-Symbol_12x17.png',
 			top:63 + spacing,
 			left:12,
 			width:12,

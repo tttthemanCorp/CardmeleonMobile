@@ -10,8 +10,8 @@
 
 		var headerView = cm.ui.createHeaderView();
 		var backButton = Titanium.UI.createButton({
-			backgroundSelectedImage:'images/Button_Rewards-back_ON.png', 
-			backgroundImage:'images/Button_Rewards-back_OFF.png',
+			backgroundSelectedImage:'/images/Button_Rewards-back_ON.png', 
+			backgroundImage:'/images/Button_Rewards-back_OFF.png',
 			top:9,
 			left:58,
 			width:62,
@@ -45,7 +45,7 @@
 		mainView.add(msgField);
 		
 		var facebookIcon = Ti.UI.createView({
-			backgroundImage:'images/Icon_Facebook_32.png',
+			backgroundImage:'/images/Icon_Facebook_32.png',
 			top:194,
 			left:60,
 			width:32,
@@ -72,7 +72,7 @@
 		}
 		
 		var twitterIcon = Titanium.UI.createView({
-			backgroundImage:'/images/Icon_Twitter_32.png',
+			backgroundImage:'//images/Icon_Twitter_32.png',
 			top:194,
 			left:180,
 		    width:32,
@@ -99,8 +99,8 @@
 		}
 
 		var sendButton = Titanium.UI.createButton({
-		   	backgroundImage:'images/Button_Share_OFF.png',
-		   	backgroundSelectedImage:'images/Button_Share_ON.png',
+		   	backgroundImage:'/images/Button_Share_OFF.png',
+		   	backgroundSelectedImage:'/images/Button_Share_ON.png',
 			top:264,
 			width: 90,
 			height: 24

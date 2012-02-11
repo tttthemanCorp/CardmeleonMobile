@@ -16,7 +16,7 @@
 		})),
 		t1 = Titanium.UI.create2DMatrix().scale(0.4),
 		loader = Ti.UI.createView({
-			backgroundImage:'images/Icon_Camera.png',  // TODO - replace image
+			backgroundImage:'/images/Icon_Camera.png',  // TODO - replace image
 			height:80,
 			width:80,
 			transform: t1

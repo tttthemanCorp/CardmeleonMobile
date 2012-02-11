@@ -31,7 +31,7 @@
 			row.className = 'datarow';
 			row.clickName = 'row';
 			row.selectionStyle = Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE;
-			//row.backgroundImage = 'images/Bgrnd_Reward-Card.png';
+			//row.backgroundImage = '/images/Bgrnd_Reward-Card.png';
 			//row.selectedBackgroundColor = '#EAE1C1';
 			//row.filter = '';
 			//row.borderWidth = 2;
@@ -40,7 +40,7 @@
 			//row.width = 309;
 			
 			var backgroundImg = Ti.UI.createView({
-				backgroundImage:'images/Bgrnd_Reward-Card.png',
+				backgroundImage:'/images/Bgrnd_Reward-Card.png',
 				top:3,
 				left:6,
 				width:308,
@@ -104,7 +104,7 @@
 			
 			var cardmeleonIcon = Ti.UI.createView({
 				zIndex: 3,
-				backgroundImage:'images/Icon_Points-Symbol_12x17.png',
+				backgroundImage:'/images/Icon_Points-Symbol_12x17.png',
 				top:52,
 				left:12,
 				width:12,
@@ -128,8 +128,8 @@
 			
 			var redeemButton = Titanium.UI.createButton({
 				zIndex: 3,
-			   	backgroundImage:'images/Button_Redeem_OFF.png',
-			   	backgroundSelectedImage:'images/Button_Redeem_ON.png',
+			   	backgroundImage:'/images/Button_Redeem_OFF.png',
+			   	backgroundSelectedImage:'/images/Button_Redeem_ON.png',
 				bottom:10,
 				left:12,
 				width:90,
@@ -151,8 +151,8 @@
 			
 			var giftButton = Titanium.UI.createButton({
 				zIndex: 3,
-			   	backgroundImage:'images/Button_Gift_OFF.png',
-			   	backgroundSelectedImage:'images/Button_Gift_ON.png',
+			   	backgroundImage:'/images/Button_Gift_OFF.png',
+			   	backgroundSelectedImage:'/images/Button_Gift_ON.png',
 				bottom:10,
 				left:108,
 				width:90,
@@ -174,8 +174,8 @@
 			
 			var shareButton = Titanium.UI.createButton({
 				zIndex: 3,
-			   	backgroundImage:'images/Button_Share_OFF.png',
-			   	backgroundSelectedImage:'images/Button_Share_ON.png',
+			   	backgroundImage:'/images/Button_Share_OFF.png',
+			   	backgroundSelectedImage:'/images/Button_Share_ON.png',
 				bottom:10,
 				left:204,
 				width:90,
@@ -188,7 +188,7 @@
 		            cm.navGroup.open(cm.ui.createRewardsShareWindow({
 		            	model: model,
 		            	modal: true,
-		            	backgroundImage: 'images/Bgrnd_G-Y.png',
+		            	backgroundImage: '/images/Bgrnd_G-Y.png',
 		            	//barImage:$$.headerView.backgroundImage,
 		            	//backgroundColor : 'blue',
 						navBarHidden : true  // this is very important
@@ -196,8 +196,8 @@
 			}}(item));
 			row.add(shareButton);
 			
-			var image = 'images/Button_Sale_OFF.png';
-			if (item.forSale) image = 'images/Button_Sale_ON.png';
+			var image = '/images/Button_Sale_OFF.png';
+			if (item.forSale) image = '/images/Button_Sale_ON.png';
 			var forsaleSwitch = Titanium.UI.createButton({
 				zIndex: 3,
 			   	backgroundImage:image,
@@ -213,14 +213,14 @@
 				    Titanium.API.info('forsaleSwitch value = ' + e.value + ' act val ' + sw.value);
 				    if (sw.value) {
 				    	sw.value = false;
-				    	sw.backgroundImage = 'images/Button_Sale_OFF.png';
+				    	sw.backgroundImage = '/images/Button_Sale_OFF.png';
 				    	model.forSale = false;
-				    	cm.model.markForSale(model.id, false);
+				    	cm.model.markForSale(model.userrewardid, false);
 				    } else {
 				    	sw.value = true;
-				    	sw.backgroundImage = 'images/Button_Sale_ON.png';
+				    	sw.backgroundImage = '/images/Button_Sale_ON.png';
 				    	model.forSale = true;
-				    	cm.model.markForSale(model.id, true);
+				    	cm.model.markForSale(model.userrewardid, true);
 				    }
 				    if (index == 0) {
 				    	Ti.App.fireEvent('app:expiresoon.rewards.updated', {});
@@ -280,13 +280,13 @@
 
 		var viewData = [{ // Nearby
         	view: createRewardTable(),
-            tabbedBarBackgroundImage: 'images/Frame_Rewards-tab_Nearby.png'
+            tabbedBarBackgroundImage: '/images/Frame_Rewards-tab_Nearby.png'
         }, { // Expire Soon
             view: createRewardTable(),
-            tabbedBarBackgroundImage: 'images/Frame_Rewards-tab_Expire.png'
+            tabbedBarBackgroundImage: '/images/Frame_Rewards-tab_Expire.png'
         }, { // My Sales
             view: createRewardTable(),
-            tabbedBarBackgroundImage: 'images/Frame_Rewards-tab_Sales.png'
+            tabbedBarBackgroundImage: '/images/Frame_Rewards-tab_Sales.png'
         }];
         
         var data;

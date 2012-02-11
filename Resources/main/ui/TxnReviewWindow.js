@@ -5,10 +5,8 @@
 (function() {
 
 	cm.ui.createTxnReviewWindow = function(_args) {
-		var win = Ti.UI.createWindow(cm.combine($$.Window,{
-			exitOnClose:true,
-			orientationModes:[Ti.UI.PORTRAIT]
-		}));
+		var model = _args.model;
+		var win = Ti.UI.createWindow(cm.combine($$.stretch, _args));
 		
 		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
 		
@@ -16,7 +14,9 @@
 		
 		var reviewView = createTxnReviewView(cm.combine($$.stretch, {
 			top: $$.headerView.height, // + $$.subHeaderView.height,
-			win: win
+			backgroundImage:'/images/Bgrnd_G-B.png',
+			win: win,
+			model:model
 		}));
 		
 		win.add(headerView);
@@ -27,10 +27,11 @@
 	};
 	
 	function createTxnReviewView(_args) {
+		var model = _args.model;
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
 		
 		var reviewSummaryView = Ti.UI.createView({
-			backgroundImage:'images/Bgrnd_Store-Review.png',
+			backgroundImage:'/images/Bgrnd_Store-Review.png',
 			top:0,
 			left:0,
 			width:$$.platformWidth,
@@ -38,35 +39,60 @@
 			clickName:'reviewSummaryView'
 		});
 		
-		reviewSummaryView.add(cm.ui.createReviewStars({
+		var storeName = Ti.UI.createLabel(cm.combine($$.Label, {
+			color:'#000000',
+			font:{fontStyle:'normal',fontSize:16,fontWeight:'normal'},
+			left:12,
 			top:12,
-			left:6,
-			height:18,
-			width:102,
-			model:model
+			height:'auto',
+			width:'auto',
+			clickName:'storeName',
+			text:model.storeName
 		}));
+		reviewSummaryView.add(storeName);
 		
 		var numReviews = Ti.UI.createLabel(cm.combine($$.Label, {
 			color:'#999999',
-			font:{fontStyle:'normal',fontSize:12,fontWeight:'normal'},
+			font:{fontStyle:'normal',fontSize:16,fontWeight:'normal'},
 			right:12,
 			top:12,
 			height:'auto',
 			width:'auto',
 			clickName:'numReviews',
-			text:model.numReviews + " reviews: " + model.rating + " / 5.0"
+			text:model.numReviews + " reviews: " + model.rating + " / 5"
 		}));
 		reviewSummaryView.add(numReviews);
 		
 		view.add(reviewSummaryView);
 		
-		var textArea = Ti.UI.createTextArea({
-			top: 18,
+		var label = Ti.UI.createLabel(cm.combine($$.Label, {
+			color:'#000000',
+			font:{fontStyle:'normal',fontSize:16,fontWeight:'normal'},
+			left:18,
+			top:66,
+			height:'auto',
+			width:'auto',
+			text:"Your rating and review for "+model.storeName+":"
+		}));
+		view.add(label);
+		
+		var stars = cm.ui.createReviewStars({
+			top:100,
+			left:18,
+			height:18,
+			width:102,
+			model:{rating:2.5}
+		});
+		view.add(stars);
+		
+		var reviewMsg = Titanium.UI.createTextArea(cm.combine($$.TextArea, {
+			font:{fontStyle:'normal',fontSize:16,fontWeight:'normal'},
+			top: 140,
 			left: 18,
 			right: 18,
 			bottom: 86
-		});
-		view.add(textArea);
+		}));
+		view.add(reviewMsg);
 
 		//
 		// SKIP REFER LINK
@@ -83,8 +109,8 @@
 		//  CREATE OK BUTTON
 		//
 		var okButton = Titanium.UI.createButton({
-			backgroundImage:'images/Button_OK_OFF.png',
-			backgroundSelectedImage:'images/Button_OK_ON.png',
+			backgroundImage:'/images/Button_OK_OFF.png',
+			backgroundSelectedImage:'/images/Button_OK_ON.png',
 			bottom:44,
 			height:24,
 			width:90
@@ -96,40 +122,12 @@
   		//
   		okButton.addEventListener('click', function(){
   			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+  			cm.model.submitReview(model.id, reviewMsg.value, stars.rating);
   			Ti.App.fireEvent('app:txn.review.done', {});
-  			/*
-			var client = Titanium.Network.createHTTPClient();
-			client.onerror = function(e)
-			{
-				Ti.API.error(e.error + "\nResponse: " + this.responseText);
-				if (this.status == 401) {
-					alert('Wrong Username or Password!');
-				} else {
-					alert("Server connection failure!");
-				}
-				Ti.App.fireEvent('app:user.refer.done', {});
-			};
-			client.onload = function()
-			{
-				result = JSON.parse(this.responseText);
-				Ti.API.info('User ID: '+result.id);
-				//alert("User logged in.  User ID = "+result.id);
-				Ti.App.fireEvent('app:user.refer.done', {});
-			};
-
-			client.open('GET',cm.config.SERVICE_ENDPOINT+'api/auth');
-
-			//cm.ui.alert(fieldvalues[0]+':'+fieldvalues[1]);
-			client.setRequestHeader('Authorization','Basic '+Ti.Utils.base64encode(fieldvalues[0]+':'+fieldvalues[1]));
-	
-			client.send();
-			*/
   		});
   		
   		skipLabel.addEventListener('click', function(){
-  			//alert('New user clicked!');
   			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
-  			Ti.App.fireEvent('app:txn.review.done', {});
   		});
   		
 		return view;

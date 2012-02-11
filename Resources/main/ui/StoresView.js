@@ -31,9 +31,9 @@
 			row.className = 'datarow';
 			row.clickName = 'row';
 			row.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
-			//row.backgroundImage = 'images/Bgrnd_Store-Card.png';
-			//row.selectedBackgroundImage = 'images/Bgrnd_Store-Card_Selected.png';
-			//row.rightImage = 'images/Icon_Arrow_RT.png'
+			//row.backgroundImage = '/images/Bgrnd_Store-Card.png';
+			//row.selectedBackgroundImage = '/images/Bgrnd_Store-Card_Selected.png';
+			//row.rightImage = '/images/Icon_Arrow_RT.png'
 			//row.selectedColor = "blue";
 			//row.filter = '';
 			//row.borderWidth = 2;
@@ -42,7 +42,7 @@
 			//row.width = 309;
 			
 			var backgroundImg = Ti.UI.createView({
-				backgroundImage:'images/Bgrnd_Store-Card.png',
+				backgroundImage:'/images/Bgrnd_Store-Card.png',
 				top:3,
 				left:0,
 				width:320,
@@ -52,7 +52,7 @@
 			row.add(backgroundImg);
 			
 			var storeIcon = Ti.UI.createImageView({
-				//backgroundImage:'images/Icon_No-Avatar.png',
+				//backgroundImage:'/images/Icon_No-Avatar.png',
 				image:cm.getImageUrl(item.logo),
 				top:12,
 				left:12,
@@ -63,8 +63,8 @@
 			});
 			row.add(storeIcon);
 			
-			var image = 'images/Icon_Favorite_OFF.png';
-			if (item.favorite) image = 'images/Icon_Favorite_ON.png';
+			var image = '/images/Icon_Favorite_OFF.png';
+			if (item.favorite) image = '/images/Icon_Favorite_ON.png';
 			var favIcon = Ti.UI.createView({
 				backgroundImage:image,
 				top:5,
@@ -83,12 +83,12 @@
 					if (!myrow.favorite) {
 						myitem.favorite = true;
 						myrow.favorite = true;
-						myfavicon.backgroundImage = 'images/Icon_Favorite_ON.png';
+						myfavicon.backgroundImage = '/images/Icon_Favorite_ON.png';
 						cm.model.favorites.push(myitem);
 					} else {
 						myitem.favorite = false;
 						myrow.favorite = false;
-						myfavicon.backgroundImage = 'images/Icon_Favorite_OFF.png';
+						myfavicon.backgroundImage = '/images/Icon_Favorite_OFF.png';
 						for (var j = 0; j < cm.model.favorites.length; j++) {
 							if (myitem.id == cm.model.favorites[j].id) {
 								cm.model.favorites.splice(j, 1);
@@ -112,7 +112,7 @@
 				zIndex: 2
 			});
 			var arrowIcon = Ti.UI.createImageView({
-				image:'images/Icon_Arrow_RT.png',
+				image:'/images/Icon_Arrow_RT.png',
 				top:40,
 				right:5,
 				width:12,
@@ -141,7 +141,7 @@
 			var progressOnLength = item.numPurchases / item.purchasesPerReward * 220;
 			
 			var progressOnIcon = Ti.UI.createView({
-				backgroundImage:'images/Bgrnd_Store-Progress-bar_ON.png',
+				backgroundImage:'/images/Bgrnd_Store-Progress-bar_ON.png',
 				top:42,
 				left:70,
 				width:progressOnLength,
@@ -152,7 +152,7 @@
 			row.add(progressOnIcon);
 			
 			var progressOffIcon = Ti.UI.createView({
-				backgroundImage:'images/Bgrnd_Store-Progress-bar_OFF.png',
+				backgroundImage:'/images/Bgrnd_Store-Progress-bar_OFF.png',
 				top:42,
 				left:70,
 				width:220,
@@ -248,11 +248,11 @@
 
 		var viewData = [{ // Nearby
         	view: createStoreTable(),
-            tabbedBarBackgroundImage: 'images/Frame_Stores-tab_Nearby.png',
+            tabbedBarBackgroundImage: '/images/Frame_Stores-tab_Nearby.png',
             loadEvent: 'app:nearby.stores.loaded'
         }, { // Favorites
             view: createStoreTable(),
-            tabbedBarBackgroundImage: 'images/Frame_Stores-tab_Favorites.png',
+            tabbedBarBackgroundImage: '/images/Frame_Stores-tab_Favorites.png',
             loadEvent: 'app:fav.stores.loaded'
         }];
         
@@ -271,9 +271,9 @@
 				if (e.id == eachrow.data.id) {
 					eachrow.favorite = e.favorite;
 					if (eachrow.favorite) {
-						eachrow.favIcon.backgroundImage = 'images/Icon_Favorite_ON.png';
+						eachrow.favIcon.backgroundImage = '/images/Icon_Favorite_ON.png';
 					} else {
-						eachrow.favIcon.backgroundImage = 'images/Icon_Favorite_OFF.png';
+						eachrow.favIcon.backgroundImage = '/images/Icon_Favorite_OFF.png';
 					}
 				}
 			}

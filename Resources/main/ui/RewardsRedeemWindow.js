@@ -19,8 +19,8 @@
 
 		var headerView = cm.ui.createHeaderView();
 		var backButton = Titanium.UI.createButton({
-			backgroundSelectedImage:'images/Button_Rewards-back_ON.png', 
-			backgroundImage:'images/Button_Rewards-back_OFF.png',
+			backgroundSelectedImage:'/images/Button_Rewards-back_ON.png', 
+			backgroundImage:'/images/Button_Rewards-back_OFF.png',
 			top:9,
 			left:58,
 			width:62,
@@ -28,7 +28,7 @@
 		});
 		backButton.addEventListener('click', function() {
 			if (redeemed) {
-				cm.model.redeemReward(model.id);
+				cm.model.redeemReward(model.userrewardid);
 				cm.model.requestNearbyRewards();
 			}
 			win.close();
@@ -37,7 +37,7 @@
 		
 		var mainView = Ti.UI.createView(cm.combine($$.stretch, {
 			top:$$.headerView.height,
-			backgroundImage:'images/Bgrnd_G-Y.png'
+			backgroundImage:'/images/Bgrnd_G-Y.png'
 		}));
 		
 		var margin = ($$.platformHeight - $$.headerView.height - $$.cameraView.height - 350) / 2;
@@ -45,7 +45,7 @@
 		var bgView = Ti.UI.createView(cm.combine($$.stretch, {
 			top: margin,
 			bottom: margin,
-			backgroundImage:'images/Bgrnd_Reward-Redeem.png'
+			backgroundImage:'/images/Bgrnd_Reward-Redeem.png'
 		}));
 		mainView.add(bgView);
 		
@@ -76,7 +76,7 @@
 		bgView.add(expireTime);
 		
 		var cardmeleonIcon = Ti.UI.createView({
-			backgroundImage:'images/Icon_Points-Symbol_12x17.png',
+			backgroundImage:'/images/Icon_Points-Symbol_12x17.png',
 			top:40,
 			left:12,
 			width:12,
@@ -122,8 +122,8 @@
 		bgView.add(alertLabel);
 		
 		var button = Titanium.UI.createButton({
-		   	backgroundImage:'images/Button_Redeem-Lg_OFF.png',
-		   	backgroundSelectedImage:'images/Button_Redeem-Lg_ON.png',
+		   	backgroundImage:'/images/Button_Redeem-Lg_OFF.png',
+		   	backgroundSelectedImage:'/images/Button_Redeem-Lg_ON.png',
 			top:226,
 			height:36,
 			width:135

@@ -8,6 +8,7 @@
 	cm.ui.createReviewStars = function(_args) {
 		var model = _args.model;
 		var view = Ti.UI.createView(_args);
+		view.rating = model.rating;
 		
 		var p = Math.floor(model.rating);
 		var n = 5 - Math.ceil(model.rating);
@@ -15,7 +16,7 @@
 		var favIcon, curPos = 0;
 		for (var i = 0; i < p; i++) {
 			favIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Favorite_ON.png',
+				backgroundImage:'/images/Icon_Favorite_ON.png',
 				top:0,
 				left:curPos * 21,
 				width:18,
@@ -27,7 +28,7 @@
 		}
 		for (var i = 0; i < h; i++) {
 			favIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Favorite_ON.png',  // TODO change to half star
+				backgroundImage:'/images/Icon_Favorite_ON.png',  // TODO change to half star
 				top:0,
 				left: curPos * 21,
 				width:18,
@@ -39,7 +40,7 @@
 		}
 		for (var i = 0; i < n; i++) {
 			favIcon = Ti.UI.createView({
-				backgroundImage:'images/Icon_Favorite_OFF.png',
+				backgroundImage:'/images/Icon_Favorite_OFF.png',
 				top:0,
 				left:curPos * 21,
 				width:18,
@@ -57,12 +58,28 @@
 		var view = Ti.UI.createView(cm.combine($$.cameraView, params));
 		
 		var cameraIcon = Ti.UI.createView({
-			backgroundImage:'images/Icon_Camera.png',
+			backgroundImage:'/images/Icon_Camera.png',
 			bottom:6,
 			width:34,
 			height:24,
 			clickName:'cameraIcon'
 		});
+		
+		Ti.App.addEventListener('app:store.reviews.retrieved', function(e) {
+			Ti.API.info("app:store.reviews.retrieved - event received");
+			var model = e.model;
+			var win = cm.ui.createTxnReviewWindow({
+				top:0,
+				left:0,
+				model:model
+			});
+			win.open({animated:true});
+		});
+		
+		Ti.App.addEventListener('app:purchase.recorded', function(e) {
+			var merchantId = e.data;
+			cm.model.requestStoreReviews(merchantId);
+        });
 
 		cameraIcon.addEventListener('click', function(e) {
 			Ti.API.info('cameraIcon clicked!');
@@ -81,7 +98,7 @@
 			width: 24,
 			height: 24,
 			zIndex: 1,
-			image: 'images/Icon_Settings.png'
+			image: '/images/Icon_Settings.png'
 		});
 		settingsIcon.addEventListener('click', function(e) {
 			Ti.API.info('settingsIcon clicked!');
@@ -111,7 +128,7 @@
 			width: 36,
 			height: 36,
 			zIndex: 1,
-			image: 'images/Dash_Search_OFF.png'
+			image: '/images/Dash_Search_OFF.png'
 		});
 		searchIcon.addEventListener('click', function(e) {
 			Ti.API.info('searchIcon clicked!');
@@ -146,7 +163,7 @@
 			width: 73,
 			height: 25,
 			zIndex: 1,
-			image: 'images/Dash_Wallet.png'
+			image: '/images/Dash_Wallet.png'
 		});
 		dollarIcon.addEventListener('click', function(e) {
 			Ti.API.info('dollarIcon clicked!');
@@ -170,7 +187,7 @@
 			width: 30,
 			height: 26,
 			zIndex: 1,
-			image: 'images/Icon_Level_01.png'
+			image: '/images/Icon_Level_01.png'
 		});
 		userlevelIcon.addEventListener('click', function(e) {
 			Ti.API.info('userlevelIcon clicked!');
@@ -583,6 +600,7 @@
 //Include major UI components and styling properties
 Ti.include(
 	'/main/ui/styles.js',
+	'/main/ui/TxnReviewWindow.js',
 	'/main/ui/SettingsWindow.js',
 	'/main/ui/LoginWindow.js',
 	'/main/ui/LoadingView.js',
@@ -600,106 +618,4 @@ Ti.include(
 	'/main/ui/DrawerView.js'
 );
 
-/*	
-	cm.ui.createFilmstripTabGrpView = function(params) {
-		var data = params.data || [],
-		platformWidth = Ti.Platform.displayCaps.platformWidth,
-		tabHeight = params.heightAtBottom || 60,
-		tabWidth = platformWidth / data.length,
-		top = params.top || 0,
-		shadow = params.shadow || 10,
-		tabs = [],
-		item, tab;
-		
-		var container = Ti.UI.createView(cm.combine($$.stretch, {top:top}));
-		
-		var tabView = Ti.UI.createView({
-			left:0,
-			bottom:0,
-			height:tabHeight,
-			width:platformWidth
-		});
-		
-		var filmStripView = cm.ui.createFilmStripView({
-			bottom:tabHeight - shadow,
-			views: [
-				cm.ui.createStoresView(),
-				cm.ui.createRewardsView(),
-				cm.ui.createMarketView()
-			]
-		});
-		
-		//create clickable tab images
-		function createTab(_iconOn,_iconOff,_cb,_on) {
-			var view = Ti.UI.createView({
-				top:0,
-				bottom:0,
-				width:tabWidth
-			}),
-			image = Ti.UI.createImageView({
-				image:(_on) ? _iconOn : _iconOff
-			});
-			
-			view.on = _on||false; //instance var for 'on' state
-			
-			//assemble view
-			view.add(image);
-			view.addEventListener('click',_cb);
-			
-			//'instance' method
-			view.toggle = function() {
-				view.on = !view.on;
-				image.image = (view.on) ? _iconOn : _iconOff;
-			};
-			
-			return view;
-		}
-		
-		//toggle view state of application to the relevant tab
-		function selectIndex(_idx) {
-			for (var i = 0, l = tabs.length; i<l; i++) {
-				//select the tab and move the tab 'cursor'
-				if (_idx === i) {
-					//if the tab is already selected, do nothing
-					if (!tabs[i].on) {
-						Ti.API.info('selecting tab index: '+_idx);
-						tabs[i].toggle();
-						//set the current film strip index
-						filmStripView.fireEvent('changeIndex',{idx:i});
-					}
-				}
-				else if (tabs[i].on) {
-					tabs[i].toggle();
-				}
-			}
-		}
-		
-		//assemble main app tabs
-		// HACK: need to use annonymous functions to wrap selectIndex as a view event handler
-		for (var i = 0, l = data.length; i<l; i++) {
-			item = data[i];
-			tabs.push(createTab(item.iconOn, item.iconOff, function(idx) {
-				return function() {
-					selectIndex(idx)
-				};
-			}(item.index), item.active));
-		}
-		
-		//add tabs to layout
-		for (var i = 0, l = tabs.length; i<l; i++) {
-			tabs[i].left = tabWidth*i;
-			tabView.add(tabs[i]);
-		}
-		
-		//App app-level event listener to change tabs
-		Ti.App.addEventListener('app:change.tab', function(e) {
-			selectIndex(e.tabIndex);
-		});
-		
-		container.add(filmStripView);
-		container.add(tabView);
-		
-		return container;
-	};
-*/
 	

@@ -51,9 +51,9 @@
 		//  CREATE SIGNUP BUTTON
 		//
 		var signupButton = Titanium.UI.createButton({
-			backgroundImage:'images/Button_signup_OFF.png',
-			backgroundSelectedImage:'images/Button_signup_ON.png',
-			//backgroundImage:'images/Button_bg.png',
+			backgroundImage:'/images/Button_signup_OFF.png',
+			backgroundSelectedImage:'/images/Button_signup_ON.png',
+			//backgroundImage:'/images/Button_bg.png',
 			//title:'Log in!',
 			//borderRadius:8,
 			bottom:45,

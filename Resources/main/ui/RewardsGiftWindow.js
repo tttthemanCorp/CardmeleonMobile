@@ -10,8 +10,8 @@
 
 		var headerView = cm.ui.createHeaderView();
 		var backButton = Titanium.UI.createButton({
-			backgroundSelectedImage:'images/Button_Rewards-back_ON.png', 
-			backgroundImage:'images/Button_Rewards-back_OFF.png',
+			backgroundSelectedImage:'/images/Button_Rewards-back_ON.png', 
+			backgroundImage:'/images/Button_Rewards-back_OFF.png',
 			top:9,
 			left:58,
 			width:62,
@@ -24,7 +24,7 @@
 		
 		var mainView = Ti.UI.createView(cm.combine($$.stretch, {
 			top:$$.headerView.height,
-			backgroundImage:'images/Bgrnd_G-Y.png'
+			backgroundImage:'/images/Bgrnd_G-Y.png'
 		}));
 		
 		/*
@@ -45,8 +45,8 @@
 		mainView.add(contactLabel);
 		
 		var contactButton = Titanium.UI.createButton({
-		   	backgroundImage:'images/Button_Contacts_OFF.png',
-		   	backgroundSelectedImage:'images/Button_Contacts_ON.png',
+		   	backgroundImage:'/images/Button_Contacts_OFF.png',
+		   	backgroundSelectedImage:'/images/Button_Contacts_ON.png',
 			top:22,
 			width:90,
 			height:24,
@@ -82,8 +82,8 @@
 		mainView.add(msgField);
 		
 		var sendButton = Titanium.UI.createButton({
-		   	backgroundImage:'images/Button_Gift_OFF.png',
-		   	backgroundSelectedImage:'images/Button_Gift_ON.png',
+		   	backgroundImage:'/images/Button_Gift_OFF.png',
+		   	backgroundSelectedImage:'/images/Button_Gift_ON.png',
 			top:290,
 			width:90,
 			height:24,
@@ -127,7 +127,7 @@
 			phoneNumber = phoneNumber.replace("/^\s+|\s+$/g", "");
 			Ti.API.log("phone number to send SMS is: "+phoneNumber);
 			
-			cm.model.giftReward(model.id, msgField.value, phoneNumber);
+			cm.model.giftReward(model.userrewardid, msgField.value, phoneNumber);
   		});
   		
 		var cameraView = cm.ui.createCameraView({

@@ -17,18 +17,18 @@
 		// main application tab group
 		var data = [{
         	title: 'Stores',
-        	tabbedBarBackgroundImage: 'images/Frame_Base_Stores.png',
-        	winBackgroundImage: 'images/Bgrnd_G-B.png',
+        	tabbedBarBackgroundImage: '/images/Frame_Base_Stores.png',
+        	winBackgroundImage: '/images/Bgrnd_G-B.png',
         	view: cm.ui.createStoresView()
         }, {
         	title: 'Rewards',
-        	tabbedBarBackgroundImage: 'images/Frame_Base_Rewards.png',
-        	winBackgroundImage: 'images/Bgrnd_G-Y.png',
+        	tabbedBarBackgroundImage: '/images/Frame_Base_Rewards.png',
+        	winBackgroundImage: '/images/Bgrnd_G-Y.png',
         	view: cm.ui.createRewardsView()
         }, {
         	title: 'Market',
-        	tabbedBarBackgroundImage: 'images/Frame_Base_Market.png',
-        	winBackgroundImage: 'images/Bgrnd_O-Y.png',
+        	tabbedBarBackgroundImage: '/images/Frame_Base_Market.png',
+        	winBackgroundImage: '/images/Bgrnd_O-Y.png',
         	view: cm.ui.createMarketView()
         }];
 		var tabGroup = cm.ui.createFilmstripTabGrpView(cm.combine($$.TabGroup,{
@@ -109,6 +109,11 @@
 		
 		// get GEO location
 		cm.requestGeoLocation();
+		
+		// set up listeners for other events
+		Ti.App.addEventListener('app:txn.review.done', function(e) {
+			
+		});
 	    
 	    return win;
 	};
