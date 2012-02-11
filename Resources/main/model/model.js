@@ -50,7 +50,7 @@
 			{
 				result = JSON.parse(client.responseText);
 
-				var storedetails = {}, programs = [], reviews = [], program, review;
+				var storedetails = {}, programs = [], reviews = [], program, review, sum = 0, numReviews = result.userreview_set.length;
 				storedetails.storeName = result.name;
 				for (var i = 0, l = result.rewardprogram_set.length; i < l; i++) {
 					program = {};
@@ -61,7 +61,8 @@
 					program.reward_name = result.rewardprogram_set[i].reward.name;
 					programs.push(program);
 				}
-				for (var i = 0, l = result.userreview_set.length; i < l; i++) {
+				for (var i = 0; i < numReviews; i++) {
+					sum += parseFloat(result.userreview_set[i].rating);
 					review = {};
 					review.review = result.userreview_set[i].review;
 					review.rating = result.userreview_set[i].rating;
@@ -71,6 +72,9 @@
 				}
 				storedetails.programs = programs;
 				storedetails.reviews = reviews;
+				var avgrating = sum / numReviews;
+				storedetails.rating = Math.round(avgrating * 2) / 2;
+				storedetails.numReviews = numReviews;
 				
 				
 				// Once data loaded, fire event to trigger UI update
@@ -391,7 +395,11 @@
 		var req = {}, merchant={}; //{"merchant":{"id":1}, "review":"this merchant is awesome!", "rating":4.5}
 		merchant.id = merchantId;
 		req.merchant = merchant;
-		req.review = review;
+		if (review === undefined || review === null) {
+			req.review = "";
+		} else {
+			req.review = review;
+		}
 		req.rating = rating;
 		var payload = JSON.stringify(req);
         cm.restcall("POST", "users/"+cm.getUserID()+"/review", payload, 

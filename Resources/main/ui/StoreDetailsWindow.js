@@ -175,6 +175,15 @@
 		var model = _args.model;
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
        
+
+		
+		return view;
+	}
+	
+	function addStoreReviewTable(view, data, params) {
+		var sectionlist = [], reviewList = data.reviews;
+		
+		// summary view
 		var reviewSummaryView = Ti.UI.createView({
 			backgroundImage:'//images/Bgrnd_Store-Review.png',
 			top:0,
@@ -189,7 +198,7 @@
 			left:6,
 			height:18,
 			width:102,
-			model:model
+			model:data
 		}));
 		
 		var numReviews = Ti.UI.createLabel(cm.combine($$.Label, {
@@ -200,16 +209,11 @@
 			height:'auto',
 			width:'auto',
 			clickName:'numReviews',
-			text:model.numReviews + " reviews: " + model.rating + " / 5.0"
+			text:data.numReviews + " reviews: " + data.rating + " / 5.0"
 		}));
 		reviewSummaryView.add(numReviews);
 		
-		view.add(reviewSummaryView);
-		
-		return view;
-	}
-	
-	function addStoreReviewTable(view, data, params) {
+		// table view
 		var tableView = Titanium.UI.createTableView(cm.combine({
 			//search:search,
 			//headerView:headerView,
@@ -223,8 +227,6 @@
 			separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
 			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
 		}, params));
-		
-		var sectionlist = [], reviewList = data.reviews;
 		
 		for (var i = 0, l = reviewList.length; i<l; i++) {
 			item = reviewList[i];
@@ -319,6 +321,7 @@
 			Ti.API.info('review table view row clicked - source ' + e.source);
 		});
 		
+		view.add(reviewSummaryView);
 		view.add(tableView);
 	}		
 
@@ -443,12 +446,12 @@
 		var model = _args.model;
 		var win = Ti.UI.createWindow(cm.combine($$.stretch, _args));
 
-		var headerView = cm.ui.createHeaderView();
+		var headerView = cm.ui.createHeaderView({noSettings:true});
 		var backButton = Titanium.UI.createButton({
-			backgroundSelectedImage:'//images/Button_Stores-back_ON.png', 
-			backgroundImage:'//images/Button_Stores-back_OFF.png',
+			backgroundSelectedImage:'/images/Button_Back_ON.png', 
+			backgroundImage:'/images/Button_Back_OFF.png',
 			top:9,
-			left:58,
+			left:12,
 			width:62,
 			height:18
 		});

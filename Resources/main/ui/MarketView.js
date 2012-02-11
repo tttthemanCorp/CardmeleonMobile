@@ -257,15 +257,15 @@
 
 		var viewData = [{ // Nearby
         	view: createMarketTable(),
-            tabbedBarBackgroundImage: '//images/Frame_Market-tab_Nearby.png',
+            tabbedBarBackgroundImage: '/images/Frame_Market-tab_Nearby.png',
             updateEvent:'app:nearby.market.updated'
         }, { // Expire Soon
             view: createMarketTable(),
-            tabbedBarBackgroundImage: '//images/Frame_Market-tab_Expire.png',
+            tabbedBarBackgroundImage: '/images/Frame_Market-tab_Expire.png',
             updateEvent:'app:expiresoon.market.updated'
         }, { // Watching
             view: createMarketTable(),
-            tabbedBarBackgroundImage: '//images/Frame_Market-tab_Watching.png',
+            tabbedBarBackgroundImage: '/images/Frame_Market-tab_Watching.png',
             updateEvent:null
         }];
         
@@ -279,9 +279,9 @@
 						if (e.id == eachrow.data.id && e.userid == eachrow.data.userid) {
 							eachrow.watching = e.watching;
 							if (eachrow.watching) {
-								eachrow.watchingSwitch.backgroundImage = '//images/Button_Sale_ON.png';
+								eachrow.watchingSwitch.backgroundImage = '/images/Button_Sale_ON.png';
 							} else {
-								eachrow.watchingSwitch.backgroundImage = '//images/Button_Sale_OFF.png';
+								eachrow.watchingSwitch.backgroundImage = '/images/Button_Sale_OFF.png';
 							}
 						}
 					}

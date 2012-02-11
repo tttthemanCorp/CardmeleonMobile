@@ -17,12 +17,12 @@
 		countdown = 600;
 		var win = Ti.UI.createWindow(cm.combine($$.stretch, _args));
 
-		var headerView = cm.ui.createHeaderView();
+		var headerView = cm.ui.createHeaderView({noSettings:true});
 		var backButton = Titanium.UI.createButton({
 			backgroundSelectedImage:'/images/Button_Rewards-back_ON.png', 
 			backgroundImage:'/images/Button_Rewards-back_OFF.png',
 			top:9,
-			left:58,
+			left:12,
 			width:62,
 			height:18
 		});

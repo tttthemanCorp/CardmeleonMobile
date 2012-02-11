@@ -12,7 +12,7 @@
 		
 		var p = Math.floor(model.rating);
 		var n = 5 - Math.ceil(model.rating);
-		var h = 5 - p -n;
+		var h = 5 - p - n;
 		var favIcon, curPos = 0;
 		for (var i = 0; i < p; i++) {
 			favIcon = Ti.UI.createView({
@@ -21,19 +21,31 @@
 				left:curPos * 21,
 				width:18,
 				height:18,
-				clickName:'favIcon'
+				clickName:'favIconP',
+				zIndex:0
 			});
 			view.add(favIcon);
 			curPos++;
 		}
 		for (var i = 0; i < h; i++) {
 			favIcon = Ti.UI.createView({
-				backgroundImage:'/images/Icon_Favorite_ON.png',  // TODO change to half star
+				backgroundImage:'/images/Icon_Favorite_ON-HALF.png',
 				top:0,
 				left: curPos * 21,
+				width:10,
+				height:18,
+				clickName:'favIconH2',
+				zIndex:1
+			});
+			view.add(favIcon);
+			favIcon = Ti.UI.createView({
+				backgroundImage:'/images/Icon_Favorite_OFF.png',
+				top:0,
+				left:curPos * 21,
 				width:18,
 				height:18,
-				clickName:'favIcon'
+				clickName:'favIconH1',
+				zIndex:0
 			});
 			view.add(favIcon);
 			curPos++;
@@ -45,14 +57,80 @@
 				left:curPos * 21,
 				width:18,
 				height:18,
-				clickName:'favIcon'
+				clickName:'favIconN',
+				zIndex:0
 			});
 			view.add(favIcon);
 			curPos++;
 		}
 
 		return view;
+	};
+	
+	function refreshStars(rating, starIcons) {
+		var p = Math.floor(rating);
+		var hasHalf = (rating - Math.floor(rating) > 0);
+		//Ti.API.info("hasHalf: "+hasHalf);
+		var image, width;
+		for (var i = 0; i < 5; i++) {
+			if (i < p) {
+				image = '/images/Icon_Favorite_ON.png';
+				width = 18;
+			} else if (i == p && hasHalf == true) {
+				image = '/images/Icon_Favorite_ON-HALF.png';
+				width = 10;
+			} else {
+				image = '/images/Icon_Favorite_OFF.png';
+				width = 18;
+			}
+			if (starIcons[i].image === null || !starIcons[i].image.match(image+"$")) {
+				Ti.API.info("changed: i="+i+" : "+image+"; was: "+starIcons[i].image);
+				starIcons[i].image = image;
+				starIcons[i].width = width;
+			}
+		}
 	}
+	
+	cm.ui.createTouchableReviewStars = function(_args) {
+		var model = _args.model;
+		var view = Ti.UI.createView(_args);
+		view.rating = model.rating;
+		
+		var starIcons = [], curPos = 0, icon, bkgd;
+		for (var i = 0; i < 5; i++) {
+			bkgd = Ti.UI.createView({
+				backgroundImage:'/images/Icon_Favorite_OFF.png',
+				top:0,
+				left:curPos * 21,
+				width:18,
+				height:18,
+				zIndex:0
+			});
+			icon = Ti.UI.createImageView({
+				image:null,
+				top:0,
+				left:curPos * 21,
+				width:18,
+				height:18,
+				zIndex:1
+			});
+			view.add(bkgd);
+			view.add(icon);
+			starIcons.push(icon);
+			curPos++;
+		}
+		
+		refreshStars(model.rating, starIcons);
+		
+		view.addEventListener("touchstart", function(e) {
+			Ti.API.info("touchstart @ x:"+e.x+" y:"+e.y);
+			var rating = Math.round(e.x / 21 * 2) / 2;
+			refreshStars(rating, starIcons);
+			this.rating = rating;
+		});
+		
+		return view;
+	};
 	
 	cm.ui.createCameraView = function(params) {
 		var view = Ti.UI.createView(cm.combine($$.cameraView, params));
@@ -65,22 +143,6 @@
 			clickName:'cameraIcon'
 		});
 		
-		Ti.App.addEventListener('app:store.reviews.retrieved', function(e) {
-			Ti.API.info("app:store.reviews.retrieved - event received");
-			var model = e.model;
-			var win = cm.ui.createTxnReviewWindow({
-				top:0,
-				left:0,
-				model:model
-			});
-			win.open({animated:true});
-		});
-		
-		Ti.App.addEventListener('app:purchase.recorded', function(e) {
-			var merchantId = e.data;
-			cm.model.requestStoreReviews(merchantId);
-        });
-
 		cameraIcon.addEventListener('click', function(e) {
 			Ti.API.info('cameraIcon clicked!');
 			cm.utils.scanBarcode();
@@ -92,26 +154,28 @@
 	
 	cm.ui.createHeaderView = function(params) {
 		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
-		var settingsIcon = Ti.UI.createImageView({
-			top: 6,
-			left: 6,
-			width: 24,
-			height: 24,
-			zIndex: 1,
-			image: '/images/Icon_Settings.png'
-		});
-		settingsIcon.addEventListener('click', function(e) {
-			Ti.API.info('settingsIcon clicked!');
-			//Ti.App.fireEvent('app:show.drawer', {showing:'settings'});
-			var win = cm.ui.createSettingsWindow();
-			//if (Ti.Platform.osname == 'android') {
-			//	win.open({animated:true});
-			//} else {
-			//	win.open({transition:Ti.UI.iPhone.AnimationStyle.CURL_DOWN});
-			//}
-			win.open({animated:true});
-		});
-		headerView.add(settingsIcon);
+		if (params === undefined || params.noSettings === false) {
+			var settingsIcon = Ti.UI.createImageView({
+				top: 6,
+				left: 6,
+				width: 24,
+				height: 24,
+				zIndex: 1,
+				image: '/images/Icon_Settings.png'
+			});
+			settingsIcon.addEventListener('click', function(e) {
+				Ti.API.info('settingsIcon clicked!');
+				//Ti.App.fireEvent('app:show.drawer', {showing:'settings'});
+				var win = cm.ui.createSettingsWindow();
+				//if (Ti.Platform.osname == 'android') {
+				//	win.open({animated:true});
+				//} else {
+				//	win.open({transition:Ti.UI.iPhone.AnimationStyle.CURL_DOWN});
+				//}
+				win.open({animated:true});
+			});
+			headerView.add(settingsIcon);
+		}
 		return headerView;
 	};
 	

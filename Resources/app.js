@@ -60,6 +60,22 @@ Ti.App.addEventListener('app:friend.refer.done', function(e) {
 	//cm.app.mainWindow.animate(cm.ui.createWindowAnimation());
 });
 
+Ti.App.addEventListener('app:store.reviews.retrieved', function(e) {
+	Ti.API.info("app:store.reviews.retrieved - event received");
+	var model = e.model;
+	var win = cm.ui.createTxnReviewWindow({
+		top:0,
+		left:0,
+		model:model
+	});
+	win.open({animated:true});
+});
+
+Ti.App.addEventListener('app:purchase.recorded', function(e) {
+	var merchantId = e.data;
+	cm.model.requestStoreReviews(merchantId);
+});
+
 if (!cm.isLoggedIn()) {
 	Ti.App.fireEvent('app:user.signup.existing', {});	
 } else {

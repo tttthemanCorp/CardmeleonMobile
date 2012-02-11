@@ -11,7 +11,7 @@
 		})),
 		drawer = Ti.UI.createView({
 			borderWidth:2,
-			borderColor:'#9FD1F5', //"#AADCD7",
+			borderColor:'#F5D507', //"#AADCD7", 9FD1F5
 			height:$$.platformHeight - 80,
 			bottom:$$.platformHeight,  //$$.platformHeight - $$.headerView.height - $$.dashView.height - 12,
 			left:12,
@@ -32,7 +32,7 @@
 		closeView = Ti.UI.createView({
 			height:30,
 			borderRadius:15,
-			backgroundColor:'#9FD1F5', //"#AADCD7",
+			backgroundColor:'#F5D507', //"#AADCD7", 9FD1F5
 			left:0,
 			right:0,
 			bottom:0

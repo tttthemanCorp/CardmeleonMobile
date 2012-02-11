@@ -76,11 +76,11 @@
 		}));
 		view.add(label);
 		
-		var stars = cm.ui.createReviewStars({
+		var stars = cm.ui.createTouchableReviewStars({
 			top:100,
 			left:18,
 			height:18,
-			width:102,
+			width:110,
 			model:{rating:2.5}
 		});
 		view.add(stars);
