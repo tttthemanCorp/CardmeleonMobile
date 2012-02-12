@@ -28,7 +28,8 @@
 		});
 		backButton.addEventListener('click', function() {
 			if (redeemed) {
-				cm.model.redeemReward(model.userrewardid);
+				cm.model.redeemReward(model.userrewardid, model.forSale);
+				cm.model.removeUserRewardLocally(model.userrewardid);
 				cm.model.requestNearbyRewards();
 			}
 			win.close();

@@ -233,7 +233,6 @@
 				    	Ti.App.fireEvent('app:expiresoon.rewards.updated', {});
 				    	Ti.App.fireEvent('app:forsale.rewards.updated', {});
 				    }
-				    
 				}
 			}(item, forsaleSwitch));
 			row.add(forsaleSwitch);

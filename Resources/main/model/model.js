@@ -281,6 +281,7 @@
 			function(client)
 			{
 				Ti.API.info("markForSale succeed");
+				Ti.App.fireEvent('app:mark.forsale.succeed', {});
 			}
 		);
 	};
@@ -301,11 +302,12 @@
 			function(client)
 			{
 				Ti.API.info("buyReward succeed");
+				Ti.App.fireEvent('app:buy.reward.succeed', {});
 			}
 		);
 	};
 	
-	cm.model.redeemReward = function(userrewardId) {
+	cm.model.redeemReward = function(userrewardId, forSale) {
 		Ti.API.info("redeemReward Requested!");
 		
 		var req = {}; //{"userreward_id":2, "description":"test redeem"}
@@ -321,6 +323,7 @@
 			function(client)
 			{
 				Ti.API.info("redeemReward succeed");
+				Ti.App.fireEvent('app:redeem.reward.succeed', {forSale:forSale});
 			}
 		);
 	};
@@ -419,6 +422,20 @@
 				Ti.App.fireEvent('app:review.submitted', {review_id:reviewId});
 			}
 		);
+	};
+	
+	cm.model.removeUserRewardLocally = function(userrewardId) {
+		var userrewards = cm.model.userinfo.userrewards, index = -1;
+		for (var i = 0, l = userrewards.length; i < l; i++) {
+			item = userrewards[i];
+			if (item.id === userrewardId) {
+				index = i;
+				break;
+			}
+		}
+		if (index >= 0) {
+			cm.model.userinfo.userrewards.splice(index, 1);
+		}
 	};
 	
 })();

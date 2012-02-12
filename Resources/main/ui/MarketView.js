@@ -135,9 +135,11 @@
 					confirmDialog.addEventListener('click', function(e)
 					{
 					   	if (e.index == 0) { // OK
-					   		cm.model.buyReward(myitem.userrewardid, myitem.userid, 'buying a reward from smartphone');
-					   		Ti.App.fireEvent('app:geoloc.available', {longitude: cm.getLongitude(), latitude: cm.getLatitude()});
-					   		//tableView.deleteRow(idx, {animate:true});
+					   		if (myitem.userid === parseInt(cm.getUserID())) {
+					   			cm.ui.alert("Info", "This reward belongs to you already");
+					   		} else {
+					   			cm.model.buyReward(myitem.userrewardid, myitem.userid, 'buying a reward from smartphone');
+					   		}
 					   	}
 					});
 					confirmDialog.show();

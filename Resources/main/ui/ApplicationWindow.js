@@ -111,10 +111,25 @@
 		cm.requestGeoLocation();
 		
 		// set up listeners for other events
+		Ti.App.addEventListener('app:mark.forsale.succeed', function(e) {
+			cm.model.requestNearbyMarket();
+			cm.model.requestMyWatching();
+		});
+		
+		Ti.App.addEventListener('app:buy.reward.succeed', function(e) {
+			cm.model.requestUserInfo();
+		});
+		
+		Ti.App.addEventListener('app:redeem.reward.succeed', function(e) {
+			if (e.forSale) {
+				cm.model.requestNearbyMarket();
+			}
+		});
+		
 		Ti.App.addEventListener('app:txn.review.done', function(e) {
 			
 		});
-	    
+
 	    return win;
 	};
 		
