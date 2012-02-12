@@ -384,6 +384,8 @@
 				var activityId = result.id;
 				Ti.API.info("makePurchase succeed.  purchase activity id is: "+activityId);
 				
+				cm.ui.alert("Info", "Purchase activity has been recorded successfully!");
+				
 				Ti.App.fireEvent('app:purchase.recorded', {data:merchantId});
 			}
 		);

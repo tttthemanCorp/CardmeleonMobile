@@ -7,9 +7,9 @@
 
 	cm.ui.createSettingsWindow = function(_args) {
 		var win = Ti.UI.createWindow(cm.combine($$.Window,{
-			exitOnClose:true,
-			orientationModes:[Ti.UI.PORTRAIT],
-			modal: true
+			//exitOnClose:false,
+			//orientationModes:[Ti.UI.PORTRAIT],
+			//modal: true
 		}));
 		
 		var scrollView = Titanium.UI.createScrollView(cm.combine($$.stretch, {
@@ -76,20 +76,31 @@
 		});
 		view.add(userlevelIcon);
 		
-		var referButton = Titanium.UI.createButton({
+		var referButton = Ti.UI.createButton({
 			backgroundImage:'/images/Button_Refer_OFF.png',
 			backgroundSelectedImage:'/images/Button_Refer_ON.png',
 			top:22,
 			right:18,
 			height:24,
 			width:90,
-			enabled:true
+			zIndex: 1
 		});
 		view.add(referButton);
 		
 		referButton.addEventListener('click', function(e) {
 			Ti.API.info('referButton clicked!');
-			// TODO
+			var refwin = cm.ui.createFriendsReferWindow({
+				exitOnClose:false,
+				orientationModes:[Ti.UI.PORTRAIT],
+				modal: true,
+				eventFire:false
+			});
+			refwin.open({animated:true});
+			//if (Ti.Platform.osname == 'android') {
+			//	refwin.open({animated:true});
+			//} else {
+			//	refwin.open({transition:Ti.UI.iPhone.AnimationStyle.CURL_DOWN});
+			//}
 		});
 		
 		var earnPoints = Ti.UI.createLabel(cm.combine($$.Label, {
@@ -160,7 +171,7 @@
 		
 		var NearbySlider = Titanium.UI.createSlider({
 			min:1,
-			max:10,
+			max:50,
 			value:5,
 			width:100,
 			height:'auto',
@@ -172,7 +183,9 @@
 		NearbySlider.addEventListener('change',function(e)
 		{
 			Ti.API.info('NearbySlider changed!');
-			// TODO
+			var nearby = Math.floor(e.value);
+			if (nearby === 1) NearbyLabel.text = 'Nearby: 1 mile';
+			else NearbyLabel.text = 'Nearby: '+nearby+' miles';
 		});
 		
 		
@@ -251,14 +264,24 @@
 	            backgroundImage: '/images/Frame_Base-Settings_Submit.png',
 	            handler: function() {
 					Ti.API.info('submitButton clicked!');
-					_args.win.close();
+					//_args.win.close();
+					if (Ti.Platform.osname == 'android') {
+						_args.win.close({animated:true});
+					} else {
+						_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
+					}
 					// TODO
 				}
 	        }, { // cancel
 	            backgroundImage: '/images/Frame_Base-Settings_Cancel.png',
 	            handler: function() {
 					Ti.API.info('cancelButton clicked!');
-					_args.win.close();
+					//_args.win.close();
+					if (Ti.Platform.osname == 'android') {
+						_args.win.close({animated:true});
+					} else {
+						_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
+					}
 					// TODO
 				}
 	        }]

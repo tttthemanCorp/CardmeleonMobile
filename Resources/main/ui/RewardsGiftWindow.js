@@ -10,8 +10,8 @@
 
 		var headerView = cm.ui.createHeaderView({noSettings:true});
 		var backButton = Titanium.UI.createButton({
-			backgroundSelectedImage:'/images/Button_Rewards-back_ON.png', 
-			backgroundImage:'/images/Button_Rewards-back_OFF.png',
+			backgroundSelectedImage:'/images/Button_Back_ON.png', 
+			backgroundImage:'/images/Button_Back_OFF.png',
 			top:9,
 			left:12,
 			width:62,

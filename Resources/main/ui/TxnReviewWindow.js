@@ -121,13 +121,21 @@
   		// Event Handling
   		//
   		okButton.addEventListener('click', function(){
-  			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+  			if (Ti.Platform.osname == 'android') {
+				_args.win.close({animated:true});
+			} else {
+				_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+			}
   			cm.model.submitReview(model.id, reviewMsg.value, stars.rating);
   			Ti.App.fireEvent('app:txn.review.done', {});
   		});
   		
   		skipLabel.addEventListener('click', function(){
-  			_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+  			if (Ti.Platform.osname == 'android') {
+				_args.win.close({animated:true});
+			} else {
+				_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
+			}
   		});
   		
 		return view;

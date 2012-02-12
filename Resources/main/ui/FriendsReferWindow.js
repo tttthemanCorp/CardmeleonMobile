@@ -5,18 +5,20 @@
 (function() {
 
 	cm.ui.createFriendsReferWindow = function(_args) {
-		var win = Ti.UI.createWindow(cm.combine($$.Window,{
-			exitOnClose:false,
-			orientationModes:[Ti.UI.PORTRAIT]
-		}));
+		var win = Ti.UI.createWindow(cm.combine($$.Window, _args));
 		
 		var headerView = Ti.UI.createView(cm.combine($$.headerView,{top:0}));
 		
 		//var subHeaderView = Ti.UI.createView(cm.combine($$.subHeaderView,{top: $$.headerView.height}));
 		
+		var eventFire = true;
+		if (_args != undefined && _args.eventFire != undefined) {
+			eventFire = _args.eventFire;
+		}
 		var referView = createReferView(cm.combine($$.stretch, {
 			top: $$.headerView.height, // + $$.subHeaderView.height,
-			win: win
+			win: win,
+			eventFire: eventFire
 		}));
 		
 		win.add(headerView);
@@ -163,26 +165,22 @@
 					
 					// TODO: send SMS
 					
-					if (Ti.Platform.osname == 'android') {
-						_args.win.close({animated:true});
-					} else {
-						_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
-					}
+					_args.win.close({animated:true});
 		  			
-		  			Ti.App.fireEvent('app:friend.refer.done', {});
+		  			if (_args.eventFire) {
+		  				Ti.App.fireEvent('app:friend.refer.done', {});
+		  			}
 				}
 			);
   		});
   		
   		skipLabel.addEventListener('click', function(){
   			//alert('New user clicked!');
-			if (Ti.Platform.osname == 'android') {
-				_args.win.close({animated:true});
-			} else {
-				_args.win.close({transition:Ti.UI.iPhone.AnimationStyle.CURL_UP});
-			}
+  			_args.win.close({animated:true});
   			
-  			Ti.App.fireEvent('app:friend.refer.done', {});
+  			if (_args.eventFire) {
+  				Ti.App.fireEvent('app:friend.refer.done', {});
+  			}
   		});
   		
 		return view;

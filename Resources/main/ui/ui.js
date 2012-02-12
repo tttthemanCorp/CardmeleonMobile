@@ -84,7 +84,7 @@
 				width = 18;
 			}
 			if (starIcons[i].image === null || !starIcons[i].image.match(image+"$")) {
-				Ti.API.info("changed: i="+i+" : "+image+"; was: "+starIcons[i].image);
+				//Ti.API.info("changed: i="+i+" : "+image+"; was: "+starIcons[i].image);
 				starIcons[i].image = image;
 				starIcons[i].width = width;
 			}
@@ -167,12 +167,11 @@
 				Ti.API.info('settingsIcon clicked!');
 				//Ti.App.fireEvent('app:show.drawer', {showing:'settings'});
 				var win = cm.ui.createSettingsWindow();
-				//if (Ti.Platform.osname == 'android') {
-				//	win.open({animated:true});
-				//} else {
-				//	win.open({transition:Ti.UI.iPhone.AnimationStyle.CURL_DOWN});
-				//}
-				win.open({animated:true});
+				if (Ti.Platform.osname == 'android') {
+					win.open({animated:true});
+				} else {
+					win.open({transition:Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT});
+				}
 			});
 			headerView.add(settingsIcon);
 		}

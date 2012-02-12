@@ -33,7 +33,7 @@
 		        // simple configuration for iPhone simulator
 		        configure: {
 		            classType: "ZBarReaderController",
-		            sourceType: "Album", //"Camera",
+		            sourceType: "Camera", // Camera, Album
 		            cameraMode: "Default",
 		            symbol:{
 		                "QR-Code":true,
