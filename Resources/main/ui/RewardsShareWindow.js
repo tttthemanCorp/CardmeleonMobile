@@ -72,7 +72,7 @@
 		}
 		
 		var twitterIcon = Titanium.UI.createView({
-			backgroundImage:'//images/Icon_Twitter_32.png',
+			backgroundImage:'/images/Icon_Twitter_32.png',
 			top:194,
 			left:180,
 		    width:32,

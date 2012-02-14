@@ -65,13 +65,13 @@
 	function createStoreBasicView(_args) {
 		var model = _args.model;
 		var view = Ti.UI.createView(cm.combine($$.stretch, {
-			backgroundImage:'//images/Bgrnd_Store-Basic.png'
+			backgroundImage:'/images/Bgrnd_Store-Basic.png'
 		}));
        
        var progressOnLength = model.numPurchases / model.purchasesPerReward * 284;
        
 		var progressOnIcon = Ti.UI.createView({
-			backgroundImage:'//images/Bgrnd_Store-Progress-bar_ON.png',
+			backgroundImage:'/images/Bgrnd_Store-Progress-bar_ON.png',
 			top:116,
 			left:18,
 			width:progressOnLength,
@@ -82,7 +82,7 @@
 		view.add(progressOnIcon);
 		
 		var progressOffIcon = Ti.UI.createView({
-			backgroundImage:'//images/Bgrnd_Store-Progress-bar_OFF.png',
+			backgroundImage:'/images/Bgrnd_Store-Progress-bar_OFF.png',
 			top:116,
 			left:18,
 			width:284,
@@ -185,7 +185,7 @@
 		
 		// summary view
 		var reviewSummaryView = Ti.UI.createView({
-			backgroundImage:'//images/Bgrnd_Store-Review.png',
+			backgroundImage:'/images/Bgrnd_Store-Review.png',
 			top:0,
 			left:0,
 			width:$$.platformWidth,
@@ -237,14 +237,14 @@
 			//row.hasChild = true;
 			row.className = 'datarow';
 			row.clickName = 'row';
-			row.backgroundImage = '//images/Bgrnd_Store-Card.png';
+			row.backgroundImage = '/images/Bgrnd_Store-Card.png';
 			//row.selectedBackgroundImage = '//images/Bgrnd_Store-Card_Selected.png';
 			//row.filter = '';
 			//row.borderWidth = 2;
 			//row.borderColor = '#006cb1';
 			
 			var avatarIcon = Ti.UI.createView({
-				backgroundImage:'//images/Icon_No-Avatar.png',  // TODO
+				backgroundImage:'/images/Icon_No-Avatar.png',  // TODO
 				top:12,
 				left:12,
 				width:48,
@@ -254,7 +254,7 @@
 			row.add(avatarIcon);
 			
 			var userLevelIcon = Ti.UI.createView({
-				backgroundImage:'//images/Icon_Level_01.png',  // TODO
+				backgroundImage:'/images/Icon_Level_01.png',  // TODO
 				top:12,
 				right:12,
 				width:30,
@@ -354,7 +354,7 @@
 			row.hasChild = false;
 			row.className = 'datarow';
 			row.clickName = 'row';
-			row.backgroundImage = '//images/Bgrnd_Store-Card.png';
+			row.backgroundImage = '/images/Bgrnd_Store-Card.png';
 			row.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
 			//row.selectedBackgroundImage = '//images/Bgrnd_Store-Card_Selected.png';
 			//row.filter = '';

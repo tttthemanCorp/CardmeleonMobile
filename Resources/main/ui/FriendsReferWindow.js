@@ -128,8 +128,8 @@
 		//  CREATE REFER BUTTON
 		//
 		var referButton = Titanium.UI.createButton({
-			backgroundImage:'//images/Button_Refer_OFF.png',
-			backgroundSelectedImage:'//images/Button_Refer_ON.png',
+			backgroundImage:'/images/Button_Refer_OFF.png',
+			backgroundSelectedImage:'/images/Button_Refer_ON.png',
 			bottom:44,
 			height:24,
 			width:90
