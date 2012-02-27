@@ -54,6 +54,7 @@
 			var storeIcon = Ti.UI.createImageView({
 				//backgroundImage:'/images/Icon_No-Avatar.png',
 				image:cm.getImageUrl(item.logo),
+				defaultImage:'/images/photoDefault.png',
 				top:12,
 				left:12,
 				width:48,
@@ -122,23 +123,22 @@
 			arrowView.add(arrowIcon);
 			row.add(arrowView);
 			
-			arrowView.addEventListener('click', function(e)
-			{
-				Ti.API.info('table view row clicked - source ' + e.source);
-				// use rowNum property on object to get row number
-				var rowNum = e.index;
-				Ti.API.info('You clicked on row# '+rowNum);
-				Ti.API.info('You clicked on the '+e.source.clickName);
-	            cm.navGroup.open(cm.ui.createStoreDetailsWindow({
-	            	model: e.rowData.data,
-	            	modal: true,
-	            	//barImage:$$.headerView.backgroundImage,
-	            	//backgroundColor : 'blue',
-					navBarHidden : true  // this is very important
-	            }), { animated: true });
-			});
+			arrowView.addEventListener('click', function(myitem) {
+				return function(e) {
+		            cm.navGroup.open(cm.ui.createStoreDetailsWindow({
+		            	model: myitem,
+		            	modal: true,
+		            	//barImage:$$.headerView.backgroundImage,
+		            	//backgroundColor : 'blue',
+						navBarHidden : true  // this is very important
+		            }), { animated: true });
+			};}(item));
 			
-			var progressOnLength = item.numPurchases / item.purchasesPerReward * 220;
+			var progressOnLength = 0;
+			if (item.purchasesPerReward > 0) {
+				progressOnLength = item.numPurchases / item.purchasesPerReward * 220;
+				if (progressOnLength > 220) progressOnLength = 220;
+			}
 			
 			var progressOnIcon = Ti.UI.createView({
 				backgroundImage:'/images/Bgrnd_Store-Progress-bar_ON.png',
@@ -202,7 +202,7 @@
 			row.add(phone);
 			
 			phone.addEventListener('click', function(e){
-				alert("phone clicked");
+				cm.callPhone(phone.text);
 			});
 			
 			var distance = Ti.UI.createLabel(cm.combine($$.Link, {
@@ -219,7 +219,7 @@
 			row.add(distance);
 			
 			distance.addEventListener('click', function(e){
-				alert("distance clicked");
+				cm.openMap(item.addr);
 			});
 
 			section = Ti.UI.createTableViewSection();
@@ -229,6 +229,24 @@
 		}
 		
 		tableView.setData(sectionlist);
+		
+		/*
+		tableView.addEventListener('click', function(e)
+		{
+			Ti.API.info('table view row clicked - source ' + e.source);
+			// use rowNum property on object to get row number
+			var rowNum = e.index;
+			Ti.API.info('You clicked on row# '+rowNum);
+			Ti.API.info('You clicked on the '+e.source);
+            cm.navGroup.open(cm.ui.createStoreDetailsWindow({
+            	model: e.row.data,
+            	modal: true,
+            	//barImage:$$.headerView.backgroundImage,
+            	//backgroundColor : 'blue',
+				navBarHidden : true  // this is very important
+            }), { animated: true });
+		});
+		*/
 		
 	}
 	

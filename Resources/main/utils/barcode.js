@@ -9,22 +9,33 @@
 			var TiBar = require('com.mwaysolutions.barcode');
 			TiBar.scan({
 		        success: function (data) {
-		          if(data && data.barcode) {
-	                Ti.UI.createAlertDialog({
-	                    title: "Scan result",
-	                    message: "Barcode: " + data.barcode + " Symbology:" + data.symbology
-	                }).show();
-		          } else {
-		            alert(JSON.stringify(data));
-		          }
+		            Ti.API.info('TiBar success callback!');
+		            if(data && data.barcode){
+		            	/*
+		                Ti.UI.createAlertDialog({
+		                    title: "Scan result",
+		                    message: "Barcode: " + data.barcode + " Symbology:" + data.symbology
+		                }).show();
+		                */
+		                Ti.API.info("Barcode: " + data.barcode + "\nSymbology:" + data.symbology);
+		                
+		                var merchantId = parseInt(data.barcode);
+		                if (isNaN(merchantId)) {
+		                	cm.ui.alert("Error", "Invalid QR Code Scanned: " + data.barcode);
+		                } else {
+		                	cm.model.makePurchase(merchantId);
+		                }
+		            }
 		        },
 		
 		        error: function (err) {
-		          alert('Error while scanning: ' + err);
+		        	Ti.API.info('Error while scanning: ' + err);
+		            alert('Error while scanning: ' + err);
 		        },
 		
 		        cancel: function () {
-		          alert('Scan cancelled');
+		        	Ti.API.info('Scan cancelled');
+		        	alert('Scan cancelled');
 		        }
 		    });
 		} else { // iphone
@@ -56,14 +67,15 @@
 		                } else {
 		                	cm.model.makePurchase(merchantId);
 		                }
-
 		            }
 		        },
 		        cancel:function(){
-		            Ti.API.info('TiBar cancel callback!');
+		        	Ti.API.info('Scan cancelled');
+		            alert('Scan cancelled');
 		        },
-		        error:function(){
-		            Ti.API.info('TiBar error callback!');
+		        error:function(err){
+		        	Ti.API.info('Error while scanning: ' + err);
+		            alert('Error while scanning: ' + err);
 		        }
 		    });
 		}

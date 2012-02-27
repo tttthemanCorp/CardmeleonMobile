@@ -28,7 +28,7 @@
 		Button: {
 			height:36,
 			color:'#000000',
-			backgroundColor:'#00A4AB',
+			//backgroundColor:'#00A4AB',
 			font: {
 				fontSize:18,
 				fontWeight:'bold'

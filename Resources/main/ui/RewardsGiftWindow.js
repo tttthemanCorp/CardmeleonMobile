@@ -119,6 +119,11 @@
   		sendButton.addEventListener('click', function(){
 			Ti.API.log('sendButton clicked!');
 			
+			if (msgField.value == undefined || msgField.value.length == 0) {
+				cm.ui.alert("Info", "Please enter a gifting message for your friend");
+				return;
+			}
+			
 			var phoneNumber = contactField.value;
 			var idx = phoneNumber.indexOf("[", 0);
 			if (idx >= 0) {

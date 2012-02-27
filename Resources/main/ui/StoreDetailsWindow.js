@@ -9,6 +9,7 @@
        
 		var storeIcon = Ti.UI.createImageView({
 			image:cm.getImageUrl(model.logo),
+			defaultImage:'/images/photoDefault.png',
 			top:6,
 			right:6,
 			width:72,
@@ -36,8 +37,8 @@
 			font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
 			left:12,
 			top:42,
-			height:14,
-			width:73,
+			height:13,
+			width:72,
 			thickness:1,
 			clickName:'phone',
 			text:model.phone,
@@ -45,19 +46,27 @@
 		}));
 		view.add(phone);
 		
+		phone.addEventListener('click', function(e){
+			cm.callPhone(phone.text);
+		});
+		
 		var distance = cm.ui.createLink(cm.combine($$.Link, {
 			color:'#FFFFFF',
 			font:{fontStyle:'normal',fontSize:10,fontWeight:'normal'},
 			left:12,
 			bottom:12,
-			height:14,
-			width:45,
+			height:13,
+			width:44,
 			thickness:1,
 			clickName:'distance',
 			text:model.distance + " miles",
 			zIndex: 3
 		}));
 		view.add(distance);
+		
+		distance.addEventListener('click', function(e){
+			cm.openMap(model.addr);
+		});
 			
        return view;
 	}
@@ -68,7 +77,11 @@
 			backgroundImage:'/images/Bgrnd_Store-Basic.png'
 		}));
        
-       var progressOnLength = model.numPurchases / model.purchasesPerReward * 284;
+		var progressOnLength = 0;
+		if (model.purchasesPerReward > 0) {
+			progressOnLength = model.numPurchases / model.purchasesPerReward * 284;
+			if (progressOnLength > 284) progressOnLength = 284;
+		}
        
 		var progressOnIcon = Ti.UI.createView({
 			backgroundImage:'/images/Bgrnd_Store-Progress-bar_ON.png',
@@ -175,8 +188,6 @@
 		var model = _args.model;
 		var view = Ti.UI.createView(cm.combine($$.stretch, _args));
        
-
-		
 		return view;
 	}
 	
@@ -437,9 +448,68 @@
 	
 	function createStoreMenuView(_args) {
 		var view = Ti.UI.createView(cm.combine($$.stretch, {
-
-       }));
-       return view;
+		}));
+			
+       	return view;
+	}
+	
+	function addStoreMenuTable(view, data, params) {
+		var tableView = Titanium.UI.createTableView(cm.combine({
+			//search:search,
+			//headerView:headerView,
+			//footerView:footerView,
+			filterAttribute:'filter',
+			backgroundColor:'transparent',
+			//opacity: 0.0,
+			maxRowHeight:145,
+			minRowHeight:145,
+			style:Titanium.UI.iPhone.TableViewStyle.GROUPED,
+			separatorStyle: Ti.UI.iPhone.TableViewSeparatorStyle.NONE,
+			animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE
+		}, params));
+		
+		var sectionlist = [], programList = data.programs;
+		
+		for (var i = 0, l = programList.length; i<l; i++) {
+			row = Ti.UI.createTableViewRow();
+			row.hasChild = false;
+			row.className = 'datarow';
+			row.clickName = 'row';
+			row.backgroundImage = '/images/Bgrnd_Store-Card.png';
+			row.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
+			
+			var reqRewardButton = Titanium.UI.createButton(cm.combine($$.Button, {
+				zIndex: 3,
+			   	//backgroundImage:"",
+			   	//backgroundSelectedImage:"",
+			   	style:Titanium.UI.iPhone.SystemButtonStyle.BORDERED,
+			   	title:"Request A Reward",
+			   	top:50,
+				width:180
+			}));
+			reqRewardButton.addEventListener('click',function(index)
+			{
+				return function(e) {
+					Ti.API.info("reqRewardButton clicked!");
+					cm.model.requestAReward(data.storeId, programList[index].id);
+			}}(i));
+			
+			row.add(reqRewardButton);
+			
+			section = Ti.UI.createTableViewSection();
+			section.add(row);	
+			
+			sectionlist.push(section);
+		}
+		
+		tableView.setData(sectionlist);
+		
+		//tableView.addEventListener('click', function(e)
+		//{
+		//	Ti.API.info('menu table view row clicked - source ' + e.source);
+		//});
+		
+		view.add(tableView);
 	}
 	
 	cm.ui.createStoreDetailsWindow = function(_args) {
@@ -516,6 +586,12 @@
 				bottom:0
 			});
 			addStoreProgramTable(viewData[2].view, e.data, {
+				top:0,
+				left:0,
+				width:$$.platformWidth,
+				bottom:0
+			});
+			addStoreMenuTable(viewData[3].view, e.data, {
 				top:0,
 				left:0,
 				width:$$.platformWidth,

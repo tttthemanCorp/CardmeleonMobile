@@ -52,6 +52,7 @@
 
 				var storedetails = {}, programs = [], reviews = [], program, review, sum = 0, numReviews = result.userreview_set.length;
 				storedetails.storeName = result.name;
+				storedetails.storeId = storeId;
 				for (var i = 0, l = result.rewardprogram_set.length; i < l; i++) {
 					program = {};
 					program.name = result.rewardprogram_set[i].name;
@@ -59,6 +60,7 @@
 					program.reward_trigger = result.rewardprogram_set[i].reward_trigger;
 					program.reward_points = result.rewardprogram_set[i].reward.equiv_points;
 					program.reward_name = result.rewardprogram_set[i].reward.name;
+					program.id = result.rewardprogram_set[i].id;
 					programs.push(program);
 				}
 				for (var i = 0; i < numReviews; i++) {
@@ -150,7 +152,6 @@
 					storeItem.phone = cm.formatPhoneNumber(resultItem.phone);
 					storeItem.logo = resultItem.logo;
 					storeItem.distance = 1.0; //resultItem.distance.toFixed(1);  TODO
-					storeItem.purchasesPerReward = 10; //resultItem.reward_trigger;  TODO
 					storeItem.desc = resultItem.desc;
 					storeItem.addr = resultItem.address;
 					storeItem.numRewards = cm.model.userinfo.userrewards.length;
@@ -162,11 +163,13 @@
 						}
 					}
 					storeItem.numPurchases = 0;  // set initial value first, then correct it below
+					storeItem.purchasesPerReward = 0;  // set initial value first, then correct it below
 					progressList = cm.model.userinfo.userprogresses;
 					for (var j = 0, m = progressList.length; j < m; j++) {
 						progressItem = progressList[j];
 						if (storeId == progressItem.merchant.id) {
 							storeItem.numPurchases = progressItem.cur_times;
+							storeItem.purchasesPerReward = progressItem.merchant.rewardprogram_set[0].reward_trigger;
 							break;
 						}
 					}
@@ -436,6 +439,36 @@
 		if (index >= 0) {
 			cm.model.userinfo.userrewards.splice(index, 1);
 		}
+	};
+	
+	cm.model.requestAReward = function(merchantId, programId) {
+		Ti.API.info("requestAReward Requested! merchant_id:"+merchantId+", rewardprogram_id:"+programId);
+		
+		var req = {}; //{"merchant_id":1, "rewardprogram_id":1}
+		req.merchant_id = merchantId;
+		req.rewardprogram_id = programId;
+		var payload = JSON.stringify(req);
+        cm.restcall("POST", "users/"+cm.getUserID()+"/reward", payload, 
+			function(e, client)
+			{
+				Ti.API.error(e.error + "\nResponse: " + client.responseText + "\nStatus: " + client.status);
+				cm.ui.alert("Error", "requestAReward failed: " + e.error + "\nDetails: " + client.responseText);
+			},
+			function(client)
+			{
+				var result = JSON.parse(client.responseText);
+				var userRewardId = result.id;
+				if (userRewardId == undefined) {
+					var errorMsg = result[0];
+					Ti.API.info("requestAReward returned error.  message is: "+errorMsg);
+					cm.ui.alert("Failed", errorMsg);
+				} else {
+					Ti.API.info("requestAReward succeed.  userRewardId is: "+userRewardId);
+					cm.ui.alert("Succeed", "Your request for this reward succeed. Please check your reward list for the new reward.");
+					Ti.App.fireEvent('app:request.reward.succeed', {review_id:reviewId});
+				}
+			}
+		);
 	};
 	
 })();

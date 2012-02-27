@@ -120,6 +120,10 @@
 			cm.model.requestUserInfo();
 		});
 		
+		Ti.App.addEventListener('app:request.reward.succeed', function(e) {
+			cm.model.requestUserInfo();
+		});
+		
 		Ti.App.addEventListener('app:redeem.reward.succeed', function(e) {
 			if (e.forSale) {
 				cm.model.requestNearbyMarket();

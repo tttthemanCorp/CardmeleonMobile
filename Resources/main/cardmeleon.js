@@ -148,7 +148,9 @@ var cm = {};
 	};
 	
 	cm.requestGeoLocation = function() {
-		if(Ti.Platform.model == 'x86_64') {
+		Ti.API.info("*** Ti.Platform.model = "+Ti.Platform.model);
+		// a hack to get around a bug in iPhone Simulator in Lion - location service is disabled
+		if(Ti.Platform.model == 'Simulator' || Ti.Platform.model == 'x86_64') {
 			var longitude = 201.32;
 			var latitude = 102.45;
 		    Ti.App.Properties.setDouble('longitude', longitude);
@@ -179,47 +181,65 @@ var cm = {};
 					}).show();
 				}
 			}
+
+			if (Ti.Platform.osname == 'android') {
+				Ti.Geolocation.preferredProvider = Ti.Geolocation.PROVIDER_GPS;
+				Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
+				Ti.Geolocation.distanceFilter = 0;
+				Ti.Geolocation.frequency = 1;
+			} else {
+				Ti.Geolocation.preferredProvider = "gps";
+				Ti.Geolocation.purpose = "Find nearby merchants and rewards";
+				Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
+				Ti.Geolocation.distanceFilter = 0;
+			}			
+
+			var headingCallback = function(e) { }; // no code here
+			Ti.Geolocation.addEventListener('heading', headingCallback);
 			
-			Ti.Geolocation.preferredProvider = "gps";
-			Ti.Geolocation.purpose = "Find nearby merchants and rewards";
-			Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
-			Ti.Geolocation.distanceFilter = 10;
-		
-			Ti.Geolocation.getCurrentPosition(function(e)
-			{
-				var longitude = e.coords.longitude;
-				var latitude = e.coords.latitude;
-				var altitude = e.coords.altitude;
-				var heading = e.coords.heading;
-				var accuracy = e.coords.accuracy;
-				var speed = e.coords.speed;
-				var timestamp = e.coords.timestamp;
-				var altitudeAccuracy = e.coords.altitudeAccuracy;
-				
-				Ti.API.info('speed ' + speed);
-				Ti.API.info('geo - current location: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
-			});
+			var currentLocationCallback = function(e) {
+			    if ( !e.success || e.error ) {
+			        cm.ui.alert("Error","Unable to get your location.");
+			        Ti.API.debug(JSON.stringify(e));
+			        Ti.API.debug(e);
+			        return;
+			    }
 			
-			var locationCallback = function(e)
-			{
-				var longitude = e.coords.longitude;
-				var latitude = e.coords.latitude;
-				var altitude = e.coords.altitude;
-				var heading = e.coords.heading;
-				var accuracy = e.coords.accuracy;
-				var speed = e.coords.speed;
-				var timestamp = e.coords.timestamp;
-				var altitudeAccuracy = e.coords.altitudeAccuracy;
+				updatePosition(e.coords);
+			};
+			
+			var newLocationCallback = function(e) {
+			    if( ! e.success || e.error ) {
+			        cm.ui.alert("Error","Unable to get your location.");
+			        Ti.API.debug(JSON.stringify(e));
+			        Ti.API.debug(e);
+			        return;
+			    }
+			
+			    updatePosition(e.coords);
+			    
+			    Ti.Geolocation.removeEventListener('location', newLocationCallback);
+			    Ti.App.fireEvent('app:geoloc.available', {longitude: longitude, latitude: latitude});
+			};
+			
+			var updatePosition = function(coords) {
+				var longitude = coords.longitude;
+				var latitude = coords.latitude;
+				var altitude = coords.altitude;
+				var heading = coords.heading;
+				var accuracy = coords.accuracy;
+				var speed = coords.speed;
+				var timestamp = coords.timestamp;
+				var altitudeAccuracy = coords.altitudeAccuracy;
 		
 				Ti.API.info('geo - location updated: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
 				
 			    Ti.App.Properties.setDouble('longitude', longitude);
 			    Ti.App.Properties.setDouble('latitude', latitude);
-				Ti.App.fireEvent('app:geoloc.available', {longitude: longitude, latitude: latitude});
-				
-				Ti.Geolocation.removeEventListener('location', locationCallback);
 			};
-			Ti.Geolocation.addEventListener('location', locationCallback);
+			
+			Ti.Geolocation.addEventListener('location', newLocationCallback);
+			Ti.Geolocation.getCurrentPosition(currentLocationCallback);
 		}
 	};
 		
@@ -276,7 +296,27 @@ var cm = {};
 	};
 	
 	cm.getImageUrl = function(urlpath) {
-		return cm.config.SERVICE_ENDPOINT+'image/'+urlpath;
+		return cm.config.SERVICE_ENDPOINT+'image'+urlpath;
+	};
+	
+	cm.callPhone = function(number) {
+		if (Ti.Platform.osname == 'android') {
+			var intent = Ti.Android.createIntent({
+			    action: Ti.Android.ACTION_CALL,
+			    data: 'tel:'+number
+			});
+			Ti.Android.currentActivity.startActivity(intent);
+		} else {
+			Ti.Platform.openURL('tel:'+number);
+		}
+	};
+	
+	cm.openMap = function(address) {
+		Ti.Platform.openURL('http://maps.google.com/maps?q='+address);
+	};
+	
+	cm.sendSMS = function(number, message) {
+		
 	};
 	
 })();
